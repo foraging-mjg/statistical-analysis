@@ -1,4 +1,4 @@
-# E1 Revisits
+# Revisits  {.unnumbered}
 
 This number is how many trees they pointlessly looked at again after already getting the fruit - it corresponds with memory errors.
 

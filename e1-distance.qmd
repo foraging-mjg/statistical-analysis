@@ -1,0 +1,169 @@
+# Distance {.unnumbered}
+
+The Euclidian distance between successive tree-visits, in units of pixels.
+
+```{r setup, include=FALSE}
+source("_libraries.R")
+source("_prettify.R")
+source("_plot_preferences.R")
+knitr::opts_chunk$set(fig.path='e1_figures/')
+knitr::opts_chunk$set(fig.width=7, fig.height=5)
+options(dplyr.summarise.inform=F)
+```
+
+## E1 Distance - Prepare the data
+
+Read the data and pre-process it.
+
+```{r e1_ntrees_prep_data}
+e1 <- readRDS("001-00-e1-data.RDS")
+
+# remove things from the raw data to make it 
+# suitable for this particular analysis
+
+# remove samples that did not look at a tree
+e1 <- e1 %>% filter(fl>0)
+
+# remove the second (and any subsequent) *consecutive* duplicates
+e1 <- e1 %>% 
+  group_by(pp, rr, tb) %>% 
+  filter(is.na(tl != lag(tl)) | tl != lag(tl)) %>% 
+  ungroup()
+
+# remove trials where they failed to get 10 fruit
+e1 <- e1 %>% 
+  group_by(pp, rr, tb) %>% 
+  mutate(max_fr = max(fr)) %>% 
+  ungroup() %>% 
+  filter(max_fr==10)
+
+# Euclid
+e1 <- e1 %>% 
+  group_by(pp, rr, tb) %>% 
+  mutate(dist = round(sqrt((lead(xx)-xx)^2 + (lead(yy)-yy)^2), 2)) %>% 
+  ungroup()
+
+# time
+e1 <- e1 %>% 
+  group_by(pp, rr, tb) %>% 
+  mutate(tm=tm-first(tm)) %>%
+  ungroup()
+
+# fewer columns
+e1 <- e1 %>% 
+  select(pp, rr, st, tb, tm, ll, tl, dist)
+
+e1 <- e1 %>% 
+  mutate(pp = as_factor(pp), 
+         st=as_factor(st), 
+         tb=as_factor(tb),
+         ll=factor(ll, levels=c("fruit", "not"), labels=c(
+           "Launched from fruit", "Launched from tree without fruit"
+         )),
+         rr=factor(rr, levels=c("dispersed", "patchy")), 
+         )
+
+
+#2 x 2 x 2
+#launch x resources x stage
+
+
+dst <- e1 %>% 
+  group_by(pp, rr, st, ll, tb) %>% 
+  # average over tree-visits yielding
+  # two values for each trial, 
+  # one for launch from fruit, 
+  # one for launch from empty
+  summarise(dist=mean(dist, na.rm=TRUE)) %>% 
+  arrange(pp, rr, st, ll, tb, .by_group = TRUE) %>% 
+  ungroup()
+
+# average over trials in each of the two stages,
+# to yield one row for each launch type, per stage
+# 8 rows per subject, 2 x 2 x 2
+# 2 x 2 x 2 x 42=336 rows
+dst <- dst %>% 
+  group_by(pp, rr, st, ll) %>% 
+  summarise(mu.dist=mean(dist, na.rm=TRUE)) %>% 
+  ungroup()
+
+
+dst <- dst %>% 
+  select(rr, st, ll, pp, mu.dist) %>% 
+  arrange(rr, st, ll, pp, mu.dist)
+
+saveRDS(dst, "e1_distance_data.rds")
+```
+
+## E1 Distance ANOVA
+
+Run the ANOVA
+
+2 x 2 x 2 
+resources, stage, launch
+
+```{r e1-distance-aov}
+options(contrasts=c("contr.sum","contr.poly"))
+e1_distance_ANOVA <- 
+  ezANOVA(data=dst,
+          dv=mu.dist,
+          wid=pp,
+          within=c(rr, st, ll),
+          type=3, 
+          return_aov = TRUE)
+if("Sphericity Corrections" %in% names(e1_distance_ANOVA)){
+  corr=aovSphericityAdjustment(e1_distance_ANOVA)$ANOVA %>% tibble()
+} else {
+  corr=e1_distance_ANOVA$ANOVA %>% tibble()  
+  }
+```
+
+Table the ANOVA
+
+```{r}
+prettify_anova(e1_distance_ANOVA, "E1 Distance ANOVA")
+```
+
+Report the ANOVA
+
+The effect of resources was 
+F(`r round(corr[corr$Effect=="rr","DFn"],1)`, 
+  `r round(corr[corr$Effect=="rr","DFd"],1)`) = 
+  `r round(corr[corr$Effect=="rr", "F"],2)`, 
+  `r case_when(
+    corr[corr$Effect=="rr","p"] <.001 ~ "p<.001",
+    corr[corr$Effect=="rr","p"] <.01  ~ "p<.01",
+    corr[corr$Effect=="rr","p"] <.05  ~ "p<.05",
+    TRUE ~ paste0("p=",format(round(pull(corr[corr$Effect=="rr","p"]),3), scientific = F, nsmall=3)))`.
+
+The effect of stage was 
+F(`r round(corr[corr$Effect=="st","DFn"],1)`, 
+  `r round(corr[corr$Effect=="st","DFd"],1)`) = 
+  `r round(corr[corr$Effect=="st", "F"],2)`, 
+  `r case_when(
+    corr[corr$Effect=="st","p"] <.001 ~ "p<.001",
+    corr[corr$Effect=="st","p"] <.01  ~ "p<.01",
+    corr[corr$Effect=="st","p"] <.05  ~ "p<.05",
+    TRUE ~ paste0("p=",format(round(pull(corr[corr$Effect=="st","p"]),3), scientific = F, nsmall=3)))`.
+    
+The effect of stage was 
+F(`r round(corr[corr$Effect=="ll","DFn"],1)`, 
+  `r round(corr[corr$Effect=="ll","DFd"],1)`) = 
+  `r round(corr[corr$Effect=="ll", "F"],2)`, 
+  `r case_when(
+    corr[corr$Effect=="ll","p"] <.001 ~ "p<.001",
+    corr[corr$Effect=="ll","p"] <.01  ~ "p<.01",
+    corr[corr$Effect=="ll","p"] <.05  ~ "p<.05",
+    TRUE ~ paste0("p=",format(round(pull(corr[corr$Effect=="ll","p"]),3), scientific = F, nsmall=3)))`.
+    
+The effect of the interaction resources x stage x launch was 
+F(`r round(corr[corr$Effect=="rr:st:ll","DFn"],1)`, 
+  `r round(corr[corr$Effect=="rr:st:ll","DFd"],1)`) = 
+  `r round(corr[corr$Effect=="rr:st:ll", "F"],2)`, 
+  `r case_when(
+    corr[corr$Effect=="rr:st:ll","p"] <.001 ~ "p<.001",
+    corr[corr$Effect=="rr:st:ll","p"] <.01  ~ "p<.01",
+    corr[corr$Effect=="rr:st:ll","p"] <.05  ~ "p<.05",
+    TRUE ~ paste0("p=",format(round(pull(corr[corr$Effect=="rr:st:ll","p"]),3), scientific = F, nsmall=3)))`.
+    
+    

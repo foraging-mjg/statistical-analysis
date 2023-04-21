@@ -1,1 +1,1 @@
-# E2 Ntrees
+# Trees {.unnumbered}

@@ -1,4 +1,4 @@
-# E1 Ntrees
+# Trees {.unnumbered}
 
 This number is how many trees they looked at overall to get the ten fruit - high numbers represent worse performance.
 

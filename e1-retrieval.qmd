@@ -1,4 +1,4 @@
-# E1 Retrieval
+# Retrieval {.unnumbered}
 
 This rate is how many trees they had to look at to get each successive fruit.
 
@@ -32,7 +32,7 @@ e1 <- e1 %>%
 
 # remove trials where they failed to get 10 fruit
 e1 <- e1 %>% 
-  group_by(pp, te) %>% 
+  group_by(pp, rr, tb) %>% 
   mutate(max_fr = max(fr)) %>% 
   ungroup() %>% 
   filter(max_fr==10)

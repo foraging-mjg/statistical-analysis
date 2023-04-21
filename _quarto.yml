@@ -3,9 +3,9 @@ project:
   output-dir: docs
   
 book:
-  title: "foraging-manuscript-al23"
-  author: "Jane Doe"
-  date: "04/21/2023"
+  title: "Foraging manuscript data analysis"
+  author: "Matt Green"
+  date: "`r Sys.Date()`"
   chapters:
     - index.qmd
     - part: Experiment One
@@ -13,6 +13,7 @@ book:
         - e1-ntrees.qmd
         - e1-nrevisits.qmd
         - e1-retrieval.qmd
+        - e1-distance.qmd
         - e1-master-plot.qmd
     - part: Experiment Two
       chapters: 
