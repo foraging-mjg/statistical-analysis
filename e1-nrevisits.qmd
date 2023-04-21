@@ -1,4 +1,4 @@
-# Revisits  {.unnumbered}
+#  e1_Revisits  {.unnumbered}
 
 This number is how many trees they pointlessly looked at again after already getting the fruit - it corresponds with memory errors.
 
@@ -204,7 +204,7 @@ ggplot(data=nrev_data_for_ggplot, aes(y=nrv, x=st, group=rr, shape=rr, fill=rr)
 
 Table means for stage
 
-```{r e1_Number of trees_fruit_means}
+```{r e1_nrevisits_stage_means}
 frpremeans = nrev_data_for_ggplot %>% group_by(st, pp, rr) %>%
   summarise(mu=mean(nrv)) %>% 
   summarise(mu=mean(mu))  
@@ -213,10 +213,9 @@ frmeans <- frpremeans %>%
 prettify_means(frmeans, "E1 NRevisits stage means")
 ```
 
-
 ## E1 NRevisits: Fruit means
 
-```{r}
+```{r e1_nrevisits_fruit_means}
 pre.means = nrev_data_for_aov %>% 
   group_by(fr, pp, st) %>% 
   # average over resources
@@ -230,11 +229,9 @@ ok.means = pre.means %>%
 prettify_means(ok.means, "E1 Nrevisits fruit means")
 ```
 
-
 ---
 
-
-```{r}
+```{r e1_nrevisits_10plot}
 #| warning: false
 ggplot(data=pre.means, aes(y=mean.nrv, x=fr))+
   #geom_jitter()+
@@ -242,7 +239,8 @@ ggplot(data=pre.means, aes(y=mean.nrv, x=fr))+
   #stat_summary(geom="smooth", group=1)+
   #geom_smooth(span=0.5)+
   stat_summary(fun.data="mean_sdl", fun.args = list(mult=1))+
-  ggtitle("Mean plus / minus one sd")
+  stat_summary(geom='line', group=1)+
+  labs(title="Revisits", subtitle="Mean plus / minus one sd")+ theme_bw()
 ```
 
 
