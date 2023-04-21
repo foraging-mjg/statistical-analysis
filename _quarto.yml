@@ -1,23 +1,21 @@
 project:
   type: book
-
+  output-dir: docs
+  
 book:
   title: "foraging-manuscript-al23"
   author: "Jane Doe"
-  date: "21/04/2023"
+  date: "04/21/2023"
   chapters:
     - index.qmd
-    - intro.qmd
-    - summary.qmd
-    - references.qmd
-
-bibliography: references.bib
+    - part: Experiment One
+      chapters: 
+        - e1-retrieval.qmd
+    - part: Experiment Two
+      chapters: 
+        - e2-ntrees.qmd
 
 format:
   html:
     theme: cosmo
-  # pdf:
-  #   documentclass: scrreprt
-
-
 
