@@ -1,17 +1,25 @@
 # E1 Retrieval
 
+This rate is how many trees they had to look at to get each successive fruit.
+
 ```{r setup, include=FALSE}
 source("_libraries.R")
 source("_prettify.R")
+source("_plot_preferences.R")
 knitr::opts_chunk$set(fig.path='e1_figures/')
 knitr::opts_chunk$set(fig.width=7, fig.height=5)
 options(dplyr.summarise.inform=F)
 ```
 
-```{r prep_data_for_retrieval_rate}
+## E1 Retrieval: Prepare the data
+
+Read the data in and pre-process it.
+
+```{r e1_retrieval_rate_prep_data}
 e1 <- readRDS("001-00-e1-data.RDS")
 
-# remove things from the raw data to make it suitable for this particular analysis
+# remove things from the raw data to make it 
+# suitable for this particular analysis
 
 # remove samples that did not look at a tree
 e1 <- e1 %>% filter(fl>0)
@@ -30,7 +38,8 @@ e1 <- e1 %>%
   filter(max_fr==10)
 
 # how many trees to get each fruit?
-# this is neat and it needs to be done after reducing the data to row-per-valid-tree-visit
+# this is neat and it needs to be done after 
+# reducing the data to row-per-valid-tree-visit
 e1$ntrees_to_get_a_fruit = NA
 j = 0
 for (k in seq_along(e1$ix)) {
@@ -44,7 +53,8 @@ for (k in seq_along(e1$ix)) {
 # remove any remaining NAs
 e1 <- e1 %>% filter(!is.na(ntrees_to_get_a_fruit))
 
-# average over trials (and ignore stage) to yield participant means suitable for ggplot and ANOVA
+# average over trials (and ignore stage) to yield 
+# participant means suitable for ggplot and ANOVA
 rtv = e1 %>% 
   select(pp, rr, tb, fr, ntrees_to_get_a_fruit) %>% 
   group_by(pp, rr, fr) %>% 
@@ -54,3 +64,113 @@ rtv = e1 %>%
 
 saveRDS(rtv, "e1_retrieval_plot_data.rds")
 ```
+
+## E1 Retrieval: ANOVA
+
+Run the ANOVA
+
+```{r e1_retrieval_rate_anova}
+options(contrasts=c("contr.sum","contr.poly"))
+e1_retrievalrate_ANOVA <- 
+  ezANOVA(data=rtv,
+          dv=mu,
+          wid=pp,
+          within=c(rr, fr),
+          type=3, 
+          return_aov = TRUE)
+
+if("Sphericity Corrections" %in% names(e1_retrievalrate_ANOVA)){
+  corr=aovSphericityAdjustment(e1_retrievalrate_ANOVA)$ANOVA %>% tibble()
+} else {
+  corr=e1_retrievalrate_ANOVA$ANOVA %>% tibble()  
+  }
+```
+
+Table the ANOVA taking into account sphericity violations.
+
+```{r e1_retrieval_rate_print_anova_table}
+prettify_sphericity(
+  aovSphericityAdjustment(e1_retrievalrate_ANOVA), 
+  "E1 Retrieval ANOVA") 
+```
+
+Report the ANOVA
+
+The effect of resources was 
+F(`r round(corr[corr$Effect=="rr","DFn"],1)`, 
+  `r round(corr[corr$Effect=="rr","DFd"],1)`) = 
+  `r round(corr[corr$Effect=="rr", "F"],2)`, 
+  `r case_when(
+    corr[corr$Effect=="rr","p"] <.001 ~ "p<.001",
+    corr[corr$Effect=="rr","p"] <.01  ~ "p<.01",
+    corr[corr$Effect=="rr","p"] <.05  ~ "p<.05",
+    TRUE ~ paste0("p=",format(round(pull(corr[corr$Effect=="rr","p"]),3), scientific = F, nsmall=3)))`.
+
+The effect of fruit after Greenhouse-Geisser correction for sphericity violation was 
+F(`r round(corr[corr$Effect=="fr","DFn"],1)`, 
+  `r round(corr[corr$Effect=="fr","DFd"],1)`) = 
+  `r round(corr[corr$Effect=="fr", "F"],2)`, 
+  `r case_when(
+    corr[corr$Effect=="fr","p"] <.001 ~ "p<.001",
+    corr[corr$Effect=="fr","p"] <.01  ~ "p<.01",
+    corr[corr$Effect=="fr","p"] <.05  ~ "p<.05",
+    TRUE ~ paste0("p=",format(round(pull(corr[corr$Effect=="fr","p"]),3), scientific = F, nsmall=3)))`.
+
+The fruit x resources interaction after Greenhouse-Geisser correction for sphericity violation was 
+F(`r round(corr[corr$Effect=="rr:fr","DFn"],1)`, 
+  `r round(corr[corr$Effect=="rr:fr","DFd"],1)`) = 
+  `r round(corr[corr$Effect=="rr:fr", "F"],2)`, 
+  `r case_when(
+    corr[corr$Effect=="rr:fr","p"] <.001 ~ "p<.001",
+    corr[corr$Effect=="rr:fr","p"] <.01  ~ "p<.01",
+    corr[corr$Effect=="rr:fr","p"] <.05  ~ "p<.05",
+    TRUE ~ paste0("p=",format(round(pull(corr[corr$Effect=="rr:fr","p"]),3), scientific = F, nsmall=3)))`.
+
+
+## E1 Retrieval: Plot
+
+Ten points along the x axis, each participant contributes one point per cell
+
+```{r e1_retrieval_rate_plot}
+ggplot(
+  data=rtv, 
+  aes(x=fr, y=mu, group=rr, pch=rr, fill=rr)
+) +
+  labs(title="(c): Retrieval rate", subtitle="People benefit from being in a patch once they realise they are in one")+
+  ylab("Number\nof\ntrees\nvisited\nto get\neach fruit")+
+  xlab("Number of fruit collected so far during trial")+
+  my_fgms_theme+
+  geom_hline(yintercept=2, lty=3,col="grey")+
+  scale_fill_manual(name="Resources", values=c("white", "black")) +
+  scale_shape_manual(name="Resources", values=c(24,19)) +
+  stat_summary(fun.data = mean_cl_normal, geom = "errorbar", width=0.2, position=pd) +
+  stat_summary(fun = mean, geom = "line", position=pd) + 
+  stat_summary(fun = mean, geom = "point", size=3, position=pd)
+```
+
+## E1 Retrieval: Resources Means
+
+Table means for resources
+
+```{r e1_retrieval_rate_resources_means}
+rrpremeans = rtv %>% group_by(rr, pp, fr) %>%
+  summarise(mu=mean(mu)) %>% 
+  summarise(mu=mean(mu)) 
+rrmeans <- rrpremeans %>% 
+  summarise(mean=mean(mu), sd=sd(mu))
+prettify_means(rrmeans, "E1 Retrieval stage means")
+```
+
+## E1 Retrieval: Fruit means
+
+Table means for fruit
+
+```{r e1_retrieval_rate_fruit_means}
+frpremeans = rtv %>% group_by(fr, pp, rr) %>%
+  summarise(mu=mean(mu)) %>% 
+  summarise(mu=mean(mu))  
+frmeans <- frpremeans %>% 
+  summarise(mean=mean(mu), sd=sd(mu))
+prettify_means(frmeans, "E1 Retrieval fruit means")
+```
+

@@ -10,7 +10,10 @@ book:
     - index.qmd
     - part: Experiment One
       chapters: 
+        - e1-ntrees.qmd
+        - e1-nrevisits.qmd
         - e1-retrieval.qmd
+        - e1-master-plot.qmd
     - part: Experiment Two
       chapters: 
         - e2-ntrees.qmd
@@ -19,8 +22,10 @@ format:
   html: 
     theme: 
       cosmo
-    grid:
-      sidebar-width: 300px
-      body-width: 1200px
-      margin-width: 150px
-      gutter-width: 1.5rem
+    code-fold: true
+    code-summary: "Show the code"
+    # grid:
+    #   sidebar-width: 300px
+    #   body-width: 1200px
+    #   margin-width: 150px
+    #   gutter-width: 1.5rem

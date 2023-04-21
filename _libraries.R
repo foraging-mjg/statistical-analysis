@@ -1,7 +1,7 @@
-#library(psychReport) # aovSphericityAdjustment
-#library(papaja) # apa_print()
+library(psychReport) # aovSphericityAdjustment
+library(papaja) # apa_print()
 #library(easystats) # report()
-library(kableExtra)
+#library(kableExtra)
 library(tidyverse)
-#library(ez)
-#library(gt)
+library(ez)
+library(gt)

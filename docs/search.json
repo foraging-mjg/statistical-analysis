@@ -7,10 +7,185 @@
     "text": "Preface\nThis is data analysis for the foraging manuscript, started during annual leave 2023."
   },
   {
-    "objectID": "e1-retrieval.html",
-    "href": "e1-retrieval.html",
-    "title": "1  E1 Retrieval",
+    "objectID": "e1-retrieval.html#anova",
+    "href": "e1-retrieval.html#anova",
+    "title": "2  E1 Retrieval",
+    "section": "2.2 ANOVA",
+    "text": "2.2 ANOVA\nRun the ANOVA\n\n\nShow the code\noptions(contrasts=c(\"contr.sum\",\"contr.poly\"))\ne1_retrievalrate_ANOVA &lt;- \n  ezANOVA(data=rtv,\n          dv=mu,\n          wid=pp,\n          within=c(rr, fr),\n          type=3, return_aov = TRUE)\n\n\nTable the ANOVA taking into account sphericity violations.\n\n\nShow the code\nprettify_sphericity(\n  aovSphericityAdjustment(e1_retrievalrate_ANOVA), \n  \"E1 Retrieval ANOVA\") \n\n\n\n\n\n\n  \n    \n      E1 Retrieval ANOVA\n    \n    \n    \n      Effect\n      DFn\n      DFd\n      F\n      p\n      sig\n    \n  \n  \n    rr\n1\n41\n54.14\n0.000\n***\n    fr\n3.9\n160.4\n22.99\n0.000\n***\n    rr:fr\n4.8\n197.9\n46.85\n0.000\n***\n  \n  \n  \n\n\n\n\nShow the code\nav = e1_retrievalrate_ANOVA$ANOVA %&gt;% tibble()\nsp = e1_retrievalrate_ANOVA$`Sphericity Corrections` %&gt;% tibble()\n\n\nThe effect of resources was F(1, 41) = 54.14, p&lt; .001.\nThe effect of fruit after Greenhouse-Geisser correction for sphericity violation was F(3.9, 160.4) = 22.99, p&lt; .001.\nThe fruit x resources interaction after Greenhouse-Geisser correction for sphericity violation was F(4.8, 197.9) = 46.85, p&lt; .001."
+  },
+  {
+    "objectID": "e1-retrieval.html#plot",
+    "href": "e1-retrieval.html#plot",
+    "title": "2  E1 Retrieval",
+    "section": "2.3 Plot",
+    "text": "2.3 Plot\nTen points along the x axis, each participant contributes one point per cell\n\n\nShow the code\nggplot(\n  data=rtv, \n  aes(x=fr, y=mu, group=rr, pch=rr, fill=rr)\n) +\n  labs(title=\"(c): Retrieval rate\", subtitle=\"People benefit from being in a patch once they realise they are in one\")+\n  ylab(\"Number\\nof\\ntrees\\nvisited\\nto get\\neach fruit\")+\n  xlab(\"Number of fruit collected so far during trial\")+\n  my_fgms_theme+\n  geom_hline(yintercept=2, lty=3,col=\"grey\")+\n  scale_fill_manual(name=\"Resources\", values=c(\"white\", \"black\")) +\n  scale_shape_manual(name=\"Resources\", values=c(24,19)) +\n  stat_summary(fun.data = mean_cl_normal, geom = \"errorbar\", width=0.2, position=pd) +\n  stat_summary(fun = mean, geom = \"line\", position=pd) + \n  stat_summary(fun = mean, geom = \"point\", size=3, position=pd)"
+  },
+  {
+    "objectID": "e1-retrieval.html#resources-means",
+    "href": "e1-retrieval.html#resources-means",
+    "title": "2  E1 Retrieval",
+    "section": "2.4 Resources Means",
+    "text": "2.4 Resources Means\nTable means for resources\n\n\nShow the code\nrrpremeans = rtv %&gt;% group_by(rr, pp, fr) %&gt;%\n  summarise(mu=mean(mu)) %&gt;% \n  summarise(mu=mean(mu)) \nrrmeans &lt;- rrpremeans %&gt;% \n  summarise(mean=mean(mu), sd=sd(mu))\nprettify_means(rrmeans, \"E1 Retrieval stage means\")\n\n\n\n\n\n\n  \n    \n      E1 Retrieval stage means\n    \n    \n    \n      rr\n      mean\n      sd\n    \n  \n  \n    dispersed\n2.04\n0.13\n    patchy\n1.67\n0.30"
+  },
+  {
+    "objectID": "e1-retrieval.html#fruit-means",
+    "href": "e1-retrieval.html#fruit-means",
+    "title": "2  E1 Retrieval",
+    "section": "2.5 Fruit means",
+    "text": "2.5 Fruit means\nTable means for fruit\n\n\nShow the code\nfrpremeans = rtv %&gt;% group_by(fr, pp, rr) %&gt;%\n  summarise(mu=mean(mu)) %&gt;% \n  summarise(mu=mean(mu))  \nfrmeans &lt;- frpremeans %&gt;% \n  summarise(mean=mean(mu), sd=sd(mu))\nprettify_means(frmeans, \"E1 Retrieval fruit means\")\n\n\n\n\n\n\n  \n    \n      E1 Retrieval fruit means\n    \n    \n    \n      fr\n      mean\n      sd\n    \n  \n  \n    1\n2.79\n0.90\n    2\n2.00\n0.63\n    3\n1.67\n0.28\n    4\n1.77\n0.44\n    5\n1.73\n0.36\n    6\n1.75\n0.38\n    7\n1.68\n0.35\n    8\n1.58\n0.20\n    9\n1.74\n0.44\n    10\n1.79\n0.38"
+  },
+  {
+    "objectID": "e1-retrieval.html#prepare-the-data",
+    "href": "e1-retrieval.html#prepare-the-data",
+    "title": "2  E1 Retrieval",
+    "section": "2.1 Prepare the data",
+    "text": "2.1 Prepare the data\nRead the data in and pre-process it.\n\n\nShow the code\ne1 &lt;- readRDS(\"001-00-e1-data.RDS\")\n\n# remove things from the raw data to make it \n# suitable for this particular analysis\n\n# remove samples that did not look at a tree\ne1 &lt;- e1 %&gt;% filter(fl&gt;0)\n\n# remove the second (and any subsequent) *consecutive* duplicates\ne1 &lt;- e1 %&gt;% \n  group_by(pp, rr, tb) %&gt;% \n  filter(is.na(tl != lag(tl)) | tl != lag(tl)) %&gt;% \n  ungroup()\n\n# remove trials where they failed to get 10 fruit\ne1 &lt;- e1 %&gt;% \n  group_by(pp, te) %&gt;% \n  mutate(max_fr = max(fr)) %&gt;% \n  ungroup() %&gt;% \n  filter(max_fr==10)\n\n# how many trees to get each fruit?\n# this is neat and it needs to be done after \n# reducing the data to row-per-valid-tree-visit\ne1$ntrees_to_get_a_fruit = NA\nj = 0\nfor (k in seq_along(e1$ix)) {\n j = j + 1\n if (e1[k, 'fl']==2) {\n   e1[k, 'ntrees_to_get_a_fruit'] = j\n   j = 0\n }\n}\n\n# remove any remaining NAs\ne1 &lt;- e1 %&gt;% filter(!is.na(ntrees_to_get_a_fruit))\n\n# average over trials (and ignore stage) to yield \n# participant means suitable for ggplot and ANOVA\nrtv = e1 %&gt;% \n  select(pp, rr, tb, fr, ntrees_to_get_a_fruit) %&gt;% \n  group_by(pp, rr, fr) %&gt;% \n  summarise(mu=mean(ntrees_to_get_a_fruit)) %&gt;% \n  ungroup() %&gt;% \n  mutate(pp=as_factor(pp), rr=as_factor(rr), fr=as_factor(fr))\n\nsaveRDS(rtv, \"e1_retrieval_plot_data.rds\")"
+  },
+  {
+    "objectID": "e1-master-plot.html",
+    "href": "e1-master-plot.html",
+    "title": "4  E1 master plot",
     "section": "",
-    "text": "e1 &lt;- readRDS(\"001-00-e1-data.RDS\")\n\n# remove things from the raw data to make it suitable for this particular analysis\n\n# remove samples that did not look at a tree\ne1 &lt;- e1 %&gt;% filter(fl&gt;0)\n\n# remove the second (and any subsequent) *consecutive* duplicates\ne1 &lt;- e1 %&gt;% \n  group_by(pp, rr, tb) %&gt;% \n  filter(is.na(tl != lag(tl)) | tl != lag(tl)) %&gt;% \n  ungroup()\n\n# remove trials where they failed to get 10 fruit\ne1 &lt;- e1 %&gt;% \n  group_by(pp, te) %&gt;% \n  mutate(max_fr = max(fr)) %&gt;% \n  ungroup() %&gt;% \n  filter(max_fr==10)\n\n# how many trees to get each fruit?\n# this is neat and it needs to be done after reducing the data to row-per-valid-tree-visit\ne1$ntrees_to_get_a_fruit = NA\nj = 0\nfor (k in seq_along(e1$ix)) {\n j = j + 1\n if (e1[k, 'fl']==2) {\n   e1[k, 'ntrees_to_get_a_fruit'] = j\n   j = 0\n }\n}\n\n# remove any remaining NAs\ne1 &lt;- e1 %&gt;% filter(!is.na(ntrees_to_get_a_fruit))\n\n# average over trials (and ignore stage) to yield participant means suitable for ggplot and ANOVA\nrtv = e1 %&gt;% \n  select(pp, rr, tb, fr, ntrees_to_get_a_fruit) %&gt;% \n  group_by(pp, rr, fr) %&gt;% \n  summarise(mu=mean(ntrees_to_get_a_fruit)) %&gt;% \n  ungroup() %&gt;% \n  mutate(pp=as_factor(pp), rr=as_factor(rr), fr=as_factor(fr))\n\nsaveRDS(rtv, \"e1_retrieval_plot_data.rds\")"
+    "text": "5 Read in the data\nShow the code\nntrees_data &lt;- readRDS(\"e1_ntrees_plot_data.rds\")\nnrevisits_data &lt;- readRDS(\"e1_nrevisits_plot_data.rds\")\nretrieval_data &lt;- readRDS(\"e1_retrieval_plot_data.rds\")"
+  },
+  {
+    "objectID": "e1-ntrees.html#prepare-the-data",
+    "href": "e1-ntrees.html#prepare-the-data",
+    "title": "1  E1 Ntrees",
+    "section": "1.1 Prepare the data",
+    "text": "1.1 Prepare the data\nRead the data in and pre-process it.\n\n\nShow the code\ne1 &lt;- readRDS(\"001-00-e1-data.RDS\")\n\n# remove things from the raw data to make it \n# suitable for this particular analysis\n\n# remove samples that did not look at a tree\ne1 &lt;- e1 %&gt;% filter(fl&gt;0)\n\n# remove the second (and any subsequent) *consecutive* duplicates\ne1 &lt;- e1 %&gt;% \n  group_by(pp, rr, tb) %&gt;% \n  filter(is.na(tl != lag(tl)) | tl != lag(tl)) %&gt;% \n  ungroup()\n\n# remove trials where they failed to get 10 fruit\ne1 &lt;- e1 %&gt;% \n  group_by(pp, te) %&gt;% \n  mutate(max_fr = max(fr)) %&gt;% \n  ungroup() %&gt;% \n  filter(max_fr==10)"
+  },
+  {
+    "objectID": "e1-retrieval.html#e1-retrieval-prepare-the-data",
+    "href": "e1-retrieval.html#e1-retrieval-prepare-the-data",
+    "title": "3  E1 Retrieval",
+    "section": "3.1 E1 Retrieval: Prepare the data",
+    "text": "3.1 E1 Retrieval: Prepare the data\nRead the data in and pre-process it.\n\n\nShow the code\ne1 &lt;- readRDS(\"001-00-e1-data.RDS\")\n\n# remove things from the raw data to make it \n# suitable for this particular analysis\n\n# remove samples that did not look at a tree\ne1 &lt;- e1 %&gt;% filter(fl&gt;0)\n\n# remove the second (and any subsequent) *consecutive* duplicates\ne1 &lt;- e1 %&gt;% \n  group_by(pp, rr, tb) %&gt;% \n  filter(is.na(tl != lag(tl)) | tl != lag(tl)) %&gt;% \n  ungroup()\n\n# remove trials where they failed to get 10 fruit\ne1 &lt;- e1 %&gt;% \n  group_by(pp, te) %&gt;% \n  mutate(max_fr = max(fr)) %&gt;% \n  ungroup() %&gt;% \n  filter(max_fr==10)\n\n# how many trees to get each fruit?\n# this is neat and it needs to be done after \n# reducing the data to row-per-valid-tree-visit\ne1$ntrees_to_get_a_fruit = NA\nj = 0\nfor (k in seq_along(e1$ix)) {\n j = j + 1\n if (e1[k, 'fl']==2) {\n   e1[k, 'ntrees_to_get_a_fruit'] = j\n   j = 0\n }\n}\n\n# remove any remaining NAs\ne1 &lt;- e1 %&gt;% filter(!is.na(ntrees_to_get_a_fruit))\n\n# average over trials (and ignore stage) to yield \n# participant means suitable for ggplot and ANOVA\nrtv = e1 %&gt;% \n  select(pp, rr, tb, fr, ntrees_to_get_a_fruit) %&gt;% \n  group_by(pp, rr, fr) %&gt;% \n  summarise(mu=mean(ntrees_to_get_a_fruit)) %&gt;% \n  ungroup() %&gt;% \n  mutate(pp=as_factor(pp), rr=as_factor(rr), fr=as_factor(fr))\n\nsaveRDS(rtv, \"e1_retrieval_plot_data.rds\")"
+  },
+  {
+    "objectID": "e1-retrieval.html#e1-retrieval-anova",
+    "href": "e1-retrieval.html#e1-retrieval-anova",
+    "title": "3  E1 Retrieval",
+    "section": "3.2 E1 Retrieval: ANOVA",
+    "text": "3.2 E1 Retrieval: ANOVA\nRun the ANOVA\n\n\nShow the code\noptions(contrasts=c(\"contr.sum\",\"contr.poly\"))\ne1_retrievalrate_ANOVA &lt;- \n  ezANOVA(data=rtv,\n          dv=mu,\n          wid=pp,\n          within=c(rr, fr),\n          type=3, \n          return_aov = TRUE)\n\nif(\"Sphericity Corrections\" %in% names(e1_retrievalrate_ANOVA)){\n  corr=aovSphericityAdjustment(e1_retrievalrate_ANOVA)$ANOVA %&gt;% tibble()\n} else {\n  corr=e1_retrievalrate_ANOVA$ANOVA %&gt;% tibble()  \n  }\n\n\nTable the ANOVA taking into account sphericity violations.\n\n\nShow the code\nprettify_sphericity(\n  aovSphericityAdjustment(e1_retrievalrate_ANOVA), \n  \"E1 Retrieval ANOVA\") \n\n\n\n\n\n\n  \n    \n      E1 Retrieval ANOVA\n    \n    \n    \n      Effect\n      DFn\n      DFd\n      F\n      p\n      sig\n    \n  \n  \n    rr\n1\n41\n54.14\n0.000\n***\n    fr\n3.9\n160.4\n22.99\n0.000\n***\n    rr:fr\n4.8\n197.9\n46.85\n0.000\n***\n  \n  \n  \n\n\n\n\nReport the ANOVA\nThe effect of resources was F(1, 41) = 54.14, p&lt;.001.\nThe effect of fruit after Greenhouse-Geisser correction for sphericity violation was F(3.9, 160.4) = 22.99, p&lt;.001.\nThe fruit x resources interaction after Greenhouse-Geisser correction for sphericity violation was F(4.8, 197.9) = 46.85, p&lt;.001."
+  },
+  {
+    "objectID": "e1-retrieval.html#e1-retrieval-plot",
+    "href": "e1-retrieval.html#e1-retrieval-plot",
+    "title": "3  E1 Retrieval",
+    "section": "3.3 E1 Retrieval: Plot",
+    "text": "3.3 E1 Retrieval: Plot\nTen points along the x axis, each participant contributes one point per cell\n\n\nShow the code\nggplot(\n  data=rtv, \n  aes(x=fr, y=mu, group=rr, pch=rr, fill=rr)\n) +\n  labs(title=\"(c): Retrieval rate\", subtitle=\"People benefit from being in a patch once they realise they are in one\")+\n  ylab(\"Number\\nof\\ntrees\\nvisited\\nto get\\neach fruit\")+\n  xlab(\"Number of fruit collected so far during trial\")+\n  my_fgms_theme+\n  geom_hline(yintercept=2, lty=3,col=\"grey\")+\n  scale_fill_manual(name=\"Resources\", values=c(\"white\", \"black\")) +\n  scale_shape_manual(name=\"Resources\", values=c(24,19)) +\n  stat_summary(fun.data = mean_cl_normal, geom = \"errorbar\", width=0.2, position=pd) +\n  stat_summary(fun = mean, geom = \"line\", position=pd) + \n  stat_summary(fun = mean, geom = \"point\", size=3, position=pd)"
+  },
+  {
+    "objectID": "e1-retrieval.html#e1-retrieval-resources-means",
+    "href": "e1-retrieval.html#e1-retrieval-resources-means",
+    "title": "3  E1 Retrieval",
+    "section": "3.4 E1 Retrieval: Resources Means",
+    "text": "3.4 E1 Retrieval: Resources Means\nTable means for resources\n\n\nShow the code\nrrpremeans = rtv %&gt;% group_by(rr, pp, fr) %&gt;%\n  summarise(mu=mean(mu)) %&gt;% \n  summarise(mu=mean(mu)) \nrrmeans &lt;- rrpremeans %&gt;% \n  summarise(mean=mean(mu), sd=sd(mu))\nprettify_means(rrmeans, \"E1 Retrieval stage means\")\n\n\n\n\n\n\n  \n    \n      E1 Retrieval stage means\n    \n    \n    \n      rr\n      mean\n      sd\n    \n  \n  \n    dispersed\n2.04\n0.13\n    patchy\n1.67\n0.30"
+  },
+  {
+    "objectID": "e1-retrieval.html#e1-retrieval-fruit-means",
+    "href": "e1-retrieval.html#e1-retrieval-fruit-means",
+    "title": "3  E1 Retrieval",
+    "section": "3.5 E1 Retrieval: Fruit means",
+    "text": "3.5 E1 Retrieval: Fruit means\nTable means for fruit\n\n\nShow the code\nfrpremeans = rtv %&gt;% group_by(fr, pp, rr) %&gt;%\n  summarise(mu=mean(mu)) %&gt;% \n  summarise(mu=mean(mu))  \nfrmeans &lt;- frpremeans %&gt;% \n  summarise(mean=mean(mu), sd=sd(mu))\nprettify_means(frmeans, \"E1 Retrieval fruit means\")\n\n\n\n\n\n\n  \n    \n      E1 Retrieval fruit means\n    \n    \n    \n      fr\n      mean\n      sd\n    \n  \n  \n    1\n2.79\n0.90\n    2\n2.00\n0.63\n    3\n1.67\n0.28\n    4\n1.77\n0.44\n    5\n1.73\n0.36\n    6\n1.75\n0.38\n    7\n1.68\n0.35\n    8\n1.58\n0.20\n    9\n1.74\n0.44\n    10\n1.79\n0.38"
+  },
+  {
+    "objectID": "e1-ntrees.html#e1-ntrees-prepare-the-data",
+    "href": "e1-ntrees.html#e1-ntrees-prepare-the-data",
+    "title": "1  E1 Ntrees",
+    "section": "1.1 E1 Ntrees: Prepare the data",
+    "text": "1.1 E1 Ntrees: Prepare the data\nRead the data in and pre-process it.\n\n\nShow the code\ne1 &lt;- readRDS(\"001-00-e1-data.RDS\")\n\n# remove things from the raw data to make it \n# suitable for this particular analysis\n\n# remove samples that did not look at a tree\ne1 &lt;- e1 %&gt;% filter(fl&gt;0)\n\n# remove the second (and any subsequent) *consecutive* duplicates\ne1 &lt;- e1 %&gt;% \n  group_by(pp, rr, tb) %&gt;% \n  filter(is.na(tl != lag(tl)) | tl != lag(tl)) %&gt;% \n  ungroup()\n\n# remove trials where they failed to get 10 fruit\ne1 &lt;- e1 %&gt;% \n  group_by(pp, te) %&gt;% \n  mutate(max_fr = max(fr)) %&gt;% \n  ungroup() %&gt;% \n  filter(max_fr==10)\n\n# average over tree-visits to get counts for each trial\nntr.counts &lt;- e1 %&gt;% \n  select(pp, rr, st, tb, tl) %&gt;% \n  group_by(pp, rr, st, tb) %&gt;% \n  summarise(ntrees=n()) %&gt;% \n  ungroup() %&gt;% \n  mutate(pp=as_factor(pp), rr=as_factor(rr),  st=as_factor(st))\n\n# average over trials to get mean count for each stage\nntr &lt;- ntr.counts %&gt;% \n  group_by(pp, rr, st) %&gt;% \n  summarise(mean_ntrees_per_stage=mean(ntrees))\n\nsaveRDS(ntr, \"e1_ntrees_plot_data.rds\")"
+  },
+  {
+    "objectID": "e1-ntrees.html#e1-ntrees-anova",
+    "href": "e1-ntrees.html#e1-ntrees-anova",
+    "title": "1  E1 Ntrees",
+    "section": "1.2 E1 Ntrees: ANOVA",
+    "text": "1.2 E1 Ntrees: ANOVA\nRun the ANOVA\n\n\nShow the code\noptions(contrasts=c(\"contr.sum\",\"contr.poly\"))\ne1_ntrees_ANOVA &lt;- \n  ezANOVA(data=ntr,\n          dv=mean_ntrees_per_stage,\n          wid=pp,\n          within=c(rr, st),\n          type=3,\n          return_aov = TRUE)\nif(\"Sphericity Corrections\" %in% names(e1_ntrees_ANOVA)){\n  corr=aovSphericityAdjustment(e1_ntrees_ANOVA)$ANOVA %&gt;% tibble()\n} else {\n  corr=e1_ntrees_ANOVA$ANOVA %&gt;% tibble()  \n  }\n\n\nTable the ANOVA.\n\n\nShow the code\nprettify_anova(e1_ntrees_ANOVA, \"E1 Ntrees ANOVA\")\n\n\n\n\n\n\n  \n    \n      E1 Ntrees ANOVA\n    \n    \n    \n      Effect\n      DFn\n      DFd\n      F\n      p\n      sig\n    \n  \n  \n    rr\n1\n41\n52.17\n0.000\n***\n    st\n1\n41\n17.43\n0.000\n***\n    rr:st\n1\n41\n 5.04\n0.030\n*\n  \n  \n  \n\n\n\n\nReport the ANOVA\nThe effect of resources was F(1, 41) = 52.17, p&lt;.001.\nThe effect of stage was F(1, 41) = 17.43, p&lt;.001.\nThe effect of the interaction resources x stage was F(1, 41) = 5.04, p&lt;.05."
+  },
+  {
+    "objectID": "e1-ntrees.html#e1-ntrees-plot",
+    "href": "e1-ntrees.html#e1-ntrees-plot",
+    "title": "1  E1 Ntrees",
+    "section": "1.3 E1 Ntrees: Plot",
+    "text": "1.3 E1 Ntrees: Plot\nTwo points along the x axis, each participant contributes one point per cell\n\n\nShow the code\nggplot(data=ntr, aes(x=st, y=mean_ntrees_per_stage, group=rr, pch=rr, fill=rr)\n) +\n  my_fgms_theme+\n  ggtitle(\"(a): Total trees visited\")+\n  ylab(\"Visits\")+\n  xlab(\"Trials\")+\n  scale_fill_manual(name=\"Resource\\ndistribution\",values=c(\"white\", \"black\")) +\n  scale_shape_manual(name=\"Resource\\ndistribution\",values=c(24,19)) +\n  stat_summary(fun.data = mean_cl_normal, geom = \"errorbar\", width=0.1, position=pd) +\n  stat_summary(fun = mean, geom = \"line\", position=pd) + \n  stat_summary(fun = mean, geom = \"point\", size=4, position=pd)+\n  scale_x_discrete(labels=c(\"early\\ntrials 1 to 5\", \"late\\ntrials 6 to 10\"))"
+  },
+  {
+    "objectID": "e1-ntrees.html#e1-number-of-trees-resources-means",
+    "href": "e1-ntrees.html#e1-number-of-trees-resources-means",
+    "title": "1  E1 Ntrees",
+    "section": "1.4 E1 Number of trees: Resources Means",
+    "text": "1.4 E1 Number of trees: Resources Means\nTable means for resources\n\n\nShow the code\nrrpremeans = ntr %&gt;% group_by(rr, pp, st) %&gt;%\n  summarise(mu=mean(mean_ntrees_per_stage)) %&gt;% \n  summarise(mu=mean(mu)) \nrrmeans &lt;- rrpremeans %&gt;% \n  summarise(mean=mean(mu), sd=sd(mu))\nprettify_means(rrmeans, \"E1 Number of trees resources means\")\n\n\n\n\n\n\n  \n    \n      E1 Number of trees resources means\n    \n    \n    \n      rr\n      mean\n      sd\n    \n  \n  \n    dispersed\n20.40\n1.26\n    patchy\n16.69\n3.06"
+  },
+  {
+    "objectID": "e1-ntrees.html#e1-number-of-trees-stage-means",
+    "href": "e1-ntrees.html#e1-number-of-trees-stage-means",
+    "title": "1  E1 Ntrees",
+    "section": "1.5 E1 Number of trees: Stage means",
+    "text": "1.5 E1 Number of trees: Stage means\nTable means for stage\n\n\nShow the code\nfrpremeans = ntr %&gt;% group_by(st, pp, rr) %&gt;%\n  summarise(mu=mean(mean_ntrees_per_stage)) %&gt;% \n  summarise(mu=mean(mu))  \nfrmeans &lt;- frpremeans %&gt;% \n  summarise(mean=mean(mu), sd=sd(mu))\nprettify_means(frmeans, \"E1 Retrieval stage means\")\n\n\n\n\n\n\n  \n    \n      E1 Retrieval stage means\n    \n    \n    \n      st\n      mean\n      sd\n    \n  \n  \n    early\n19.09\n1.84\n    late\n18.00\n1.85"
+  },
+  {
+    "objectID": "e1-nrevisits.html#e1-revisits-prepare-the-data",
+    "href": "e1-nrevisits.html#e1-revisits-prepare-the-data",
+    "title": "2  E1 Revisits",
+    "section": "2.1 E1 Revisits: Prepare the data",
+    "text": "2.1 E1 Revisits: Prepare the data\nRead in the data and pre-process it.\n\n\nShow the code\ne1 &lt;- readRDS(\"001-00-e1-data.RDS\")\n\n# remove things from the raw data to make it \n# suitable for this particular analysis\n\n# remove samples that did not look at a tree\ne1 &lt;- e1 %&gt;% filter(fl&gt;0)\n\n# remove the second (and any subsequent) *consecutive* duplicates\ne1 &lt;- e1 %&gt;% \n  group_by(pp, rr, tb) %&gt;% \n  filter(is.na(tl != lag(tl)) | tl != lag(tl)) %&gt;% \n  ungroup()\n\n# remove trials where they failed to get 10 fruit\ne1 &lt;- e1 %&gt;%\n  group_by(pp, te) %&gt;%\n  mutate(max_fr = max(fr)) %&gt;%\n  ungroup() %&gt;%\n  filter(max_fr==10) %&gt;% \n  select(-c(ex,max_fr, te, tt, st, xx, yy, ll))\n\n# currently some trials don't have entries for fruit of zero\n# these trials are where they found a fruit on the first tree\n# We want to say that these were:\n# number of revisits = 0 \n# (not number of revisits = \"a structural missing\")\ndesign &lt;-\n  tibble(\n    expand.grid(\n      pp=unique(e1$pp),\n      rr=unique(e1$rr),\n      tb=unique(e1$tb),\n      fr=0\n    )\n  )\ne1 &lt;- \n  full_join(x=design, y=e1, by = join_by(pp, rr, tb, fr)) %&gt;% \n  group_by(pp, rr, tb) %&gt;% \n  arrange(pp, rr, tb, fr, tm, .by_group = TRUE) %&gt;% \n  replace_na(list(ix=0, tm=0, tl=0, fl=-1)) %&gt;% \n  ungroup()\n\n# annotate with revisit\ne1 &lt;- e1 %&gt;% \n  group_by(pp, rr, tb) %&gt;% \n  mutate(isrv = duplicated(tl)) %&gt;% \n  ungroup()  \n\n# get number of revisits per fruit\n# (is how many times they looked at a tree that \n#  they saw before on this trial on the way to \n#  getting this particular fruit)\ne1 &lt;- e1 %&gt;% \n  select(pp, rr, tb, fr, isrv) %&gt;% \n  group_by(pp, rr, tb, fr) %&gt;% \n  summarise(nrv=sum(isrv)) %&gt;% \n  ungroup()\n\n# add the stage IV\ne1 &lt;- e1 %&gt;% \n  mutate(\n    st = ifelse(tb&lt;=5, \"early\", \"late\")\n  ) %&gt;% \n  select(pp,rr, st, tb, fr, nrv)\n\n# factors\ne1 &lt;- e1 %&gt;% \n  mutate(pp=as_factor(pp), rr=as_factor(rr), st=as_factor(st)) %&gt;% \n  ungroup()\n\n# collapse over trials - what was the average number of revisits for this fruit,\n# now that the absence of visits to trees while fr was zero contributes a zero\n# not a structural missing. Also prune entries for fr == 10 which are all \n# constrained to be zero\nnrev_data_for_aov &lt;- e1 %&gt;% \n  group_by(pp, rr, st, fr) %&gt;% \n  summarise(nrv=mean(nrv)) %&gt;% \n  filter(fr!=10) %&gt;% \n  mutate(fr=as_factor(fr)) %&gt;% \n  ungroup()\n\n# collapse over trials to stages\nnrev_data_for_ggplot &lt;- nrev_data_for_aov %&gt;% \n  group_by(pp, rr, st) %&gt;% \n  summarise(nrv=mean(nrv)) %&gt;% \n  ungroup()\n\nsaveRDS(nrev_data_for_ggplot, \"e1_nrevisits_plot_data.rds\")"
+  },
+  {
+    "objectID": "e1-nrevisits.html#e1-revisits-anova",
+    "href": "e1-nrevisits.html#e1-revisits-anova",
+    "title": "2  E1 Revisits",
+    "section": "2.2 E1 Revisits: ANOVA",
+    "text": "2.2 E1 Revisits: ANOVA\n2 * 2 * 10\nA 2x2x10 ANOVA with the within factors resource distribution (patchy, dispersed) and trial (early [mean trials 1-5], late [mean trials 6-10]) and number of fruit consumed (1-10)\nRun the ANOVA\n\n\nShow the code\noptions(contrasts=c(\"contr.sum\",\"contr.poly\"))\ne1_revisits_ANOVA &lt;- \n  ezANOVA(data=nrev_data_for_aov,\n          dv=nrv,\n          wid=pp,\n          within=c(rr, st, fr),\n          type=3, \n          return_aov = TRUE)\nif(\"Sphericity Corrections\" %in% names(e1_revisits_ANOVA)){\n  corr=aovSphericityAdjustment(e1_revisits_ANOVA)$ANOVA %&gt;% tibble()\n} else {\n  corr=e1_revisits_ANOVA$ANOVA %&gt;% tibble()  \n  }\n\n\nTable the ANOVA.\n\n\nShow the code\nprettify_sphericity_3_way(\n  aovSphericityAdjustment(e1_revisits_ANOVA), \n  \"E1 NRevisits ANOVA\")\n\n\n\n\n\n\n  \n    \n      E1 NRevisits ANOVA\n    \n    \n    \n      Effect\n      DFn\n      DFd\n      F\n      p\n      sig\n    \n  \n  \n    rr\n1\n41\n 3.84\n0.057\n\n    st\n1\n41\n17.83\n0.000\n***\n    fr\n4.3\n177.5\n 6.39\n0.000\n***\n    rr:st\n1\n41\n 0.12\n0.730\n\n    rr:fr\n4.5\n182.6\n 4.41\n0.001\n**\n    st:fr\n5.8\n238.8\n 0.50\n0.799\n\n    rr:st:fr\n4.7\n193.0\n 1.19\n0.315\n\n  \n  \n  \n\n\n\n\nReport the ANOVA\nThe effect of resources was F(1, 41) = 3.84, p=0.057.\nThe effect of stage was F(1, 41) = 17.83, p&lt;.001.\nThe effect of fruit after Greenhouse-Geisser correction for sphericity violation was F(4.3, 177.5) = 6.39, p&lt;.001.\nThe fruit x resources interaction after Greenhouse-Geisser correction for sphericity violation was F(4.5, 182.6) = 4.41, p&lt;.01."
+  },
+  {
+    "objectID": "e1-nrevisits.html#e1-nrevisits-plot",
+    "href": "e1-nrevisits.html#e1-nrevisits-plot",
+    "title": "2  E1 Revisits",
+    "section": "2.3 E1 NRevisits: Plot",
+    "text": "2.3 E1 NRevisits: Plot\nTwo points along the x axis, each participant contributes one point per cell\n\n\nShow the code\nggplot(data=nrev_data_for_ggplot, aes(y=nrv, x=st, group=rr, shape=rr, fill=rr)\n) +\n  my_fgms_theme+\n  ggtitle(\"(b): Revisits (memory errors)\")+\n  ylab(\"Revisits\")+\n  xlab(\"Trials\")+\n  scale_fill_manual(name=\"Resource\\ndistribution\",values=c(\"white\", \"black\")) +\n  scale_shape_manual(name=\"Resource\\ndistribution\",values=c(24,19)) +\n  stat_summary(fun.data = mean_cl_normal, geom = \"errorbar\", width=0.1, position=pd) +\n  stat_summary(fun = mean, geom = \"line\", position=pd) + \n  stat_summary(fun = mean, geom = \"point\", size=4, position=pd)+\n  scale_x_discrete(labels=c(\"early\\ntrials 1 to 5\", \"late\\ntrials 6 to 10\"))"
+  },
+  {
+    "objectID": "e1-nrevisits.html#e1-nrevisits-stage-means",
+    "href": "e1-nrevisits.html#e1-nrevisits-stage-means",
+    "title": "2  E1 Revisits",
+    "section": "2.4 E1 NRevisits: Stage means",
+    "text": "2.4 E1 NRevisits: Stage means\nTable means for stage\n\n\nShow the code\nfrpremeans = nrev_data_for_ggplot %&gt;% group_by(st, pp, rr) %&gt;%\n  summarise(mu=mean(nrv)) %&gt;% \n  summarise(mu=mean(mu))  \nfrmeans &lt;- frpremeans %&gt;% \n  summarise(mean=mean(mu), sd=sd(mu))\nprettify_means(frmeans, \"E1 NRevisits stage means\")\n\n\n\n\n\n\n  \n    \n      E1 NRevisits stage means\n    \n    \n    \n      st\n      mean\n      sd\n    \n  \n  \n    early\n0.11\n0.08\n    late\n0.08\n0.07"
+  },
+  {
+    "objectID": "e1-nrevisits.html#e1-nrevisits-fruit-means",
+    "href": "e1-nrevisits.html#e1-nrevisits-fruit-means",
+    "title": "2  E1 Revisits",
+    "section": "2.5 E1 NRevisits: Fruit means",
+    "text": "2.5 E1 NRevisits: Fruit means\n\n\nShow the code\npre.means = nrev_data_for_aov %&gt;% \n  group_by(fr, pp, st) %&gt;% \n  # average over resources\n  summarise(mean.nrv=mean(nrv)) %&gt;% \n  group_by(fr, pp) %&gt;% \n  # average over stage\n  summarise(mean.nrv=mean(mean.nrv))\nok.means = pre.means %&gt;% \n  group_by(fr) %&gt;% \n  summarise(mean=mean(mean.nrv), sd=sd(mean.nrv))\nprettify_means(ok.means, \"E1 Nrevisits fruit means\")\n\n\n\n\n\n\n  \n    \n      E1 Nrevisits fruit means\n    \n    \n    \n      fr\n      mean\n      sd\n    \n  \n  \n    0\n0.06\n0.06\n    1\n0.11\n0.14\n    2\n0.08\n0.10\n    3\n0.06\n0.10\n    4\n0.08\n0.10\n    5\n0.09\n0.11\n    6\n0.08\n0.10\n    7\n0.08\n0.08\n    8\n0.12\n0.15\n    9\n0.19\n0.21\n  \n  \n  \n\n\n\n\n\n\n\nShow the code\nggplot(data=pre.means, aes(y=mean.nrv, x=fr))+\n  #geom_jitter()+\n  #stat_summary(geom='point')+\n  #stat_summary(geom=\"smooth\", group=1)+\n  #geom_smooth(span=0.5)+\n  stat_summary(fun.data=\"mean_sdl\", fun.args = list(mult=1))+\n  ggtitle(\"Mean plus / minus one sd\")"
+  },
+  {
+    "objectID": "e1-master-plot.html#number-of-trees",
+    "href": "e1-master-plot.html#number-of-trees",
+    "title": "4  E1 master plot",
+    "section": "5.1 Number of trees",
+    "text": "5.1 Number of trees\nMake plot for number of trees\n\n\nShow the code\np1=ggplot(data=ntrees_data, aes(y=mean_ntrees_per_stage, x=st, group=rr, fill=rr, shape=rr)\n) +\n  ggtitle(\"(a): Total trees visited\")+\n  ylab(\"Visits\")+\n  xlab(\"Trials\")+\n  scale_x_discrete(labels=c(\"early\\ntrials 1 to 5\", \"late\\ntrials 6 to 10\"))+\n  my_fgms_theme+\n  scale_fill_manual(name=\"Resource\\ndistribution\",values=c(\"white\", \"black\")) +\n  scale_shape_manual(name=\"Resource\\ndistribution\",values=c(24,19)) +\n  stat_summary(fun.data = mean_cl_normal, geom = \"errorbar\", width=0.1, position=pd) +\n  stat_summary(fun = mean, geom = \"line\", position=pd) + \n  stat_summary(fun = mean, geom = \"point\", size=4, position=pd)+\n  theme(aspect.ratio = 1)\n\n\nShow plot for number of trees\n\n\nShow the code\np1"
+  },
+  {
+    "objectID": "e1-master-plot.html#number-of-revisits",
+    "href": "e1-master-plot.html#number-of-revisits",
+    "title": "4  E1 master plot",
+    "section": "5.2 Number of revisits",
+    "text": "5.2 Number of revisits\nMake plot for number of revisits\n\n\nShow the code\np2=ggplot(data=nrevisits_data, aes(y=nrv, x=st, group=rr, fill=rr, shape=rr)\n) +\n  my_fgms_theme+\n  ggtitle(\"(b): Revisits (memory errors)\")+\n  ylab(\"Revisits\")+\n  xlab(\"Trials\")+\n  scale_fill_manual(name=\"Resource\\ndistribution\",values=c(\"white\", \"black\")) +\n  scale_shape_manual(name=\"Resource\\ndistribution\",values=c(24,19)) +\n  stat_summary(fun.data = mean_cl_normal, geom = \"errorbar\", width=0.1, position=pd) +\n  stat_summary(fun = mean, geom = \"line\", position=pd) + \n  stat_summary(fun = mean, geom = \"point\", size=4, position=pd)+\n  scale_x_discrete(labels=c(\"early\\ntrials 1 to 5\", \"late\\ntrials 6 to 10\"))+\n  theme(aspect.ratio = 1)\n\n\nShow plot for number of revisits\n\n\nShow the code\np2"
+  },
+  {
+    "objectID": "e1-master-plot.html#retrieval",
+    "href": "e1-master-plot.html#retrieval",
+    "title": "4  E1 master plot",
+    "section": "5.3 Retrieval",
+    "text": "5.3 Retrieval\nMake plot for retrieval.\n\n\nShow the code\np3=ggplot(data=retrieval_data, aes(y=mu, x=fr, group=rr, fill=rr, shape=rr))+\n  ggtitle(\"(c): Retrieval rate\", subtitle=\"People benefit from being in a patch once they realise they are in one\")+\n  ylab(\"Number\\nof\\ntrees\\nvisited\\nto get\\neach fruit\")+\n  xlab(\"Number of fruit collected so far during trial\")+\n  my_fgms_theme+  \n  scale_fill_manual(name=\"Resource\\ndistribution\",values=c(\"white\", \"black\")) +\n  scale_shape_manual(name=\"Resource\\ndistribution\",values=c(24,19)) +\n  stat_summary(fun.data = mean_cl_normal, geom = \"errorbar\", width=0.1, position=pd) +\n  stat_summary(fun = mean, geom = \"line\", position=pd) + \n  stat_summary(fun = mean, geom = \"point\", size=3, position=pd)+\n  theme(aspect.ratio = 1/2)\n\n\nShow plot for retrieval\n\n\nShow the code\np3"
+  },
+  {
+    "objectID": "e1-master-plot.html#master",
+    "href": "e1-master-plot.html#master",
+    "title": "4  E1 master plot",
+    "section": "5.4 Master",
+    "text": "5.4 Master\nShow master in progress\n\n\nShow the code\npp=(p1+p2)/p3/p3+\n  plot_layout(heights = c(1, 1, 1), guides=\"collect\") +\n  plot_annotation(title = 'Figure 2: Experiment One measures')\n\n\n\n\nShow the code\npp\n\n\n\n\n\nShow master (not run)\n\n\nShow the code\npp=(p1+p2)/p3/p4 + \n  plot_layout(heights = c(1, 1, 1), guides=\"collect\") +\n  plot_annotation(title = 'Figure 2: Experiment One measures')\n\nggsave(plot = pp, filename=\"e1-99-master_plot.png\",height=12,width=9)"
   }
 ]

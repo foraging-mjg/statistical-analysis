@@ -1,0 +1,163 @@
+# E1 Ntrees
+
+This number is how many trees they looked at overall to get the ten fruit - high numbers represent worse performance.
+
+```{r setup, include=FALSE}
+source("_libraries.R")
+source("_prettify.R")
+source("_plot_preferences.R")
+knitr::opts_chunk$set(fig.path='e1_figures/')
+knitr::opts_chunk$set(fig.width=7, fig.height=5)
+options(dplyr.summarise.inform=F)
+```
+
+## E1 Ntrees: Prepare the data
+
+Read the data in and pre-process it.
+
+```{r e1_ntrees_prep_data}
+e1 <- readRDS("001-00-e1-data.RDS")
+
+# remove things from the raw data to make it 
+# suitable for this particular analysis
+
+# remove samples that did not look at a tree
+e1 <- e1 %>% filter(fl>0)
+
+# remove the second (and any subsequent) *consecutive* duplicates
+e1 <- e1 %>% 
+  group_by(pp, rr, tb) %>% 
+  filter(is.na(tl != lag(tl)) | tl != lag(tl)) %>% 
+  ungroup()
+
+# remove trials where they failed to get 10 fruit
+e1 <- e1 %>% 
+  group_by(pp, te) %>% 
+  mutate(max_fr = max(fr)) %>% 
+  ungroup() %>% 
+  filter(max_fr==10)
+
+# average over tree-visits to get counts for each trial
+ntr.counts <- e1 %>% 
+  select(pp, rr, st, tb, tl) %>% 
+  group_by(pp, rr, st, tb) %>% 
+  summarise(ntrees=n()) %>% 
+  ungroup() %>% 
+  mutate(pp=as_factor(pp), rr=as_factor(rr),  st=as_factor(st))
+
+# average over trials to get mean count for each stage
+ntr <- ntr.counts %>% 
+  group_by(pp, rr, st) %>% 
+  summarise(mean_ntrees_per_stage=mean(ntrees))
+
+saveRDS(ntr, "e1_ntrees_plot_data.rds")
+```
+
+## E1 Ntrees: ANOVA
+
+Run the ANOVA
+
+```{r e1_ntrees_ANOVA}
+options(contrasts=c("contr.sum","contr.poly"))
+e1_ntrees_ANOVA <- 
+  ezANOVA(data=ntr,
+          dv=mean_ntrees_per_stage,
+          wid=pp,
+          within=c(rr, st),
+          type=3,
+          return_aov = TRUE)
+if("Sphericity Corrections" %in% names(e1_ntrees_ANOVA)){
+  corr=aovSphericityAdjustment(e1_ntrees_ANOVA)$ANOVA %>% tibble()
+} else {
+  corr=e1_ntrees_ANOVA$ANOVA %>% tibble()  
+  }
+```
+
+Table the ANOVA. 
+
+```{r e1_ntrees_print_anova_table}
+prettify_anova(e1_ntrees_ANOVA, "E1 Ntrees ANOVA")
+```
+
+Report the ANOVA
+
+The effect of resources was 
+F(`r round(corr[corr$Effect=="rr","DFn"],1)`, 
+  `r round(corr[corr$Effect=="rr","DFd"],1)`) = 
+  `r round(corr[corr$Effect=="rr", "F"],2)`, 
+  `r case_when(
+    corr[corr$Effect=="rr","p"] <.001 ~ "p<.001",
+    corr[corr$Effect=="rr","p"] <.01  ~ "p<.01",
+    corr[corr$Effect=="rr","p"] <.05  ~ "p<.05",
+    TRUE ~ paste0("p=",format(round(pull(corr[corr$Effect=="rr","p"]),3), scientific = F, nsmall=3)))`.
+
+
+The effect of stage was 
+F(`r round(corr[corr$Effect=="st","DFn"],1)`, 
+  `r round(corr[corr$Effect=="st","DFd"],1)`) = 
+  `r round(corr[corr$Effect=="st", "F"],2)`, 
+  `r case_when(
+    corr[corr$Effect=="st","p"] <.001 ~ "p<.001",
+    corr[corr$Effect=="st","p"] <.01  ~ "p<.01",
+    corr[corr$Effect=="st","p"] <.05  ~ "p<.05",
+    TRUE ~ paste0("p=",format(round(pull(corr[corr$Effect=="st","p"]),3), scientific = F, nsmall=3)))`.
+    
+    
+The effect of the interaction resources x stage was 
+F(`r round(corr[corr$Effect=="rr:st","DFn"],1)`, 
+  `r round(corr[corr$Effect=="rr:st","DFd"],1)`) = 
+  `r round(corr[corr$Effect=="rr:st", "F"],2)`, 
+  `r case_when(
+    corr[corr$Effect=="rr:st","p"] <.001 ~ "p<.001",
+    corr[corr$Effect=="rr:st","p"] <.01  ~ "p<.01",
+    corr[corr$Effect=="rr:st","p"] <.05  ~ "p<.05",
+    TRUE ~ paste0("p=",format(round(pull(corr[corr$Effect=="rr:st","p"]),3), scientific = F, nsmall=3)))`.
+
+
+
+## E1 Ntrees: Plot
+
+Two points along the x axis, each participant contributes one point per cell
+
+```{r e1_ntrees_plot}
+ggplot(data=ntr, aes(x=st, y=mean_ntrees_per_stage, group=rr, pch=rr, fill=rr)
+) +
+  my_fgms_theme+
+  ggtitle("(a): Total trees visited")+
+  ylab("Visits")+
+  xlab("Trials")+
+  scale_fill_manual(name="Resource\ndistribution",values=c("white", "black")) +
+  scale_shape_manual(name="Resource\ndistribution",values=c(24,19)) +
+  stat_summary(fun.data = mean_cl_normal, geom = "errorbar", width=0.1, position=pd) +
+  stat_summary(fun = mean, geom = "line", position=pd) + 
+  stat_summary(fun = mean, geom = "point", size=4, position=pd)+
+  scale_x_discrete(labels=c("early\ntrials 1 to 5", "late\ntrials 6 to 10"))
+```
+
+## E1 Number of trees: Resources Means
+
+Table means for resources
+
+```{r e1_Number_of_trees_resources_means}
+rrpremeans = ntr %>% group_by(rr, pp, st) %>%
+  summarise(mu=mean(mean_ntrees_per_stage)) %>% 
+  summarise(mu=mean(mu)) 
+rrmeans <- rrpremeans %>% 
+  summarise(mean=mean(mu), sd=sd(mu))
+prettify_means(rrmeans, "E1 Number of trees resources means")
+```
+
+## E1 Number of trees: Stage means
+
+Table means for stage
+
+```{r e1_Number of trees_fruit_means}
+frpremeans = ntr %>% group_by(st, pp, rr) %>%
+  summarise(mu=mean(mean_ntrees_per_stage)) %>% 
+  summarise(mu=mean(mu))  
+frmeans <- frpremeans %>% 
+  summarise(mean=mean(mu), sd=sd(mu))
+prettify_means(frmeans, "E1 Retrieval stage means")
+```
+
+
