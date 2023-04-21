@@ -5,5 +5,12 @@
     "title": "foraging-manuscript-al23",
     "section": "",
     "text": "Preface\nThis is data analysis for the foraging manuscript, started during annual leave 2023."
+  },
+  {
+    "objectID": "e1-retrieval.html",
+    "href": "e1-retrieval.html",
+    "title": "1  E1 Retrieval",
+    "section": "",
+    "text": "e1 &lt;- readRDS(\"001-00-e1-data.RDS\")\n\n# remove things from the raw data to make it suitable for this particular analysis\n\n# remove samples that did not look at a tree\ne1 &lt;- e1 %&gt;% filter(fl&gt;0)\n\n# remove the second (and any subsequent) *consecutive* duplicates\ne1 &lt;- e1 %&gt;% \n  group_by(pp, rr, tb) %&gt;% \n  filter(is.na(tl != lag(tl)) | tl != lag(tl)) %&gt;% \n  ungroup()\n\n# remove trials where they failed to get 10 fruit\ne1 &lt;- e1 %&gt;% \n  group_by(pp, te) %&gt;% \n  mutate(max_fr = max(fr)) %&gt;% \n  ungroup() %&gt;% \n  filter(max_fr==10)\n\n# how many trees to get each fruit?\n# this is neat and it needs to be done after reducing the data to row-per-valid-tree-visit\ne1$ntrees_to_get_a_fruit = NA\nj = 0\nfor (k in seq_along(e1$ix)) {\n j = j + 1\n if (e1[k, 'fl']==2) {\n   e1[k, 'ntrees_to_get_a_fruit'] = j\n   j = 0\n }\n}\n\n# remove any remaining NAs\ne1 &lt;- e1 %&gt;% filter(!is.na(ntrees_to_get_a_fruit))\n\n# average over trials (and ignore stage) to yield participant means suitable for ggplot and ANOVA\nrtv = e1 %&gt;% \n  select(pp, rr, tb, fr, ntrees_to_get_a_fruit) %&gt;% \n  group_by(pp, rr, fr) %&gt;% \n  summarise(mu=mean(ntrees_to_get_a_fruit)) %&gt;% \n  ungroup() %&gt;% \n  mutate(pp=as_factor(pp), rr=as_factor(rr), fr=as_factor(fr))\n\nsaveRDS(rtv, \"e1_retrieval_plot_data.rds\")"
   }
 ]

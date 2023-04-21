@@ -16,6 +16,11 @@ book:
         - e2-ntrees.qmd
 
 format:
-  html:
-    theme: cosmo
-
+  html: 
+    theme: 
+      cosmo
+    grid:
+      sidebar-width: 300px
+      body-width: 1200px
+      margin-width: 150px
+      gutter-width: 1.5rem

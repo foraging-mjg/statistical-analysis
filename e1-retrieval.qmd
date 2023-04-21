@@ -1,2 +1,56 @@
 # E1 Retrieval
 
+```{r setup, include=FALSE}
+source("_libraries.R")
+source("_prettify.R")
+knitr::opts_chunk$set(fig.path='e1_figures/')
+knitr::opts_chunk$set(fig.width=7, fig.height=5)
+options(dplyr.summarise.inform=F)
+```
+
+```{r prep_data_for_retrieval_rate}
+e1 <- readRDS("001-00-e1-data.RDS")
+
+# remove things from the raw data to make it suitable for this particular analysis
+
+# remove samples that did not look at a tree
+e1 <- e1 %>% filter(fl>0)
+
+# remove the second (and any subsequent) *consecutive* duplicates
+e1 <- e1 %>% 
+  group_by(pp, rr, tb) %>% 
+  filter(is.na(tl != lag(tl)) | tl != lag(tl)) %>% 
+  ungroup()
+
+# remove trials where they failed to get 10 fruit
+e1 <- e1 %>% 
+  group_by(pp, te) %>% 
+  mutate(max_fr = max(fr)) %>% 
+  ungroup() %>% 
+  filter(max_fr==10)
+
+# how many trees to get each fruit?
+# this is neat and it needs to be done after reducing the data to row-per-valid-tree-visit
+e1$ntrees_to_get_a_fruit = NA
+j = 0
+for (k in seq_along(e1$ix)) {
+ j = j + 1
+ if (e1[k, 'fl']==2) {
+   e1[k, 'ntrees_to_get_a_fruit'] = j
+   j = 0
+ }
+}
+
+# remove any remaining NAs
+e1 <- e1 %>% filter(!is.na(ntrees_to_get_a_fruit))
+
+# average over trials (and ignore stage) to yield participant means suitable for ggplot and ANOVA
+rtv = e1 %>% 
+  select(pp, rr, tb, fr, ntrees_to_get_a_fruit) %>% 
+  group_by(pp, rr, fr) %>% 
+  summarise(mu=mean(ntrees_to_get_a_fruit)) %>% 
+  ungroup() %>% 
+  mutate(pp=as_factor(pp), rr=as_factor(rr), fr=as_factor(fr))
+
+saveRDS(rtv, "e1_retrieval_plot_data.rds")
+```
