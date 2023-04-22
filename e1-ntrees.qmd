@@ -13,7 +13,7 @@ options(dplyr.summarise.inform=F)
 
 ## E1 Ntrees: Prepare the data
 
-Read the data in and pre-process it.
+Read the data in and pre-process it. 
 
 ```{r e1_ntrees_prep_data}
 e1 <- readRDS("001-00-e1-data.RDS")
@@ -32,7 +32,7 @@ e1 <- e1 %>%
 
 # remove trials where they failed to get 10 fruit
 e1 <- e1 %>% 
-  group_by(pp, te) %>% 
+  group_by(pp, rr, tb) %>% 
   mutate(max_fr = max(fr)) %>% 
   ungroup() %>% 
   filter(max_fr==10)
@@ -157,7 +157,7 @@ frpremeans = ntr %>% group_by(st, pp, rr) %>%
   summarise(mu=mean(mu))  
 frmeans <- frpremeans %>% 
   summarise(mean=mean(mu), sd=sd(mu))
-prettify_means(frmeans, "E1 Retrieval stage means")
+prettify_means(frmeans, "E1 Number of trees stage means")
 ```
 
 

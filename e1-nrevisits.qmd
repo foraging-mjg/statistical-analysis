@@ -1,4 +1,4 @@
-#  e1_Revisits  {.unnumbered}
+#  Revisits  {.unnumbered}
 
 This number is how many trees they pointlessly looked at again after already getting the fruit - it corresponds with memory errors.
 
@@ -32,11 +32,11 @@ e1 <- e1 %>%
 
 # remove trials where they failed to get 10 fruit
 e1 <- e1 %>%
-  group_by(pp, te) %>%
+  group_by(pp, rr, tb) %>%
   mutate(max_fr = max(fr)) %>%
   ungroup() %>%
   filter(max_fr==10) %>% 
-  select(-c(ex,max_fr, te, tt, st, xx, yy, ll))
+  select(-c(ex, max_fr, te, tt, st, xx, yy, ll))
 
 # currently some trials don't have entries for fruit of zero
 # these trials are where they found a fruit on the first tree

@@ -1,0 +1,250 @@
+#  Revisits  {.unnumbered}
+
+This number is how many trees they pointlessly looked at again after already getting the fruit - it corresponds with memory errors.
+
+```{r setup, include=FALSE}
+source("_libraries.R")
+source("_prettify.R")
+source("_plot_preferences.R")
+knitr::opts_chunk$set(fig.path='e2_figures/')
+knitr::opts_chunk$set(fig.width=7, fig.height=5)
+options(dplyr.summarise.inform=F)
+```
+
+## e2 Revisits: Prepare the data
+
+Read in the data and pre-process it.
+
+```{r e2_revisits_prep_data}
+e2 <- readRDS("002-00-e2-data.RDS")
+
+# remove things from the raw data to make it 
+# suitable for this particular analysis
+
+# remove samples that did not look at a tree
+e2 <- e2 %>% filter(fl>0)
+
+# remove the second (and any subsequent) *consecutive* duplicates
+e2 <- e2 %>% 
+  group_by(pp, rr, tb) %>% 
+  filter(is.na(tl != lag(tl)) | tl != lag(tl)) %>% 
+  ungroup()
+
+# remove trials where they failed to get 10 fruit
+e2 <- e2 %>%
+  group_by(pp, rr, tb) %>%
+  mutate(max_fr = max(fr)) %>%
+  ungroup() %>%
+  filter(max_fr==14) %>% 
+  select(-c(ex, max_fr, st, xx, yy, ln)) 
+
+# currently some trials don't have entries for fruit of zero
+# these trials are where they found a fruit on the first tree
+# We want to say that these were:
+# number of revisits = 0 
+# (not number of revisits = "a structural missing")
+design <-
+  tibble(
+    expand.grid(
+      pp=unique(e2$pp),
+      rr=unique(e2$rr),
+      tb=unique(e2$tb),
+      fr=0
+    )
+  )
+design <- left_join(design, e2 %>% group_by(pp) %>% summarise(ff=unique(ff)))
+e2 <- full_join(design, e2) %>% 
+  arrange(pp, rr, tb, fr)
+
+# annotate with revisit
+e2 <- e2 %>% 
+  group_by(ff, pp, rr, tb) %>% 
+  mutate(isrv = duplicated(tl)) %>% 
+  ungroup()  
+
+# get number of revisits per fruit
+# (is how many times they looked at a tree that 
+#  they saw before on this trial on the way to 
+#  getting this particular fruit)
+e2 <- e2 %>% 
+  select(ff, pp, rr, tb, fr, isrv) %>% 
+  group_by(ff, pp, rr, tb, fr) %>% 
+  summarise(nrv=sum(isrv)) %>% 
+  ungroup()
+
+# add the stage IV
+e2 <- e2 %>% 
+  mutate(
+    st = ifelse(tb<=10, "early", "late")
+  ) %>% 
+  select(ff, pp, rr, st, tb, fr, nrv)
+
+# factors
+e2 <- e2 %>% 
+  mutate(ff=as_factor(ff), pp=as_factor(pp), rr=as_factor(rr), st=as_factor(st)) %>% 
+  ungroup()
+
+# collapse over trials - what was the average number of revisits for this fruit,
+# now that the absence of visits to trees while fr was zero contributes a zero
+# not a structural missing. Also prune entries for fr == 14 which are all 
+# constrained to be zero
+nrev_data_for_aov <- e2 %>% 
+  group_by(ff, pp, rr, st, fr) %>% 
+  summarise(nrv=mean(nrv)) %>% 
+  filter(fr!=14) %>% 
+  mutate(fr=as_factor(fr)) %>% 
+  ungroup()
+
+# collapse over trials to yield a value for each fruit
+nrev_data_for_ggplot <- e2 %>% 
+  group_by(ff, pp, rr, fr) %>% 
+  summarise(nrv=mean(nrv)) %>% 
+  filter(fr!=14) %>% 
+  mutate(fr=as_factor(fr)) %>% 
+  ungroup()
+
+saveRDS(nrev_data_for_ggplot, "e2_nrevisits_plot_data.rds")
+```
+
+## e2 Revisits: ANOVA
+
+2 x 2 * 2 * 10
+
+A 2x2x2x10 ANOVA with the within factors resource distribution (patchy, dispersed) and trial (early [mean trials 1-5], late [mean trials 6-10]); between fading; and as dv number of fruit consumed (1-10) 
+
+Run the ANOVA
+
+```{r e2_revisits_anova}
+options(contrasts=c("contr.sum","contr.poly"))
+e2_revisits_ANOVA <- 
+  ezANOVA(data=nrev_data_for_aov,
+          dv=nrv,
+          wid=pp,
+          within=c(rr, st, fr),
+          between=ff,
+          type=3, 
+          return_aov = TRUE)
+if("Sphericity Corrections" %in% names(e2_revisits_ANOVA)){
+  corr=aovSphericityAdjustment(e2_revisits_ANOVA)$ANOVA %>% tibble()
+} else {
+  corr=e2_revisits_ANOVA$ANOVA %>% tibble()  
+  }
+```
+
+Table the ANOVA.
+
+```{r e2_nrevisits_print_anova_table}
+prettify_sphericity_3_way(
+  aovSphericityAdjustment(e2_revisits_ANOVA), 
+  "e2 NRevisits ANOVA")
+```
+
+Report the ANOVA
+
+The effect of fading was 
+F(`r round(corr[corr$Effect=="ff","DFn"],1)`, 
+  `r round(corr[corr$Effect=="ff","DFd"],1)`) = 
+  `r round(corr[corr$Effect=="ff", "F"],2)`, 
+  `r case_when(
+    corr[corr$Effect=="ff","p"] <.001 ~ "p<.001",
+    corr[corr$Effect=="ff","p"] <.01  ~ "p<.01",
+    corr[corr$Effect=="ff","p"] <.05  ~ "p<.05",
+    TRUE ~ paste0("p=",format(round(pull(corr[corr$Effect=="ff","p"]),3), scientific = F, nsmall=3)))`.
+
+
+The effect of resources was 
+F(`r round(corr[corr$Effect=="rr","DFn"],1)`, 
+  `r round(corr[corr$Effect=="rr","DFd"],1)`) = 
+  `r round(corr[corr$Effect=="rr", "F"],2)`, 
+  `r case_when(
+    corr[corr$Effect=="rr","p"] <.001 ~ "p<.001",
+    corr[corr$Effect=="rr","p"] <.01  ~ "p<.01",
+    corr[corr$Effect=="rr","p"] <.05  ~ "p<.05",
+    TRUE ~ paste0("p=",format(round(pull(corr[corr$Effect=="rr","p"]),3), scientific = F, nsmall=3)))`.
+
+The effect of stage was 
+F(`r round(corr[corr$Effect=="st","DFn"],1)`, 
+  `r round(corr[corr$Effect=="st","DFd"],1)`) = 
+  `r round(corr[corr$Effect=="st", "F"],2)`, 
+  `r case_when(
+    corr[corr$Effect=="st","p"] <.001 ~ "p<.001",
+    corr[corr$Effect=="st","p"] <.01  ~ "p<.01",
+    corr[corr$Effect=="st","p"] <.05  ~ "p<.05",
+    TRUE ~ paste0("p=",format(round(pull(corr[corr$Effect=="st","p"]),3), scientific = F, nsmall=3)))`.
+
+The effect of fruit after Greenhouse-Geisser correction for sphericity violation was 
+F(`r round(corr[corr$Effect=="fr","DFn"],1)`, 
+  `r round(corr[corr$Effect=="fr","DFd"],1)`) = 
+  `r round(corr[corr$Effect=="fr", "F"],2)`, 
+  `r case_when(
+    corr[corr$Effect=="fr","p"] <.001 ~ "p<.001",
+    corr[corr$Effect=="fr","p"] <.01  ~ "p<.01",
+    corr[corr$Effect=="fr","p"] <.05  ~ "p<.05",
+    TRUE ~ paste0("p=",format(round(pull(corr[corr$Effect=="fr","p"]),3), scientific = F, nsmall=3)))`.
+
+The fruit x resources interaction after Greenhouse-Geisser correction for sphericity violation was 
+F(`r round(corr[corr$Effect=="rr:fr","DFn"],1)`, 
+  `r round(corr[corr$Effect=="rr:fr","DFd"],1)`) = 
+  `r round(corr[corr$Effect=="rr:fr", "F"],2)`, 
+  `r case_when(
+    corr[corr$Effect=="rr:fr","p"] <.001 ~ "p<.001",
+    corr[corr$Effect=="rr:fr","p"] <.01  ~ "p<.01",
+    corr[corr$Effect=="rr:fr","p"] <.05  ~ "p<.05",
+    TRUE ~ paste0("p=",format(round(pull(corr[corr$Effect=="rr:fr","p"]),3), scientific = F, nsmall=3)))`.
+
+## e2 NRevisits: Plot
+
+Fourteen points along the x axis, each participant contributes one point per cell, facet for fading
+
+```{r e2_nrevisits_plot}
+ggplot(data=nrev_data_for_ggplot, aes(y=nrv, x=fr, group=rr, shape=rr, fill=rr)) +
+  facet_wrap(~ff)+
+  my_fgms_theme+
+  ggtitle("(b): Revisits (memory errors)")+
+  ylab("Revisits")+
+  xlab("Trials")+
+  scale_fill_manual(name="Resource\ndistribution",values=c("white", "black")) +
+  scale_shape_manual(name="Resource\ndistribution",values=c(24,19)) +
+  stat_summary(fun.data = mean_cl_normal, geom = "errorbar", width=0.1, position=pd) +
+  stat_summary(fun = mean, geom = "line", position=pd) + 
+  stat_summary(fun = mean, geom = "point", size=3, position=pd)
+```
+
+
+## e2 NRevisits: Stage means
+
+Table means for fading
+
+```{r e2_nrevisits_stage_means}
+frpremeans = nrev_data_for_aov %>% group_by(ff, pp, rr) %>%
+  summarise(mu=mean(nrv)) %>%
+  summarise(mu=mean(mu))
+frmeans <- frpremeans %>%
+  summarise(mean=mean(mu), sd=sd(mu))
+prettify_means(frmeans, "e2 NRevisits stage means")
+```
+
+## e2 NRevisits: Fruit means
+
+```{r e2_nrevisits_fruit_means}
+pre.means = nrev_data_for_aov %>%
+  group_by(fr, pp, st) %>%
+  # average over resources
+  summarise(mean.nrv=mean(nrv)) %>%
+  group_by(fr, pp) %>%
+  # average over stage
+  summarise(mean.nrv=mean(mean.nrv))
+ok.means = pre.means %>%
+  group_by(fr) %>%
+  summarise(mean=mean(mean.nrv), sd=sd(mean.nrv))
+prettify_means(ok.means, "e2 Nrevisits fruit means")
+```
+
+
+
+
+
+
+
+
+

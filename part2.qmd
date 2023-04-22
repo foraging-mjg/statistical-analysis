@@ -1,0 +1,7 @@
+# Experiment Two {.unnumbered}
+
+In this experiment there was an additional between-subjects manipulation on tree-fading (either the tress did or did not fade, for the whole session).
+
+We required them to get 14 out of 15 fruit - remove trial otherwise.
+
+They did 20 trials in each condition of resources

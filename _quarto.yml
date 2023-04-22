@@ -8,16 +8,18 @@ book:
   date: now
   chapters:
     - index.qmd
-    - part: Experiment One
+    - part: part1.qmd
       chapters: 
         - e1-ntrees.qmd
         - e1-nrevisits.qmd
         - e1-retrieval.qmd
         - e1-distance.qmd
         - e1-master-plot.qmd
-    - part: Experiment Two
+    - part: part2.qmd
       chapters: 
         - e2-ntrees.qmd
+        - e2-nrevisits.qmd
+        - e2-master-plot.qmd
 
 format:
   html: 

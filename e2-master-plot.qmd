@@ -1,0 +1,57 @@
+# Patchwork {.unnumbered}
+
+```{r setup, include=FALSE}
+library(tidyverse)
+library(patchwork)
+```
+
+
+```{r mainchunk}
+
+pd <- position_dodge(0.1)
+my_fgms_theme =  theme_bw()+
+  theme(
+  panel.grid        = element_blank(), 
+  axis.title.y      = element_text(angle=0, vjust=0.5, hjust=0.5), 
+  legend.text       = element_text(size=12), 
+  legend.title      = element_text(size=12), 
+  axis.text         = element_text(size=11),
+  strip.background  = element_blank(),
+  strip.text        = element_text(size=11)
+)
+
+d1=readRDS("e2_ntrees_plot_data.rds")
+p1=ggplot(data=d1, aes(x=st, y=mean_ntrees_per_stage, group=rr, fill=rr, shape=rr)
+) + facet_wrap(~ff) +
+  ggtitle("(a): Total trees visited")+
+  ylab("Visits")+
+  xlab("Trials")+
+  my_fgms_theme+  
+  scale_fill_manual(name="Resource\ndistribution",values=c("white", "black")) +
+  scale_shape_manual(name="Resource\ndistribution",values=c(24,19)) +
+  stat_summary(fun.data = mean_cl_normal, geom = "errorbar", width=0.1, position=pd) +
+  stat_summary(fun = mean, geom = "line", position=pd) + 
+  stat_summary(fun = mean, geom = "point", size=3, position=pd)+
+  scale_x_discrete(labels=c("early trials\n1 to 10", "late trials\n11 to 20"))
+
+d2=readRDS("e2_nrevisits_plot_data.rds")
+p2=ggplot(data=d2, aes(y=nrv, x=fr, group=rr, fill=rr, shape=rr)) +
+  facet_wrap(~ff)+
+  my_fgms_theme+
+  ggtitle("(b): Revisits (memory errors)")+
+  ylab("Revisits")+
+  xlab("Number of fruit collected so far during the trial")+
+  scale_fill_manual(name="Resource\ndistribution",values=c("white", "black")) +
+  scale_shape_manual(name="Resource\ndistribution",values=c(24,19)) +
+  stat_summary(fun.data = mean_cl_normal, geom = "errorbar", width=0.1, position=pd) +
+  stat_summary(fun = mean, geom = "line", position=pd) + 
+  stat_summary(fun = mean, geom = "point", size=3, position=pd)
+
+pp=p1/p2 +
+  plot_layout(heights = c(1, 1), guides="collect") +
+  plot_annotation(title = 'Figure X: Experiment Two measures')
+
+ggsave(filename="e2-99-master-plot.png", plot=pp, device="png", width=9, height=12)
+```
+
+![](e2-99-master-plot.png)

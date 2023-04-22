@@ -1,1 +1,200 @@
 # Trees {.unnumbered}
+
+This number is how many trees they looked at overall to get the fourteen out of fifteen fruit - high numbers represent worse performance.
+
+```{r setup, include=FALSE}
+source("_libraries.R")
+source("_prettify.R")
+source("_plot_preferences.R")
+knitr::opts_chunk$set(fig.path='e2_figures/')
+knitr::opts_chunk$set(fig.width=7, fig.height=5)
+options(dplyr.summarise.inform=F)
+```
+
+## E2 Ntrees: Prepare the data
+
+Read the data in and pre-process it.
+
+```{r e2_ntrees_prep_data}
+e2 <- readRDS("002-00-e2-data.RDS")
+
+# remove things from the raw data to make it 
+# suitable for this particular analysis
+
+# remove samples that did not look at a tree
+e2 <- e2 %>% filter(fl>0)
+
+# remove the second (and any subsequent) *consecutive* duplicates
+e2 <- e2 %>% 
+  group_by(ff, pp, rr, tb) %>% 
+  filter(is.na(tl != lag(tl)) | tl != lag(tl)) %>% 
+  ungroup()
+
+# remove trials where they failed to get 14 fruit
+e2 <- e2 %>% 
+  group_by(ff, pp, rr, tb) %>% 
+  mutate(max_fr = max(fr)) %>% 
+  ungroup() %>% 
+  filter(max_fr==14)
+
+# average over tree-visits to get counts for each trial
+ntr.counts <- e2 %>% 
+  select(ff, pp, rr, st, tb, tl) %>% 
+  group_by(ff, pp, rr, st, tb) %>% 
+  summarise(ntrees=n()) %>% 
+  ungroup() %>% 
+  mutate(ff=as_factor(ff), pp=as_factor(pp), rr=as_factor(rr),  st=as_factor(st))
+
+# average over trials to get mean count for each stage
+ntr <- ntr.counts %>% 
+  group_by(ff, pp, rr, st) %>% 
+  summarise(mean_ntrees_per_stage=mean(ntrees)) %>% 
+  ungroup()
+
+saveRDS(ntr, "e2_ntrees_plot_data.rds")
+```
+
+## E2 Ntrees: ANOVA
+
+Run the ANOVA
+
+```{r e2_ntrees_ANOVA}
+options(contrasts=c("contr.sum","contr.poly"))
+e2_ntrees_ANOVA <- 
+  ezANOVA(data=ntr,
+          dv=mean_ntrees_per_stage,
+          wid=pp,
+          within=c(rr, st),
+          between=ff,
+          type=3,
+          return_aov = TRUE)
+if("Sphericity Corrections" %in% names(e2_ntrees_ANOVA)){
+  corr=aovSphericityAdjustment(e2_ntrees_ANOVA)$ANOVA %>% tibble()
+} else {
+  corr=e2_ntrees_ANOVA$ANOVA %>% tibble()  
+  }
+```
+
+Do we care about unbalanced anova? There were `r unique(ntr %>% filter(ff=="fade")) %>% pull(pp) %>% unique() %>% length()` subjects in fade but `r unique(ntr %>% filter(ff=="no_fade")) %>% pull(pp) %>% unique() %>% length()` in no_fade.
+
+
+Table the ANOVA. 
+
+```{r e2_ntrees_print_anova_table}
+prettify_anova(e2_ntrees_ANOVA, "e2 Ntrees ANOVA")
+```
+
+Report the anova
+
+### Main effects
+
+The effect of fading was 
+F(`r round(corr[corr$Effect=="ff","DFn"],1)`, 
+  `r round(corr[corr$Effect=="ff","DFd"],1)`) = 
+  `r round(corr[corr$Effect=="ff", "F"],2)`, 
+  `r case_when(
+    corr[corr$Effect=="ff","p"] <.001 ~ "p<.001",
+    corr[corr$Effect=="ff","p"] <.01  ~ "p<.01",
+    corr[corr$Effect=="ff","p"] <.05  ~ "p<.05",
+    TRUE ~ paste0("p=",format(round(pull(corr[corr$Effect=="ff","p"]),3), scientific = F, nsmall=3)))`.
+
+
+The effect of resources was 
+F(`r round(corr[corr$Effect=="rr","DFn"],1)`, 
+  `r round(corr[corr$Effect=="rr","DFd"],1)`) = 
+  `r round(corr[corr$Effect=="rr", "F"],2)`, 
+  `r case_when(
+    corr[corr$Effect=="rr","p"] <.001 ~ "p<.001",
+    corr[corr$Effect=="rr","p"] <.01  ~ "p<.01",
+    corr[corr$Effect=="rr","p"] <.05  ~ "p<.05",
+    TRUE ~ paste0("p=",format(round(pull(corr[corr$Effect=="rr","p"]),3), scientific = F, nsmall=3)))`.
+
+
+The effect of stage was 
+F(`r round(corr[corr$Effect=="st","DFn"],1)`, 
+  `r round(corr[corr$Effect=="st","DFd"],1)`) = 
+  `r round(corr[corr$Effect=="st", "F"],2)`, 
+  `r case_when(
+    corr[corr$Effect=="st","p"] <.001 ~ "p<.001",
+    corr[corr$Effect=="st","p"] <.01  ~ "p<.01",
+    corr[corr$Effect=="st","p"] <.05  ~ "p<.05",
+    TRUE ~ paste0("p=",format(round(pull(corr[corr$Effect=="st","p"]),3), scientific = F, nsmall=3)))`.
+
+### Two-way interactions  
+
+The effect of fading x stage was 
+F(`r round(corr[corr$Effect=="ff:st","DFn"],1)`, 
+  `r round(corr[corr$Effect=="ff:st","DFd"],1)`) = 
+  `r round(corr[corr$Effect=="ff:st", "F"],2)`, 
+  `r case_when(
+    corr[corr$Effect=="ff:st","p"] <.001 ~ "p<.001",
+    corr[corr$Effect=="ff:st","p"] <.01  ~ "p<.01",
+    corr[corr$Effect=="ff:st","p"] <.05  ~ "p<.05",
+    TRUE ~ paste0("p=",format(round(pull(corr[corr$Effect=="ff:st","p"]),3), scientific = F, nsmall=3)))`.
+
+The effect of resources x stage was 
+F(`r round(corr[corr$Effect=="rr:st","DFn"],1)`, 
+  `r round(corr[corr$Effect=="rr:st","DFd"],1)`) = 
+  `r round(corr[corr$Effect=="rr:st", "F"],2)`, 
+  `r case_when(
+    corr[corr$Effect=="rr:st","p"] <.001 ~ "p<.001",
+    corr[corr$Effect=="rr:st","p"] <.01  ~ "p<.01",
+    corr[corr$Effect=="rr:st","p"] <.05  ~ "p<.05",
+    TRUE ~ paste0("p=",format(round(pull(corr[corr$Effect=="rr:st","p"]),3), scientific = F, nsmall=3)))`.
+    
+## plots
+
+```{r}
+ggplot(data=ntr, aes(x=st, y=mean_ntrees_per_stage, group=rr, fill=rr, shape=rr)) + 
+  facet_wrap(~ff) +
+  ggtitle("(a): Total trees visited")+
+  ylab("Visits")+
+  xlab("Trials")+
+  my_fgms_theme+  
+  scale_fill_manual(name="Resource\ndistribution",values=c("white", "black")) +
+  scale_shape_manual(name="Resource\ndistribution",values=c(24,19)) +
+  stat_summary(fun.data = mean_cl_normal, geom = "errorbar", width=0.1, position=pd) +
+  stat_summary(fun = mean, geom = "line", position=pd) + 
+  stat_summary(fun = mean, geom = "point", size=3, position=pd)+
+  scale_x_discrete(labels=c("early trials\n1 to 10", "late trials\n11 to 20"))
+```
+
+```{r}
+ggplot(data=ntr, aes(x=st, y=mean_ntrees_per_stage, group=rr, fill=rr, shape=rr)) + 
+  #facet_wrap(~ff) +
+  ggtitle("(a): Total trees visited")+
+  ylab("Visits")+
+  xlab("Trials")+
+  my_fgms_theme+  
+  scale_fill_manual(name="Resource\ndistribution",values=c("white", "black")) +
+  scale_shape_manual(name="Resource\ndistribution",values=c(24,19)) +
+  stat_summary(fun.data = mean_cl_normal, geom = "errorbar", width=0.1, position=pd) +
+  stat_summary(fun = mean, geom = "line", position=pd) + 
+  stat_summary(fun = mean, geom = "point", size=3, position=pd)+
+  scale_x_discrete(labels=c("early trials\n1 to 10", "late trials\n11 to 20"))
+```
+
+## Means
+
+Table means for resources
+
+```{r e2_Number_of_trees_resources_means}
+rrpremeans = ntr %>% group_by(rr, pp, st) %>%
+  summarise(mu=mean(mean_ntrees_per_stage)) %>% 
+  summarise(mu=mean(mu)) 
+rrmeans <- rrpremeans %>% 
+  summarise(mean=mean(mu), sd=sd(mu))
+prettify_means(rrmeans, "E2 Number of trees resources means")
+```
+
+Table means for stage
+
+```{r e2_Number of trees_fruit_means}
+frpremeans = ntr %>% group_by(st, pp, rr) %>%
+  summarise(mu=mean(mean_ntrees_per_stage)) %>% 
+  summarise(mu=mean(mu))  
+frmeans <- frpremeans %>% 
+  summarise(mean=mean(mu), sd=sd(mu))
+prettify_means(frmeans, "E2 Number of trees stage means")
+```
+

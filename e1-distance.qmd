@@ -165,5 +165,36 @@ F(`r round(corr[corr$Effect=="rr:st:ll","DFn"],1)`,
     corr[corr$Effect=="rr:st:ll","p"] <.01  ~ "p<.01",
     corr[corr$Effect=="rr:st:ll","p"] <.05  ~ "p<.05",
     TRUE ~ paste0("p=",format(round(pull(corr[corr$Effect=="rr:st:ll","p"]),3), scientific = F, nsmall=3)))`.
-    
-    
+
+## E1 Distance: Plot
+
+x axis is stage; y axis is distance; group is resources; panel is launch site type
+
+```{r}
+ggplot(data=dst, aes(y=mu.dist, x=st, group=rr, pch=rr, fill=rr)) +
+  facet_wrap(~ll) +
+  labs(title="(d): Distance moved between trees", subtitle = "The eyes move further to the next tree if the current tree has no fruit")+
+  ylab("Pixels")+
+  xlab("Trials")+
+  my_fgms_theme+
+  scale_fill_manual(name="Resource\ndistribution",values=c("white", "black")) +
+  scale_shape_manual(name="Resource\ndistribution",values=c(24,19)) +
+  stat_summary(fun.data = mean_cl_normal, geom = "errorbar", width=0.1, position=pd) +
+  stat_summary(fun = mean, geom = "line", position=pd) +
+  stat_summary(fun = mean, geom = "point", size=3, position=pd)+
+  scale_x_discrete(labels=c("early trials\n1 to 5", "late trials\n6 to 10"))
+```
+
+## E1 Distance means
+
+Stage means for patchy no-fruit increase over trials as subjects learn over the course of the experiment to move further when they are less likely to be in a patch, and to stay within fruitful areas (area restricted search)
+
+```{r}
+dst %>% filter(rr=="patchy", ll=="Launched from tree without fruit") %>% 
+  group_by(st) %>% 
+  summarise(mean=mean(mu.dist), sd=sd(mu.dist)) %>% 
+  gt() %>% 
+  fmt_number(decimals=0) %>% 
+  tab_header("Pixels for patchy no-fruit")
+```
+
