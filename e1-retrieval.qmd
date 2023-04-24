@@ -106,7 +106,7 @@ F(`r round(corr[corr$Effect=="rr","DFn"],1)`,
     corr[corr$Effect=="rr","p"] <.05  ~ "p<.05",
     TRUE ~ paste0("p=",format(round(pull(corr[corr$Effect=="rr","p"]),3), scientific = F, nsmall=3)))`.
 
-The effect of fruit after Greenhouse-Geisser correction for sphericity violation was 
+The effect of fruit was 
 F(`r round(corr[corr$Effect=="fr","DFn"],1)`, 
   `r round(corr[corr$Effect=="fr","DFd"],1)`) = 
   `r round(corr[corr$Effect=="fr", "F"],2)`, 
@@ -116,7 +116,7 @@ F(`r round(corr[corr$Effect=="fr","DFn"],1)`,
     corr[corr$Effect=="fr","p"] <.05  ~ "p<.05",
     TRUE ~ paste0("p=",format(round(pull(corr[corr$Effect=="fr","p"]),3), scientific = F, nsmall=3)))`.
 
-The fruit x resources interaction after Greenhouse-Geisser correction for sphericity violation was 
+The fruit x resources interaction was 
 F(`r round(corr[corr$Effect=="rr:fr","DFn"],1)`, 
   `r round(corr[corr$Effect=="rr:fr","DFd"],1)`) = 
   `r round(corr[corr$Effect=="rr:fr", "F"],2)`, 

@@ -21,8 +21,8 @@ my_fgms_theme =  theme_bw()+
 )
 
 d1=readRDS("e2_ntrees_plot_data.rds")
-p1=ggplot(data=d1, aes(x=st, y=mean_ntrees_per_stage, group=rr, fill=rr, shape=rr)
-) + facet_wrap(~ff) +
+p1=ggplot(data=d1, aes(x=st, y=mean_ntrees_per_stage, group=rr, fill=rr, shape=rr)) + 
+  #facet_wrap(~ff) +
   ggtitle("(a): Total trees visited")+
   ylab("Visits")+
   xlab("Trials")+
@@ -36,7 +36,7 @@ p1=ggplot(data=d1, aes(x=st, y=mean_ntrees_per_stage, group=rr, fill=rr, shape=r
 
 d2=readRDS("e2_nrevisits_plot_data.rds")
 p2=ggplot(data=d2, aes(y=nrv, x=fr, group=rr, fill=rr, shape=rr)) +
-  facet_wrap(~ff)+
+  facet_wrap(~ff, nrow=2)+
   my_fgms_theme+
   ggtitle("(b): Revisits (memory errors)")+
   ylab("Revisits")+
@@ -49,7 +49,7 @@ p2=ggplot(data=d2, aes(y=nrv, x=fr, group=rr, fill=rr, shape=rr)) +
 
 d3=readRDS("e2_retrieval_plot_data.rds")
 p3=ggplot(data=d3, aes(x=fr, y=mu, group=rr, fill=rr, shape=rr)) +
-  facet_wrap(~ff)+
+  facet_wrap(~ff, nrow=2)+
   labs(title="(c): Retrieval rate", subtitle="People benefit from being in a patch once they realise they are in one")+
   ylab("Number\nof\ntrees\nvisited\nto get\neach fruit")+
   xlab("Number of fruit collected so far during trial")+
@@ -63,7 +63,7 @@ p3=ggplot(data=d3, aes(x=fr, y=mu, group=rr, fill=rr, shape=rr)) +
 
 d4=readRDS("e2_distance_data.rds")
 p4=ggplot(data=d4, aes(y=mu.dist, x=st, group=rr, fill=rr, shape=rr)) +
-  facet_wrap(~ff+ll) +
+  facet_wrap(~ll) +
   labs(title="(d): Distance moved between trees", subtitle = "The eyes move further to the next tree if the current tree has no fruit")+
   ylab("Pixels")+
   xlab("Trials")+
@@ -76,11 +76,10 @@ p4=ggplot(data=d4, aes(y=mu.dist, x=st, group=rr, fill=rr, shape=rr)) +
   scale_x_discrete(labels=c("early trials\n1 to 10", "late trials\n11 to 20"))
 
 
-pp=p1/p2/p3/p4 +
-  plot_layout(heights = c(1, 1, 1, 2), guides="collect") +
-  plot_annotation(title = 'Figure X: Experiment Two measures')
+pp=(p1+p2)/p3/p4 +
+  plot_layout(heights = c(1, 1, 1), guides="collect") 
 
-ggsave(filename="e2-99-master-plot.png", plot=pp, device="png", width=10, height=18)
+ggsave(filename="e2-99-master-plot.png", plot=pp, device="png", width=9, height=12)
 ```
 
 ![](e2-99-master-plot.png)

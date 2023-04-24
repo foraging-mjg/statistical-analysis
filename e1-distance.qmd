@@ -165,7 +165,7 @@ F(`r round(corr[corr$Effect=="rr:st:ll","DFn"],1)`,
 
 x axis is stage; y axis is distance; group is resources; panel is launch site type
 
-```{r}
+```{r e1_distance_plot}
 ggplot(data=dst, aes(y=mu.dist, x=st, group=rr, fill=rr, shape=rr)) +
   facet_wrap(~ll) +
   labs(title="(d): Distance moved between trees", subtitle = "The eyes move further to the next tree if the current tree has no fruit")+

@@ -144,22 +144,7 @@ F(`r round(corr[corr$Effect=="rr:st","DFn"],1)`,
     
 ## plots
 
-```{r}
-ggplot(data=ntr, aes(x=st, y=mean_ntrees_per_stage, group=rr, fill=rr, shape=rr)) + 
-  facet_wrap(~ff) +
-  ggtitle("(a): Total trees visited")+
-  ylab("Visits")+
-  xlab("Trials")+
-  my_fgms_theme+  
-  scale_fill_manual(name="Resource\ndistribution",values=c("white", "black")) +
-  scale_shape_manual(name="Resource\ndistribution",values=c(24,19)) +
-  stat_summary(fun.data = mean_cl_normal, geom = "errorbar", width=0.1, position=pd) +
-  stat_summary(fun = mean, geom = "line", position=pd) + 
-  stat_summary(fun = mean, geom = "point", size=3, position=pd)+
-  scale_x_discrete(labels=c("early trials\n1 to 10", "late trials\n11 to 20"))
-```
-
-```{r}
+```{r, e2_ntrees_plot}
 ggplot(data=ntr, aes(x=st, y=mean_ntrees_per_stage, group=rr, fill=rr, shape=rr)) + 
   #facet_wrap(~ff) +
   ggtitle("(a): Total trees visited")+

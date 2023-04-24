@@ -161,7 +161,7 @@ F(`r round(corr[corr$Effect=="st","DFn"],1)`,
     corr[corr$Effect=="st","p"] <.05  ~ "p<.05",
     TRUE ~ paste0("p=",format(round(pull(corr[corr$Effect=="st","p"]),3), scientific = F, nsmall=3)))`.
 
-The effect of fruit after Greenhouse-Geisser correction for sphericity violation was 
+The effect of fruit was 
 F(`r round(corr[corr$Effect=="fr","DFn"],1)`, 
   `r round(corr[corr$Effect=="fr","DFd"],1)`) = 
   `r round(corr[corr$Effect=="fr", "F"],2)`, 
@@ -171,7 +171,7 @@ F(`r round(corr[corr$Effect=="fr","DFn"],1)`,
     corr[corr$Effect=="fr","p"] <.05  ~ "p<.05",
     TRUE ~ paste0("p=",format(round(pull(corr[corr$Effect=="fr","p"]),3), scientific = F, nsmall=3)))`.
 
-The fruit x resources interaction after Greenhouse-Geisser correction for sphericity violation was 
+The fruit x resources interaction was 
 F(`r round(corr[corr$Effect=="rr:fr","DFn"],1)`, 
   `r round(corr[corr$Effect=="rr:fr","DFd"],1)`) = 
   `r round(corr[corr$Effect=="rr:fr", "F"],2)`, 
@@ -228,22 +228,6 @@ ok.means = pre.means %>%
   summarise(mean=mean(mean.nrv), sd=sd(mean.nrv))
 prettify_means(ok.means, "E1 Nrevisits fruit means")
 ```
-
----
-
-```{r e1_nrevisits_10plot}
-#| warning: false
-ggplot(data=pre.means, aes(y=mean.nrv, x=fr))+
-  #geom_jitter()+
-  #stat_summary(geom='point')+
-  #stat_summary(geom="smooth", group=1)+
-  #geom_smooth(span=0.5)+
-  stat_summary(fun.data="mean_sdl", fun.args = list(mult=1))+
-  stat_summary(geom='line', group=1)+
-  labs(title="Revisits", subtitle="Mean plus / minus one sd")+ theme_bw()
-```
-
-
 
 
 

@@ -188,9 +188,9 @@ F(`r round(corr[corr$Effect=="st:ll","DFn"],1)`,
 
 x axis is stage; y axis is distance; group is resources; panel is launch site type
 
-```{r}
+```{r e2_distance_plot}
 ggplot(data=dst, aes(y=mu.dist, x=st, group=rr, fill=rr, shape=rr)) +
-  facet_wrap(~ff+ll) +
+  facet_wrap(~ll) +
   labs(title="(d): Distance moved between trees", subtitle = "The eyes move further to the next tree if the current tree has no fruit")+
   ylab("Pixels")+
   xlab("Trials")+
@@ -207,7 +207,7 @@ ggplot(data=dst, aes(y=mu.dist, x=st, group=rr, fill=rr, shape=rr)) +
 ## E2 Distance means for resources
 
 
-```{r}
+```{r, e2_distance_means_resources}
 dst %>% 
   group_by(rr, pp) %>%
   summarise(mu=mean(mu.dist)) %>% 
@@ -221,7 +221,7 @@ dst %>%
 ## E2 Distance means for launch-site
 
 
-```{r}
+```{r, e2_distance_means_launch}
 dst %>% 
   group_by(ll, pp) %>%
   summarise(mu=mean(mu.dist)) %>% 
@@ -232,7 +232,7 @@ dst %>%
 ```
 
 
-```{r}
+```{r, e2_distance_means_launch_dispersed}
 dst %>%
   filter(rr=="dispersed") %>% 
   group_by(ll, pp) %>% 
@@ -244,7 +244,7 @@ dst %>%
 ```
 
 
-```{r}
+```{r, e2_distance_means_launch_patchy}
 dst %>%
   filter(rr=="patchy") %>% 
   group_by(ll, pp) %>% 

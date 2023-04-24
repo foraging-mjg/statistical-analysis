@@ -74,8 +74,7 @@ p4=ggplot(data=d4, aes(y=mu.dist, x=st, group=rr, fill=rr, shape=rr)) +
   scale_x_discrete(labels=c("early trials\n1 to 5", "late trials\n6 to 10"))
 
 pp=(p1+p2)/p3/p4 +
-  plot_layout(heights = c(1, 1, 1), guides="collect") +
-  plot_annotation(title = 'Figure 2: Experiment One measures')
+  plot_layout(heights = c(1, 1, 1), guides="collect") 
 
 ggsave(filename="e1-99-master-plot.png", plot=pp, device="png", width=9, height=12)
 ```

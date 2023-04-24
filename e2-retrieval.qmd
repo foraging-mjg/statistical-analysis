@@ -168,7 +168,7 @@ ggplot(
   data=rtv, 
   aes(x=fr, y=mu, group=rr, fill=rr, shape=rr)
 ) +
-  facet_wrap(~ff)+
+  facet_wrap(~ff, nrow=2)+
   labs(title="(c): Retrieval rate", subtitle="People benefit from being in a patch once they realise they are in one")+
   ylab("Number\nof\ntrees\nvisited\nto get\neach fruit")+
   xlab("Number of fruit collected so far during trial")+
