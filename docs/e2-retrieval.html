@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Foraging manuscript data analysis - Revisits</title>
+<title>Foraging manuscript data analysis - Retrieval</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -64,8 +64,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./e2-retrieval.html" rel="next">
-<link href="./e2-ntrees.html" rel="prev">
+<link href="./e2-master-plot.html" rel="next">
+<link href="./e2-nrevisits.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -107,7 +107,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./part2.html">Experiment Two</a></li><li class="breadcrumb-item"><a href="./e2-nrevisits.html">Revisits</a></li></ol></nav>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./part2.html">Experiment Two</a></li><li class="breadcrumb-item"><a href="./e2-retrieval.html">Retrieval</a></li></ol></nav>
       <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
       </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -196,13 +196,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./e2-nrevisits.html" class="sidebar-item-text sidebar-link active">
+  <a href="./e2-nrevisits.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Revisits</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./e2-retrieval.html" class="sidebar-item-text sidebar-link">
+  <a href="./e2-retrieval.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">Retrieval</span></a>
   </div>
 </li>
@@ -224,11 +224,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#e2-revisits-prepare-the-data" id="toc-e2-revisits-prepare-the-data" class="nav-link active" data-scroll-target="#e2-revisits-prepare-the-data">e2 Revisits: Prepare the data</a></li>
-  <li><a href="#e2-revisits-anova" id="toc-e2-revisits-anova" class="nav-link" data-scroll-target="#e2-revisits-anova">e2 Revisits: ANOVA</a></li>
-  <li><a href="#e2-nrevisits-plot" id="toc-e2-nrevisits-plot" class="nav-link" data-scroll-target="#e2-nrevisits-plot">e2 NRevisits: Plot</a></li>
-  <li><a href="#e2-nrevisits-stage-means" id="toc-e2-nrevisits-stage-means" class="nav-link" data-scroll-target="#e2-nrevisits-stage-means">e2 NRevisits: Stage means</a></li>
-  <li><a href="#e2-nrevisits-fruit-means" id="toc-e2-nrevisits-fruit-means" class="nav-link" data-scroll-target="#e2-nrevisits-fruit-means">e2 NRevisits: Fruit means</a></li>
+  <li><a href="#e2-retrieval-prepare-the-data" id="toc-e2-retrieval-prepare-the-data" class="nav-link active" data-scroll-target="#e2-retrieval-prepare-the-data">e2 Retrieval: Prepare the data</a></li>
+  <li><a href="#e2-retrieval-anova" id="toc-e2-retrieval-anova" class="nav-link" data-scroll-target="#e2-retrieval-anova">e2 Retrieval: ANOVA</a></li>
+  <li><a href="#e2-retrieval-plot" id="toc-e2-retrieval-plot" class="nav-link" data-scroll-target="#e2-retrieval-plot">e2 Retrieval: Plot</a></li>
+  <li><a href="#e2-retrieval-resources-means" id="toc-e2-retrieval-resources-means" class="nav-link" data-scroll-target="#e2-retrieval-resources-means">e2 Retrieval: Resources Means</a></li>
+  <li><a href="#e2-retrieval-fruit-means" id="toc-e2-retrieval-fruit-means" class="nav-link" data-scroll-target="#e2-retrieval-fruit-means">e2 Retrieval: Fruit means</a></li>
   </ul>
 </nav>
     </div>
@@ -237,7 +237,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Revisits</h1>
+<h1 class="title">Retrieval</h1>
 </div>
 
 
@@ -252,10 +252,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 </header>
 
-<p>This number is how many trees they pointlessly looked at again after already getting the fruit - it corresponds with memory errors.</p>
-<section id="e2-revisits-prepare-the-data" class="level2">
-<h2 class="anchored" data-anchor-id="e2-revisits-prepare-the-data">e2 Revisits: Prepare the data</h2>
-<p>Read in the data and pre-process it.</p>
+<p>This rate is how many trees they had to look at to get each successive fruit.</p>
+<section id="e2-retrieval-prepare-the-data" class="level2">
+<h2 class="anchored" data-anchor-id="e2-retrieval-prepare-the-data">e2 Retrieval: Prepare the data</h2>
+<p>Read the data in and pre-process it.</p>
 <div class="cell">
 <details>
 <summary>Show the code</summary>
@@ -281,103 +281,50 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(max_fr<span class="sc">==</span><span class="dv">14</span>) <span class="sc">%&gt;%</span> </span>
 <span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span><span class="fu">c</span>(ex, max_fr, st, xx, yy, ln)) </span>
 <span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a><span class="co"># currently some trials don't have entries for fruit of zero</span></span>
-<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a><span class="co"># these trials are where they found a fruit on the first tree</span></span>
-<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a><span class="co"># We want to say that these were:</span></span>
-<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a><span class="co"># number of revisits = 0 </span></span>
-<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a><span class="co"># (not number of revisits = "a structural missing")</span></span>
-<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>design <span class="ot">&lt;-</span></span>
-<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tibble</span>(</span>
-<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>    <span class="fu">expand.grid</span>(</span>
-<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>      <span class="at">pp=</span><span class="fu">unique</span>(e2<span class="sc">$</span>pp),</span>
-<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>      <span class="at">rr=</span><span class="fu">unique</span>(e2<span class="sc">$</span>rr),</span>
-<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>      <span class="at">tb=</span><span class="fu">unique</span>(e2<span class="sc">$</span>tb),</span>
-<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a>      <span class="at">fr=</span><span class="dv">0</span></span>
-<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a>design <span class="ot">&lt;-</span> <span class="fu">left_join</span>(design, e2 <span class="sc">%&gt;%</span> <span class="fu">group_by</span>(pp) <span class="sc">%&gt;%</span> <span class="fu">summarise</span>(<span class="at">ff=</span><span class="fu">unique</span>(ff)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-stderr">
-<pre><code>Joining with `by = join_by(pp)`</code></pre>
-</div>
-<details>
-<summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>e2 <span class="ot">&lt;-</span> <span class="fu">full_join</span>(design, e2) <span class="sc">%&gt;%</span> </span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(pp, rr, tb, fr)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-stderr">
-<pre><code>Joining with `by = join_by(pp, rr, tb, fr, ff)`</code></pre>
-</div>
-<details>
-<summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># annotate with revisit</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>e2 <span class="ot">&lt;-</span> e2 <span class="sc">%&gt;%</span> </span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(ff, pp, rr, tb) <span class="sc">%&gt;%</span> </span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">isrv =</span> <span class="fu">duplicated</span>(tl)) <span class="sc">%&gt;%</span> </span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>()  </span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="co"># get number of revisits per fruit</span></span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="co"># (is how many times they looked at a tree that </span></span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="co">#  they saw before on this trial on the way to </span></span>
-<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="co">#  getting this particular fruit)</span></span>
-<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>e2 <span class="ot">&lt;-</span> e2 <span class="sc">%&gt;%</span> </span>
-<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(ff, pp, rr, tb, fr, isrv) <span class="sc">%&gt;%</span> </span>
-<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(ff, pp, rr, tb, fr) <span class="sc">%&gt;%</span> </span>
-<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">nrv=</span><span class="fu">sum</span>(isrv)) <span class="sc">%&gt;%</span> </span>
-<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>()</span>
-<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a><span class="co"># add the stage IV</span></span>
-<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>e2 <span class="ot">&lt;-</span> e2 <span class="sc">%&gt;%</span> </span>
-<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
-<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>    <span class="at">st =</span> <span class="fu">ifelse</span>(tb<span class="sc">&lt;=</span><span class="dv">10</span>, <span class="st">"early"</span>, <span class="st">"late"</span>)</span>
-<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span> </span>
-<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(ff, pp, rr, st, tb, fr, nrv)</span>
-<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a><span class="co"># factors</span></span>
-<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a>e2 <span class="ot">&lt;-</span> e2 <span class="sc">%&gt;%</span> </span>
-<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">ff=</span><span class="fu">as_factor</span>(ff), <span class="at">pp=</span><span class="fu">as_factor</span>(pp), <span class="at">rr=</span><span class="fu">as_factor</span>(rr), <span class="at">st=</span><span class="fu">as_factor</span>(st)) <span class="sc">%&gt;%</span> </span>
-<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>()</span>
-<span id="cb5-28"><a href="#cb5-28" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-29"><a href="#cb5-29" aria-hidden="true" tabindex="-1"></a><span class="co"># collapse over trials - what was the average number of revisits for this fruit,</span></span>
-<span id="cb5-30"><a href="#cb5-30" aria-hidden="true" tabindex="-1"></a><span class="co"># now that the absence of visits to trees while fr was zero contributes a zero</span></span>
-<span id="cb5-31"><a href="#cb5-31" aria-hidden="true" tabindex="-1"></a><span class="co"># not a structural missing. Also prune entries for fr == 14 which are all </span></span>
-<span id="cb5-32"><a href="#cb5-32" aria-hidden="true" tabindex="-1"></a><span class="co"># constrained to be zero</span></span>
-<span id="cb5-33"><a href="#cb5-33" aria-hidden="true" tabindex="-1"></a>nrev_data_for_aov <span class="ot">&lt;-</span> e2 <span class="sc">%&gt;%</span> </span>
-<span id="cb5-34"><a href="#cb5-34" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(ff, pp, rr, st, fr) <span class="sc">%&gt;%</span> </span>
-<span id="cb5-35"><a href="#cb5-35" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">nrv=</span><span class="fu">mean</span>(nrv)) <span class="sc">%&gt;%</span> </span>
-<span id="cb5-36"><a href="#cb5-36" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(fr<span class="sc">!=</span><span class="dv">14</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb5-37"><a href="#cb5-37" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">fr=</span><span class="fu">as_factor</span>(fr)) <span class="sc">%&gt;%</span> </span>
-<span id="cb5-38"><a href="#cb5-38" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>()</span>
-<span id="cb5-39"><a href="#cb5-39" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-40"><a href="#cb5-40" aria-hidden="true" tabindex="-1"></a><span class="co"># collapse over trials to yield a value for each fruit</span></span>
-<span id="cb5-41"><a href="#cb5-41" aria-hidden="true" tabindex="-1"></a>nrev_data_for_ggplot <span class="ot">&lt;-</span> e2 <span class="sc">%&gt;%</span> </span>
-<span id="cb5-42"><a href="#cb5-42" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(ff, pp, rr, fr) <span class="sc">%&gt;%</span> </span>
-<span id="cb5-43"><a href="#cb5-43" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">nrv=</span><span class="fu">mean</span>(nrv)) <span class="sc">%&gt;%</span> </span>
-<span id="cb5-44"><a href="#cb5-44" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(fr<span class="sc">!=</span><span class="dv">14</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb5-45"><a href="#cb5-45" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">fr=</span><span class="fu">as_factor</span>(fr)) <span class="sc">%&gt;%</span> </span>
-<span id="cb5-46"><a href="#cb5-46" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>()</span>
-<span id="cb5-47"><a href="#cb5-47" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-48"><a href="#cb5-48" aria-hidden="true" tabindex="-1"></a><span class="fu">saveRDS</span>(nrev_data_for_ggplot, <span class="st">"e2_nrevisits_plot_data.rds"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a><span class="co"># how many trees to get each fruit?</span></span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a><span class="co"># this is neat and it needs to be done after </span></span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a><span class="co"># reducing the data to row-per-valid-tree-visit</span></span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>e2<span class="sc">$</span>ntrees_to_get_a_fruit <span class="ot">=</span> <span class="cn">NA</span></span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>j <span class="ot">=</span> <span class="dv">0</span></span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (k <span class="cf">in</span> <span class="fu">seq_along</span>(e2<span class="sc">$</span>ix)) {</span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a> j <span class="ot">=</span> j <span class="sc">+</span> <span class="dv">1</span></span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a> <span class="cf">if</span> (e2[k, <span class="st">'fl'</span>]<span class="sc">==</span><span class="dv">2</span>) {</span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>   e2[k, <span class="st">'ntrees_to_get_a_fruit'</span>] <span class="ot">=</span> j</span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>   j <span class="ot">=</span> <span class="dv">0</span></span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a> }</span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a><span class="co"># remove any remaining NAs</span></span>
+<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a>e2 <span class="ot">&lt;-</span> e2 <span class="sc">%&gt;%</span> <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(ntrees_to_get_a_fruit))</span>
+<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a><span class="co"># average over trials (and ignore stage) to yield </span></span>
+<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a><span class="co"># participant means suitable for ggplot and ANOVA</span></span>
+<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a>rtv <span class="ot">=</span> e2 <span class="sc">%&gt;%</span> </span>
+<span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(ff, pp, rr, tb, fr, ntrees_to_get_a_fruit) <span class="sc">%&gt;%</span> </span>
+<span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(ff, pp, rr, fr) <span class="sc">%&gt;%</span> </span>
+<span id="cb1-44"><a href="#cb1-44" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">mu=</span><span class="fu">mean</span>(ntrees_to_get_a_fruit)) <span class="sc">%&gt;%</span> </span>
+<span id="cb1-45"><a href="#cb1-45" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb1-46"><a href="#cb1-46" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">ff=</span> <span class="fu">as_factor</span>(ff), <span class="at">pp=</span><span class="fu">as_factor</span>(pp), <span class="at">rr=</span><span class="fu">as_factor</span>(rr), <span class="at">fr=</span><span class="fu">as_factor</span>(fr))</span>
+<span id="cb1-47"><a href="#cb1-47" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-48"><a href="#cb1-48" aria-hidden="true" tabindex="-1"></a><span class="fu">saveRDS</span>(rtv, <span class="st">"e2_retrieval_plot_data.rds"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 </section>
-<section id="e2-revisits-anova" class="level2">
-<h2 class="anchored" data-anchor-id="e2-revisits-anova">e2 Revisits: ANOVA</h2>
-<p>2 x 2 * 2 * 10</p>
-<p>A 2x2x2x10 ANOVA with the within factors resource distribution (patchy, dispersed) and trial (early [mean trials 1-5], late [mean trials 6-10]); between fading; and as dv number of fruit consumed (1-10)</p>
+<section id="e2-retrieval-anova" class="level2">
+<h2 class="anchored" data-anchor-id="e2-retrieval-anova">e2 Retrieval: ANOVA</h2>
 <p>Run the ANOVA</p>
 <div class="cell">
 <details>
 <summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">contrasts=</span><span class="fu">c</span>(<span class="st">"contr.sum"</span>,<span class="st">"contr.poly"</span>))</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>e2_revisits_ANOVA <span class="ot">&lt;-</span> </span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ezANOVA</span>(<span class="at">data=</span>nrev_data_for_aov,</span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>          <span class="at">dv=</span>nrv,</span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>          <span class="at">wid=</span>pp,</span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>          <span class="at">within=</span><span class="fu">c</span>(rr, st, fr),</span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>          <span class="at">between=</span>ff,</span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>          <span class="at">type=</span><span class="dv">3</span>, </span>
-<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>          <span class="at">return_aov =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">contrasts=</span><span class="fu">c</span>(<span class="st">"contr.sum"</span>,<span class="st">"contr.poly"</span>))</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>e2_retrievalrate_ANOVA <span class="ot">&lt;-</span> </span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ezANOVA</span>(<span class="at">data=</span>rtv,</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>          <span class="at">dv=</span>mu,</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>          <span class="at">wid=</span>pp,</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>          <span class="at">within=</span><span class="fu">c</span>(rr, fr),</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>          <span class="at">between=</span>ff,</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>          <span class="at">type=</span><span class="dv">3</span>, </span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>          <span class="at">return_aov =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning: Data is unbalanced (unequal N per group). Make sure you specified a
@@ -385,40 +332,40 @@ well-considered value for the type argument to ezANOVA().</code></pre>
 </div>
 <details>
 <summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>(<span class="st">"Sphericity Corrections"</span> <span class="sc">%in%</span> <span class="fu">names</span>(e2_revisits_ANOVA)){</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  corr<span class="ot">=</span><span class="fu">aovSphericityAdjustment</span>(e2_revisits_ANOVA)<span class="sc">$</span>ANOVA <span class="sc">%&gt;%</span> <span class="fu">tibble</span>()</span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> {</span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>  corr<span class="ot">=</span>e2_revisits_ANOVA<span class="sc">$</span>ANOVA <span class="sc">%&gt;%</span> <span class="fu">tibble</span>()  </span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>  }</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>(<span class="st">"Sphericity Corrections"</span> <span class="sc">%in%</span> <span class="fu">names</span>(e2_retrievalrate_ANOVA)){</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  corr<span class="ot">=</span><span class="fu">aovSphericityAdjustment</span>(e2_retrievalrate_ANOVA)<span class="sc">$</span>ANOVA <span class="sc">%&gt;%</span> <span class="fu">tibble</span>()</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> {</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  corr<span class="ot">=</span>e2_retrievalrate_ANOVA<span class="sc">$</span>ANOVA <span class="sc">%&gt;%</span> <span class="fu">tibble</span>()  </span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>  }</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<p>Table the ANOVA.</p>
+<p>Table the ANOVA taking into account sphericity violations.</p>
 <div class="cell">
 <details>
 <summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">prettify_sphericity_3_way</span>(</span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">aovSphericityAdjustment</span>(e2_revisits_ANOVA), </span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="st">"e2 NRevisits ANOVA"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">prettify_sphericity_3_way</span>(</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">aovSphericityAdjustment</span>(e2_retrievalrate_ANOVA), </span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="st">"e2 Retrieval ANOVA"</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
 
-<div id="ygkgzilsok" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#ygkgzilsok table {
+<div id="txedbfxrhy" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#txedbfxrhy table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#ygkgzilsok thead, #ygkgzilsok tbody, #ygkgzilsok tfoot, #ygkgzilsok tr, #ygkgzilsok td, #ygkgzilsok th {
+#txedbfxrhy thead, #txedbfxrhy tbody, #txedbfxrhy tfoot, #txedbfxrhy tr, #txedbfxrhy td, #txedbfxrhy th {
   border-style: none;
 }
 
-#ygkgzilsok p {
+#txedbfxrhy p {
   margin: 0;
   padding: 0;
 }
 
-#ygkgzilsok .gt_table {
+#txedbfxrhy .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -444,12 +391,12 @@ well-considered value for the type argument to ezANOVA().</code></pre>
   border-left-color: #D3D3D3;
 }
 
-#ygkgzilsok .gt_caption {
+#txedbfxrhy .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#ygkgzilsok .gt_title {
+#txedbfxrhy .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -461,7 +408,7 @@ well-considered value for the type argument to ezANOVA().</code></pre>
   border-bottom-width: 0;
 }
 
-#ygkgzilsok .gt_subtitle {
+#txedbfxrhy .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -473,7 +420,7 @@ well-considered value for the type argument to ezANOVA().</code></pre>
   border-top-width: 0;
 }
 
-#ygkgzilsok .gt_heading {
+#txedbfxrhy .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -485,13 +432,13 @@ well-considered value for the type argument to ezANOVA().</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#ygkgzilsok .gt_bottom_border {
+#txedbfxrhy .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#ygkgzilsok .gt_col_headings {
+#txedbfxrhy .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -506,7 +453,7 @@ well-considered value for the type argument to ezANOVA().</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#ygkgzilsok .gt_col_heading {
+#txedbfxrhy .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -526,7 +473,7 @@ well-considered value for the type argument to ezANOVA().</code></pre>
   overflow-x: hidden;
 }
 
-#ygkgzilsok .gt_column_spanner_outer {
+#txedbfxrhy .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -538,15 +485,15 @@ well-considered value for the type argument to ezANOVA().</code></pre>
   padding-right: 4px;
 }
 
-#ygkgzilsok .gt_column_spanner_outer:first-child {
+#txedbfxrhy .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#ygkgzilsok .gt_column_spanner_outer:last-child {
+#txedbfxrhy .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#ygkgzilsok .gt_column_spanner {
+#txedbfxrhy .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -558,11 +505,11 @@ well-considered value for the type argument to ezANOVA().</code></pre>
   width: 100%;
 }
 
-#ygkgzilsok .gt_spanner_row {
+#txedbfxrhy .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#ygkgzilsok .gt_group_heading {
+#txedbfxrhy .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -588,7 +535,7 @@ well-considered value for the type argument to ezANOVA().</code></pre>
   text-align: left;
 }
 
-#ygkgzilsok .gt_empty_group_heading {
+#txedbfxrhy .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -603,15 +550,15 @@ well-considered value for the type argument to ezANOVA().</code></pre>
   vertical-align: middle;
 }
 
-#ygkgzilsok .gt_from_md > :first-child {
+#txedbfxrhy .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#ygkgzilsok .gt_from_md > :last-child {
+#txedbfxrhy .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#ygkgzilsok .gt_row {
+#txedbfxrhy .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -630,7 +577,7 @@ well-considered value for the type argument to ezANOVA().</code></pre>
   overflow-x: hidden;
 }
 
-#ygkgzilsok .gt_stub {
+#txedbfxrhy .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -643,7 +590,7 @@ well-considered value for the type argument to ezANOVA().</code></pre>
   padding-right: 5px;
 }
 
-#ygkgzilsok .gt_stub_row_group {
+#txedbfxrhy .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -657,15 +604,15 @@ well-considered value for the type argument to ezANOVA().</code></pre>
   vertical-align: top;
 }
 
-#ygkgzilsok .gt_row_group_first td {
+#txedbfxrhy .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#ygkgzilsok .gt_row_group_first th {
+#txedbfxrhy .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#ygkgzilsok .gt_summary_row {
+#txedbfxrhy .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -675,16 +622,16 @@ well-considered value for the type argument to ezANOVA().</code></pre>
   padding-right: 5px;
 }
 
-#ygkgzilsok .gt_first_summary_row {
+#txedbfxrhy .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#ygkgzilsok .gt_first_summary_row.thick {
+#txedbfxrhy .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#ygkgzilsok .gt_last_summary_row {
+#txedbfxrhy .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -694,7 +641,7 @@ well-considered value for the type argument to ezANOVA().</code></pre>
   border-bottom-color: #D3D3D3;
 }
 
-#ygkgzilsok .gt_grand_summary_row {
+#txedbfxrhy .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -704,7 +651,7 @@ well-considered value for the type argument to ezANOVA().</code></pre>
   padding-right: 5px;
 }
 
-#ygkgzilsok .gt_first_grand_summary_row {
+#txedbfxrhy .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -714,7 +661,7 @@ well-considered value for the type argument to ezANOVA().</code></pre>
   border-top-color: #D3D3D3;
 }
 
-#ygkgzilsok .gt_last_grand_summary_row_top {
+#txedbfxrhy .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -724,11 +671,11 @@ well-considered value for the type argument to ezANOVA().</code></pre>
   border-bottom-color: #D3D3D3;
 }
 
-#ygkgzilsok .gt_striped {
+#txedbfxrhy .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#ygkgzilsok .gt_table_body {
+#txedbfxrhy .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -737,7 +684,7 @@ well-considered value for the type argument to ezANOVA().</code></pre>
   border-bottom-color: #D3D3D3;
 }
 
-#ygkgzilsok .gt_footnotes {
+#txedbfxrhy .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -751,7 +698,7 @@ well-considered value for the type argument to ezANOVA().</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#ygkgzilsok .gt_footnote {
+#txedbfxrhy .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -760,7 +707,7 @@ well-considered value for the type argument to ezANOVA().</code></pre>
   padding-right: 5px;
 }
 
-#ygkgzilsok .gt_sourcenotes {
+#txedbfxrhy .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -774,7 +721,7 @@ well-considered value for the type argument to ezANOVA().</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#ygkgzilsok .gt_sourcenote {
+#txedbfxrhy .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -782,70 +729,70 @@ well-considered value for the type argument to ezANOVA().</code></pre>
   padding-right: 5px;
 }
 
-#ygkgzilsok .gt_left {
+#txedbfxrhy .gt_left {
   text-align: left;
 }
 
-#ygkgzilsok .gt_center {
+#txedbfxrhy .gt_center {
   text-align: center;
 }
 
-#ygkgzilsok .gt_right {
+#txedbfxrhy .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#ygkgzilsok .gt_font_normal {
+#txedbfxrhy .gt_font_normal {
   font-weight: normal;
 }
 
-#ygkgzilsok .gt_font_bold {
+#txedbfxrhy .gt_font_bold {
   font-weight: bold;
 }
 
-#ygkgzilsok .gt_font_italic {
+#txedbfxrhy .gt_font_italic {
   font-style: italic;
 }
 
-#ygkgzilsok .gt_super {
+#txedbfxrhy .gt_super {
   font-size: 65%;
 }
 
-#ygkgzilsok .gt_footnote_marks {
+#txedbfxrhy .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#ygkgzilsok .gt_asterisk {
+#txedbfxrhy .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#ygkgzilsok .gt_indent_1 {
+#txedbfxrhy .gt_indent_1 {
   text-indent: 5px;
 }
 
-#ygkgzilsok .gt_indent_2 {
+#txedbfxrhy .gt_indent_2 {
   text-indent: 10px;
 }
 
-#ygkgzilsok .gt_indent_3 {
+#txedbfxrhy .gt_indent_3 {
   text-indent: 15px;
 }
 
-#ygkgzilsok .gt_indent_4 {
+#txedbfxrhy .gt_indent_4 {
   text-indent: 20px;
 }
 
-#ygkgzilsok .gt_indent_5 {
+#txedbfxrhy .gt_indent_5 {
   text-indent: 25px;
 }
 </style>
 <table class="gt_table" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
   <thead>
     <tr class="gt_heading">
-      <td colspan="6" class="gt_heading gt_title gt_font_normal gt_bottom_border" style="">e2 NRevisits ANOVA</td>
+      <td colspan="6" class="gt_heading gt_title gt_font_normal gt_bottom_border" style="">e2 Retrieval ANOVA</td>
     </tr>
     
     <tr class="gt_col_headings">
@@ -861,92 +808,44 @@ well-considered value for the type argument to ezANOVA().</code></pre>
     <tr><td headers="Effect" class="gt_row gt_left">ff</td>
 <td headers="DFn" class="gt_row gt_right">1</td>
 <td headers="DFd" class="gt_row gt_right">40</td>
-<td headers="F" class="gt_row gt_right">16.97</td>
-<td headers="p" class="gt_row gt_right">0.000</td>
-<td headers="sig" class="gt_row gt_right">***</td></tr>
+<td headers="F" class="gt_row gt_right"> 0.36</td>
+<td headers="p" class="gt_row gt_right">0.554</td>
+<td headers="sig" class="gt_row gt_right"></td></tr>
     <tr><td headers="Effect" class="gt_row gt_left">rr</td>
 <td headers="DFn" class="gt_row gt_right">1</td>
 <td headers="DFd" class="gt_row gt_right">40</td>
-<td headers="F" class="gt_row gt_right"> 2.86</td>
-<td headers="p" class="gt_row gt_right">0.098</td>
-<td headers="sig" class="gt_row gt_right"></td></tr>
-    <tr><td headers="Effect" class="gt_row gt_left">st</td>
-<td headers="DFn" class="gt_row gt_right">1</td>
-<td headers="DFd" class="gt_row gt_right">40</td>
-<td headers="F" class="gt_row gt_right"> 0.72</td>
-<td headers="p" class="gt_row gt_right">0.401</td>
-<td headers="sig" class="gt_row gt_right"></td></tr>
+<td headers="F" class="gt_row gt_right">71.71</td>
+<td headers="p" class="gt_row gt_right">0.000</td>
+<td headers="sig" class="gt_row gt_right">***</td></tr>
     <tr><td headers="Effect" class="gt_row gt_left">fr</td>
-<td headers="DFn" class="gt_row gt_right">1.2</td>
-<td headers="DFd" class="gt_row gt_right">49.6</td>
-<td headers="F" class="gt_row gt_right">21.63</td>
+<td headers="DFn" class="gt_row gt_right">5.3</td>
+<td headers="DFd" class="gt_row gt_right">211.7</td>
+<td headers="F" class="gt_row gt_right">17.22</td>
 <td headers="p" class="gt_row gt_right">0.000</td>
 <td headers="sig" class="gt_row gt_right">***</td></tr>
     <tr><td headers="Effect" class="gt_row gt_left">ff:rr</td>
 <td headers="DFn" class="gt_row gt_right">1</td>
 <td headers="DFd" class="gt_row gt_right">40</td>
-<td headers="F" class="gt_row gt_right"> 3.53</td>
-<td headers="p" class="gt_row gt_right">0.067</td>
-<td headers="sig" class="gt_row gt_right"></td></tr>
-    <tr><td headers="Effect" class="gt_row gt_left">ff:st</td>
-<td headers="DFn" class="gt_row gt_right">1</td>
-<td headers="DFd" class="gt_row gt_right">40</td>
-<td headers="F" class="gt_row gt_right"> 1.35</td>
-<td headers="p" class="gt_row gt_right">0.252</td>
+<td headers="F" class="gt_row gt_right"> 2.97</td>
+<td headers="p" class="gt_row gt_right">0.093</td>
 <td headers="sig" class="gt_row gt_right"></td></tr>
     <tr><td headers="Effect" class="gt_row gt_left">ff:fr</td>
-<td headers="DFn" class="gt_row gt_right">1.2</td>
-<td headers="DFd" class="gt_row gt_right">49.6</td>
-<td headers="F" class="gt_row gt_right"> 8.87</td>
-<td headers="p" class="gt_row gt_right">0.003</td>
-<td headers="sig" class="gt_row gt_right">**</td></tr>
-    <tr><td headers="Effect" class="gt_row gt_left">rr:st</td>
-<td headers="DFn" class="gt_row gt_right">1</td>
-<td headers="DFd" class="gt_row gt_right">40</td>
-<td headers="F" class="gt_row gt_right"> 1.31</td>
-<td headers="p" class="gt_row gt_right">0.259</td>
-<td headers="sig" class="gt_row gt_right"></td></tr>
+<td headers="DFn" class="gt_row gt_right">5.3</td>
+<td headers="DFd" class="gt_row gt_right">211.7</td>
+<td headers="F" class="gt_row gt_right"> 2.89</td>
+<td headers="p" class="gt_row gt_right">0.013</td>
+<td headers="sig" class="gt_row gt_right">*</td></tr>
     <tr><td headers="Effect" class="gt_row gt_left">rr:fr</td>
-<td headers="DFn" class="gt_row gt_right">2.2</td>
-<td headers="DFd" class="gt_row gt_right">87.6</td>
-<td headers="F" class="gt_row gt_right"> 0.61</td>
-<td headers="p" class="gt_row gt_right">0.562</td>
-<td headers="sig" class="gt_row gt_right"></td></tr>
-    <tr><td headers="Effect" class="gt_row gt_left">st:fr</td>
-<td headers="DFn" class="gt_row gt_right">2.6</td>
-<td headers="DFd" class="gt_row gt_right">105.7</td>
-<td headers="F" class="gt_row gt_right"> 0.92</td>
-<td headers="p" class="gt_row gt_right">0.422</td>
-<td headers="sig" class="gt_row gt_right"></td></tr>
-    <tr><td headers="Effect" class="gt_row gt_left">ff:rr:st</td>
-<td headers="DFn" class="gt_row gt_right">1</td>
-<td headers="DFd" class="gt_row gt_right">40</td>
-<td headers="F" class="gt_row gt_right"> 0.13</td>
-<td headers="p" class="gt_row gt_right">0.718</td>
-<td headers="sig" class="gt_row gt_right"></td></tr>
+<td headers="DFn" class="gt_row gt_right">6.1</td>
+<td headers="DFd" class="gt_row gt_right">244.2</td>
+<td headers="F" class="gt_row gt_right">32.17</td>
+<td headers="p" class="gt_row gt_right">0.000</td>
+<td headers="sig" class="gt_row gt_right">***</td></tr>
     <tr><td headers="Effect" class="gt_row gt_left">ff:rr:fr</td>
-<td headers="DFn" class="gt_row gt_right">2.2</td>
-<td headers="DFd" class="gt_row gt_right">87.6</td>
-<td headers="F" class="gt_row gt_right"> 0.21</td>
-<td headers="p" class="gt_row gt_right">0.833</td>
-<td headers="sig" class="gt_row gt_right"></td></tr>
-    <tr><td headers="Effect" class="gt_row gt_left">ff:st:fr</td>
-<td headers="DFn" class="gt_row gt_right">2.6</td>
-<td headers="DFd" class="gt_row gt_right">105.7</td>
-<td headers="F" class="gt_row gt_right"> 1.16</td>
-<td headers="p" class="gt_row gt_right">0.327</td>
-<td headers="sig" class="gt_row gt_right"></td></tr>
-    <tr><td headers="Effect" class="gt_row gt_left">rr:st:fr</td>
-<td headers="DFn" class="gt_row gt_right">3.4</td>
-<td headers="DFd" class="gt_row gt_right">137.9</td>
-<td headers="F" class="gt_row gt_right"> 0.52</td>
-<td headers="p" class="gt_row gt_right">0.698</td>
-<td headers="sig" class="gt_row gt_right"></td></tr>
-    <tr><td headers="Effect" class="gt_row gt_left">ff:rr:st:fr</td>
-<td headers="DFn" class="gt_row gt_right">3.4</td>
-<td headers="DFd" class="gt_row gt_right">137.9</td>
-<td headers="F" class="gt_row gt_right"> 0.91</td>
-<td headers="p" class="gt_row gt_right">0.449</td>
+<td headers="DFn" class="gt_row gt_right">6.1</td>
+<td headers="DFd" class="gt_row gt_right">244.2</td>
+<td headers="F" class="gt_row gt_right"> 0.85</td>
+<td headers="p" class="gt_row gt_right">0.536</td>
 <td headers="sig" class="gt_row gt_right"></td></tr>
   </tbody>
   
@@ -956,67 +855,72 @@ well-considered value for the type argument to ezANOVA().</code></pre>
 </div>
 </div>
 <p>Report the ANOVA</p>
-<p>The effect of fading was F(1, 40) = 16.97, p&lt;.001.</p>
-<p>The effect of resources was F(1, 40) = 2.86, p=0.098.</p>
-<p>The effect of stage was F(1, 40) = 0.72, p=0.401.</p>
-<p>The effect of fruit after Greenhouse-Geisser correction for sphericity violation was F(1.2, 49.6) = 21.63, p&lt;.001.</p>
-<p>The fruit x resources interaction after Greenhouse-Geisser correction for sphericity violation was F(2.2, 87.6) = 0.61, p=0.562.</p>
+<p>The effect of fading was F(1, 40) = 0.36, p=0.554.</p>
+<p>The effect of resources was F(1, 40) = 71.71, p&lt;.001.</p>
+<p>The effect of fruit was F(5.3, 211.7) = 17.22, p&lt;.001.</p>
+<p>The fruit x resources interaction was F(6.1, 244.2) = 32.17, p&lt;.001.</p>
+<p>The fruit x fading interaction was F(5.3, 211.7) = 2.89, p&lt;.05.</p>
+<p>The fruit x fading interaction was F(5.3, 211.7) = 2.89, p&lt;.05.</p>
 </section>
-<section id="e2-nrevisits-plot" class="level2">
-<h2 class="anchored" data-anchor-id="e2-nrevisits-plot">e2 NRevisits: Plot</h2>
-<p>Fourteen points along the x axis, each participant contributes one point per cell, facet for fading</p>
+<section id="e2-retrieval-plot" class="level2">
+<h2 class="anchored" data-anchor-id="e2-retrieval-plot">e2 Retrieval: Plot</h2>
+<p>Ten points along the x axis, each participant contributes one point per cell, facet on fading</p>
 <div class="cell">
 <details>
 <summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span>nrev_data_for_ggplot, <span class="fu">aes</span>(<span class="at">y=</span>nrv, <span class="at">x=</span>fr, <span class="at">group=</span>rr, <span class="at">shape=</span>rr, <span class="at">fill=</span>rr)) <span class="sc">+</span></span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>ff)<span class="sc">+</span></span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  my_fgms_theme<span class="sc">+</span></span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">"(b): Revisits (memory errors)"</span>)<span class="sc">+</span></span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">"Revisits"</span>)<span class="sc">+</span></span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">"Trials"</span>)<span class="sc">+</span></span>
-<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">name=</span><span class="st">"Resource</span><span class="sc">\n</span><span class="st">distribution"</span>,<span class="at">values=</span><span class="fu">c</span>(<span class="st">"white"</span>, <span class="st">"black"</span>)) <span class="sc">+</span></span>
-<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_shape_manual</span>(<span class="at">name=</span><span class="st">"Resource</span><span class="sc">\n</span><span class="st">distribution"</span>,<span class="at">values=</span><span class="fu">c</span>(<span class="dv">24</span>,<span class="dv">19</span>)) <span class="sc">+</span></span>
-<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_summary</span>(<span class="at">fun.data =</span> mean_cl_normal, <span class="at">geom =</span> <span class="st">"errorbar"</span>, <span class="at">width=</span><span class="fl">0.1</span>, <span class="at">position=</span>pd) <span class="sc">+</span></span>
-<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_summary</span>(<span class="at">fun =</span> mean, <span class="at">geom =</span> <span class="st">"line"</span>, <span class="at">position=</span>pd) <span class="sc">+</span> </span>
-<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_summary</span>(<span class="at">fun =</span> mean, <span class="at">geom =</span> <span class="st">"point"</span>, <span class="at">size=</span><span class="dv">3</span>, <span class="at">position=</span>pd)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">data=</span>rtv, </span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">aes</span>(<span class="at">x=</span>fr, <span class="at">y=</span>mu, <span class="at">group=</span>rr, <span class="at">fill=</span>rr, <span class="at">shape=</span>rr)</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>) <span class="sc">+</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>ff)<span class="sc">+</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title=</span><span class="st">"(c): Retrieval rate"</span>, <span class="at">subtitle=</span><span class="st">"People benefit from being in a patch once they realise they are in one"</span>)<span class="sc">+</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">"Number</span><span class="sc">\n</span><span class="st">of</span><span class="sc">\n</span><span class="st">trees</span><span class="sc">\n</span><span class="st">visited</span><span class="sc">\n</span><span class="st">to get</span><span class="sc">\n</span><span class="st">each fruit"</span>)<span class="sc">+</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">"Number of fruit collected so far during trial"</span>)<span class="sc">+</span></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>  my_fgms_theme<span class="sc">+</span></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept=</span><span class="dv">2</span>, <span class="at">lty=</span><span class="dv">3</span>,<span class="at">col=</span><span class="st">"grey"</span>)<span class="sc">+</span></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">name=</span><span class="st">"Resources"</span>, <span class="at">values=</span><span class="fu">c</span>(<span class="st">"white"</span>, <span class="st">"black"</span>)) <span class="sc">+</span></span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_shape_manual</span>(<span class="at">name=</span><span class="st">"Resources"</span>, <span class="at">values=</span><span class="fu">c</span>(<span class="dv">24</span>,<span class="dv">19</span>)) <span class="sc">+</span></span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_summary</span>(<span class="at">fun.data =</span> mean_cl_normal, <span class="at">geom =</span> <span class="st">"errorbar"</span>, <span class="at">width=</span><span class="fl">0.2</span>, <span class="at">position=</span>pd) <span class="sc">+</span></span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_summary</span>(<span class="at">fun =</span> mean, <span class="at">geom =</span> <span class="st">"line"</span>, <span class="at">position=</span>pd) <span class="sc">+</span> </span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_summary</span>(<span class="at">fun =</span> mean, <span class="at">geom =</span> <span class="st">"point"</span>, <span class="at">size=</span><span class="dv">3</span>, <span class="at">position=</span>pd)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-<p><img src="e2_figures/e2_nrevisits_plot-1.png" class="img-fluid" width="672"></p>
+<p><img src="e2_figures/e2_retrieval_rate_plot-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 </section>
-<section id="e2-nrevisits-stage-means" class="level2">
-<h2 class="anchored" data-anchor-id="e2-nrevisits-stage-means">e2 NRevisits: Stage means</h2>
-<p>Table means for fading</p>
+<section id="e2-retrieval-resources-means" class="level2">
+<h2 class="anchored" data-anchor-id="e2-retrieval-resources-means">e2 Retrieval: Resources Means</h2>
+<p>Table means for resources</p>
 <div class="cell">
 <details>
 <summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>frpremeans <span class="ot">=</span> nrev_data_for_aov <span class="sc">%&gt;%</span> <span class="fu">group_by</span>(ff, pp, rr) <span class="sc">%&gt;%</span></span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">mu=</span><span class="fu">mean</span>(nrv)) <span class="sc">%&gt;%</span></span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">mu=</span><span class="fu">mean</span>(mu))</span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>frmeans <span class="ot">&lt;-</span> frpremeans <span class="sc">%&gt;%</span></span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">mean=</span><span class="fu">mean</span>(mu), <span class="at">sd=</span><span class="fu">sd</span>(mu))</span>
-<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a><span class="fu">prettify_means</span>(frmeans, <span class="st">"e2 NRevisits stage means"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>rrpremeans <span class="ot">=</span> rtv <span class="sc">%&gt;%</span> <span class="fu">group_by</span>(rr, pp, fr) <span class="sc">%&gt;%</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">mu=</span><span class="fu">mean</span>(mu)) <span class="sc">%&gt;%</span> </span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">mu=</span><span class="fu">mean</span>(mu)) </span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>rrmeans <span class="ot">&lt;-</span> rrpremeans <span class="sc">%&gt;%</span> </span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">mean=</span><span class="fu">mean</span>(mu), <span class="at">sd=</span><span class="fu">sd</span>(mu))</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="fu">prettify_means</span>(rrmeans, <span class="st">"e2 Retrieval stage means"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
 
-<div id="sfqtihufts" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#sfqtihufts table {
+<div id="luwxnsalub" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#luwxnsalub table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#sfqtihufts thead, #sfqtihufts tbody, #sfqtihufts tfoot, #sfqtihufts tr, #sfqtihufts td, #sfqtihufts th {
+#luwxnsalub thead, #luwxnsalub tbody, #luwxnsalub tfoot, #luwxnsalub tr, #luwxnsalub td, #luwxnsalub th {
   border-style: none;
 }
 
-#sfqtihufts p {
+#luwxnsalub p {
   margin: 0;
   padding: 0;
 }
 
-#sfqtihufts .gt_table {
+#luwxnsalub .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -1042,12 +946,12 @@ well-considered value for the type argument to ezANOVA().</code></pre>
   border-left-color: #D3D3D3;
 }
 
-#sfqtihufts .gt_caption {
+#luwxnsalub .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#sfqtihufts .gt_title {
+#luwxnsalub .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -1059,7 +963,7 @@ well-considered value for the type argument to ezANOVA().</code></pre>
   border-bottom-width: 0;
 }
 
-#sfqtihufts .gt_subtitle {
+#luwxnsalub .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -1071,7 +975,7 @@ well-considered value for the type argument to ezANOVA().</code></pre>
   border-top-width: 0;
 }
 
-#sfqtihufts .gt_heading {
+#luwxnsalub .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -1083,13 +987,13 @@ well-considered value for the type argument to ezANOVA().</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#sfqtihufts .gt_bottom_border {
+#luwxnsalub .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#sfqtihufts .gt_col_headings {
+#luwxnsalub .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1104,7 +1008,7 @@ well-considered value for the type argument to ezANOVA().</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#sfqtihufts .gt_col_heading {
+#luwxnsalub .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1124,7 +1028,7 @@ well-considered value for the type argument to ezANOVA().</code></pre>
   overflow-x: hidden;
 }
 
-#sfqtihufts .gt_column_spanner_outer {
+#luwxnsalub .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1136,15 +1040,15 @@ well-considered value for the type argument to ezANOVA().</code></pre>
   padding-right: 4px;
 }
 
-#sfqtihufts .gt_column_spanner_outer:first-child {
+#luwxnsalub .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#sfqtihufts .gt_column_spanner_outer:last-child {
+#luwxnsalub .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#sfqtihufts .gt_column_spanner {
+#luwxnsalub .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -1156,11 +1060,11 @@ well-considered value for the type argument to ezANOVA().</code></pre>
   width: 100%;
 }
 
-#sfqtihufts .gt_spanner_row {
+#luwxnsalub .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#sfqtihufts .gt_group_heading {
+#luwxnsalub .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1186,7 +1090,7 @@ well-considered value for the type argument to ezANOVA().</code></pre>
   text-align: left;
 }
 
-#sfqtihufts .gt_empty_group_heading {
+#luwxnsalub .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -1201,15 +1105,15 @@ well-considered value for the type argument to ezANOVA().</code></pre>
   vertical-align: middle;
 }
 
-#sfqtihufts .gt_from_md > :first-child {
+#luwxnsalub .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#sfqtihufts .gt_from_md > :last-child {
+#luwxnsalub .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#sfqtihufts .gt_row {
+#luwxnsalub .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1228,7 +1132,7 @@ well-considered value for the type argument to ezANOVA().</code></pre>
   overflow-x: hidden;
 }
 
-#sfqtihufts .gt_stub {
+#luwxnsalub .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1241,7 +1145,7 @@ well-considered value for the type argument to ezANOVA().</code></pre>
   padding-right: 5px;
 }
 
-#sfqtihufts .gt_stub_row_group {
+#luwxnsalub .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1255,15 +1159,15 @@ well-considered value for the type argument to ezANOVA().</code></pre>
   vertical-align: top;
 }
 
-#sfqtihufts .gt_row_group_first td {
+#luwxnsalub .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#sfqtihufts .gt_row_group_first th {
+#luwxnsalub .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#sfqtihufts .gt_summary_row {
+#luwxnsalub .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1273,16 +1177,16 @@ well-considered value for the type argument to ezANOVA().</code></pre>
   padding-right: 5px;
 }
 
-#sfqtihufts .gt_first_summary_row {
+#luwxnsalub .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#sfqtihufts .gt_first_summary_row.thick {
+#luwxnsalub .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#sfqtihufts .gt_last_summary_row {
+#luwxnsalub .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1292,7 +1196,7 @@ well-considered value for the type argument to ezANOVA().</code></pre>
   border-bottom-color: #D3D3D3;
 }
 
-#sfqtihufts .gt_grand_summary_row {
+#luwxnsalub .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1302,7 +1206,7 @@ well-considered value for the type argument to ezANOVA().</code></pre>
   padding-right: 5px;
 }
 
-#sfqtihufts .gt_first_grand_summary_row {
+#luwxnsalub .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1312,7 +1216,7 @@ well-considered value for the type argument to ezANOVA().</code></pre>
   border-top-color: #D3D3D3;
 }
 
-#sfqtihufts .gt_last_grand_summary_row_top {
+#luwxnsalub .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1322,11 +1226,11 @@ well-considered value for the type argument to ezANOVA().</code></pre>
   border-bottom-color: #D3D3D3;
 }
 
-#sfqtihufts .gt_striped {
+#luwxnsalub .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#sfqtihufts .gt_table_body {
+#luwxnsalub .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1335,7 +1239,7 @@ well-considered value for the type argument to ezANOVA().</code></pre>
   border-bottom-color: #D3D3D3;
 }
 
-#sfqtihufts .gt_footnotes {
+#luwxnsalub .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1349,7 +1253,7 @@ well-considered value for the type argument to ezANOVA().</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#sfqtihufts .gt_footnote {
+#luwxnsalub .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -1358,7 +1262,7 @@ well-considered value for the type argument to ezANOVA().</code></pre>
   padding-right: 5px;
 }
 
-#sfqtihufts .gt_sourcenotes {
+#luwxnsalub .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1372,7 +1276,7 @@ well-considered value for the type argument to ezANOVA().</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#sfqtihufts .gt_sourcenote {
+#luwxnsalub .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -1380,85 +1284,85 @@ well-considered value for the type argument to ezANOVA().</code></pre>
   padding-right: 5px;
 }
 
-#sfqtihufts .gt_left {
+#luwxnsalub .gt_left {
   text-align: left;
 }
 
-#sfqtihufts .gt_center {
+#luwxnsalub .gt_center {
   text-align: center;
 }
 
-#sfqtihufts .gt_right {
+#luwxnsalub .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#sfqtihufts .gt_font_normal {
+#luwxnsalub .gt_font_normal {
   font-weight: normal;
 }
 
-#sfqtihufts .gt_font_bold {
+#luwxnsalub .gt_font_bold {
   font-weight: bold;
 }
 
-#sfqtihufts .gt_font_italic {
+#luwxnsalub .gt_font_italic {
   font-style: italic;
 }
 
-#sfqtihufts .gt_super {
+#luwxnsalub .gt_super {
   font-size: 65%;
 }
 
-#sfqtihufts .gt_footnote_marks {
+#luwxnsalub .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#sfqtihufts .gt_asterisk {
+#luwxnsalub .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#sfqtihufts .gt_indent_1 {
+#luwxnsalub .gt_indent_1 {
   text-indent: 5px;
 }
 
-#sfqtihufts .gt_indent_2 {
+#luwxnsalub .gt_indent_2 {
   text-indent: 10px;
 }
 
-#sfqtihufts .gt_indent_3 {
+#luwxnsalub .gt_indent_3 {
   text-indent: 15px;
 }
 
-#sfqtihufts .gt_indent_4 {
+#luwxnsalub .gt_indent_4 {
   text-indent: 20px;
 }
 
-#sfqtihufts .gt_indent_5 {
+#luwxnsalub .gt_indent_5 {
   text-indent: 25px;
 }
 </style>
 <table class="gt_table" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
   <thead>
     <tr class="gt_heading">
-      <td colspan="3" class="gt_heading gt_title gt_font_normal gt_bottom_border" style="">e2 NRevisits stage means</td>
+      <td colspan="3" class="gt_heading gt_title gt_font_normal gt_bottom_border" style="">e2 Retrieval stage means</td>
     </tr>
     
     <tr class="gt_col_headings">
-      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="ff">ff</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="rr">rr</th>
       <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="mean">mean</th>
       <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="sd">sd</th>
     </tr>
   </thead>
   <tbody class="gt_table_body">
-    <tr><td headers="ff" class="gt_row gt_center">fade</td>
-<td headers="mean" class="gt_row gt_right">0.05</td>
-<td headers="sd" class="gt_row gt_right">0.05</td></tr>
-    <tr><td headers="ff" class="gt_row gt_center">no_fade</td>
-<td headers="mean" class="gt_row gt_right">0.15</td>
-<td headers="sd" class="gt_row gt_right">0.10</td></tr>
+    <tr><td headers="rr" class="gt_row gt_center">dispersed</td>
+<td headers="mean" class="gt_row gt_right">2.06</td>
+<td headers="sd" class="gt_row gt_right">0.11</td></tr>
+    <tr><td headers="rr" class="gt_row gt_center">patchy</td>
+<td headers="mean" class="gt_row gt_right">1.64</td>
+<td headers="sd" class="gt_row gt_right">0.35</td></tr>
   </tbody>
   
   
@@ -1467,42 +1371,38 @@ well-considered value for the type argument to ezANOVA().</code></pre>
 </div>
 </div>
 </section>
-<section id="e2-nrevisits-fruit-means" class="level2">
-<h2 class="anchored" data-anchor-id="e2-nrevisits-fruit-means">e2 NRevisits: Fruit means</h2>
+<section id="e2-retrieval-fruit-means" class="level2">
+<h2 class="anchored" data-anchor-id="e2-retrieval-fruit-means">e2 Retrieval: Fruit means</h2>
+<p>Table means for fruit</p>
 <div class="cell">
 <details>
 <summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>pre.means <span class="ot">=</span> nrev_data_for_aov <span class="sc">%&gt;%</span></span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(fr, pp, st) <span class="sc">%&gt;%</span></span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>  <span class="co"># average over resources</span></span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">mean.nrv=</span><span class="fu">mean</span>(nrv)) <span class="sc">%&gt;%</span></span>
-<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(fr, pp) <span class="sc">%&gt;%</span></span>
-<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>  <span class="co"># average over stage</span></span>
-<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">mean.nrv=</span><span class="fu">mean</span>(mean.nrv))</span>
-<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>ok.means <span class="ot">=</span> pre.means <span class="sc">%&gt;%</span></span>
-<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(fr) <span class="sc">%&gt;%</span></span>
-<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">mean=</span><span class="fu">mean</span>(mean.nrv), <span class="at">sd=</span><span class="fu">sd</span>(mean.nrv))</span>
-<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a><span class="fu">prettify_means</span>(ok.means, <span class="st">"e2 Nrevisits fruit means"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>frpremeans <span class="ot">=</span> rtv <span class="sc">%&gt;%</span> <span class="fu">group_by</span>(fr, pp, rr) <span class="sc">%&gt;%</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">mu=</span><span class="fu">mean</span>(mu)) <span class="sc">%&gt;%</span> </span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">mu=</span><span class="fu">mean</span>(mu))  </span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>frmeans <span class="ot">&lt;-</span> frpremeans <span class="sc">%&gt;%</span> </span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">mean=</span><span class="fu">mean</span>(mu), <span class="at">sd=</span><span class="fu">sd</span>(mu))</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="fu">prettify_means</span>(frmeans, <span class="st">"e2 Retrieval fruit means"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
 
-<div id="lotctwoujv" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#lotctwoujv table {
+<div id="lxthpunmuh" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#lxthpunmuh table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#lotctwoujv thead, #lotctwoujv tbody, #lotctwoujv tfoot, #lotctwoujv tr, #lotctwoujv td, #lotctwoujv th {
+#lxthpunmuh thead, #lxthpunmuh tbody, #lxthpunmuh tfoot, #lxthpunmuh tr, #lxthpunmuh td, #lxthpunmuh th {
   border-style: none;
 }
 
-#lotctwoujv p {
+#lxthpunmuh p {
   margin: 0;
   padding: 0;
 }
 
-#lotctwoujv .gt_table {
+#lxthpunmuh .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -1528,12 +1428,12 @@ well-considered value for the type argument to ezANOVA().</code></pre>
   border-left-color: #D3D3D3;
 }
 
-#lotctwoujv .gt_caption {
+#lxthpunmuh .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#lotctwoujv .gt_title {
+#lxthpunmuh .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -1545,7 +1445,7 @@ well-considered value for the type argument to ezANOVA().</code></pre>
   border-bottom-width: 0;
 }
 
-#lotctwoujv .gt_subtitle {
+#lxthpunmuh .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -1557,7 +1457,7 @@ well-considered value for the type argument to ezANOVA().</code></pre>
   border-top-width: 0;
 }
 
-#lotctwoujv .gt_heading {
+#lxthpunmuh .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -1569,13 +1469,13 @@ well-considered value for the type argument to ezANOVA().</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#lotctwoujv .gt_bottom_border {
+#lxthpunmuh .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#lotctwoujv .gt_col_headings {
+#lxthpunmuh .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1590,7 +1490,7 @@ well-considered value for the type argument to ezANOVA().</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#lotctwoujv .gt_col_heading {
+#lxthpunmuh .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1610,7 +1510,7 @@ well-considered value for the type argument to ezANOVA().</code></pre>
   overflow-x: hidden;
 }
 
-#lotctwoujv .gt_column_spanner_outer {
+#lxthpunmuh .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1622,15 +1522,15 @@ well-considered value for the type argument to ezANOVA().</code></pre>
   padding-right: 4px;
 }
 
-#lotctwoujv .gt_column_spanner_outer:first-child {
+#lxthpunmuh .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#lotctwoujv .gt_column_spanner_outer:last-child {
+#lxthpunmuh .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#lotctwoujv .gt_column_spanner {
+#lxthpunmuh .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -1642,11 +1542,11 @@ well-considered value for the type argument to ezANOVA().</code></pre>
   width: 100%;
 }
 
-#lotctwoujv .gt_spanner_row {
+#lxthpunmuh .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#lotctwoujv .gt_group_heading {
+#lxthpunmuh .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1672,7 +1572,7 @@ well-considered value for the type argument to ezANOVA().</code></pre>
   text-align: left;
 }
 
-#lotctwoujv .gt_empty_group_heading {
+#lxthpunmuh .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -1687,15 +1587,15 @@ well-considered value for the type argument to ezANOVA().</code></pre>
   vertical-align: middle;
 }
 
-#lotctwoujv .gt_from_md > :first-child {
+#lxthpunmuh .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#lotctwoujv .gt_from_md > :last-child {
+#lxthpunmuh .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#lotctwoujv .gt_row {
+#lxthpunmuh .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1714,7 +1614,7 @@ well-considered value for the type argument to ezANOVA().</code></pre>
   overflow-x: hidden;
 }
 
-#lotctwoujv .gt_stub {
+#lxthpunmuh .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1727,7 +1627,7 @@ well-considered value for the type argument to ezANOVA().</code></pre>
   padding-right: 5px;
 }
 
-#lotctwoujv .gt_stub_row_group {
+#lxthpunmuh .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1741,15 +1641,15 @@ well-considered value for the type argument to ezANOVA().</code></pre>
   vertical-align: top;
 }
 
-#lotctwoujv .gt_row_group_first td {
+#lxthpunmuh .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#lotctwoujv .gt_row_group_first th {
+#lxthpunmuh .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#lotctwoujv .gt_summary_row {
+#lxthpunmuh .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1759,16 +1659,16 @@ well-considered value for the type argument to ezANOVA().</code></pre>
   padding-right: 5px;
 }
 
-#lotctwoujv .gt_first_summary_row {
+#lxthpunmuh .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#lotctwoujv .gt_first_summary_row.thick {
+#lxthpunmuh .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#lotctwoujv .gt_last_summary_row {
+#lxthpunmuh .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1778,7 +1678,7 @@ well-considered value for the type argument to ezANOVA().</code></pre>
   border-bottom-color: #D3D3D3;
 }
 
-#lotctwoujv .gt_grand_summary_row {
+#lxthpunmuh .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1788,7 +1688,7 @@ well-considered value for the type argument to ezANOVA().</code></pre>
   padding-right: 5px;
 }
 
-#lotctwoujv .gt_first_grand_summary_row {
+#lxthpunmuh .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1798,7 +1698,7 @@ well-considered value for the type argument to ezANOVA().</code></pre>
   border-top-color: #D3D3D3;
 }
 
-#lotctwoujv .gt_last_grand_summary_row_top {
+#lxthpunmuh .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1808,11 +1708,11 @@ well-considered value for the type argument to ezANOVA().</code></pre>
   border-bottom-color: #D3D3D3;
 }
 
-#lotctwoujv .gt_striped {
+#lxthpunmuh .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#lotctwoujv .gt_table_body {
+#lxthpunmuh .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1821,7 +1721,7 @@ well-considered value for the type argument to ezANOVA().</code></pre>
   border-bottom-color: #D3D3D3;
 }
 
-#lotctwoujv .gt_footnotes {
+#lxthpunmuh .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1835,7 +1735,7 @@ well-considered value for the type argument to ezANOVA().</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#lotctwoujv .gt_footnote {
+#lxthpunmuh .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -1844,7 +1744,7 @@ well-considered value for the type argument to ezANOVA().</code></pre>
   padding-right: 5px;
 }
 
-#lotctwoujv .gt_sourcenotes {
+#lxthpunmuh .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1858,7 +1758,7 @@ well-considered value for the type argument to ezANOVA().</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#lotctwoujv .gt_sourcenote {
+#lxthpunmuh .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -1866,70 +1766,70 @@ well-considered value for the type argument to ezANOVA().</code></pre>
   padding-right: 5px;
 }
 
-#lotctwoujv .gt_left {
+#lxthpunmuh .gt_left {
   text-align: left;
 }
 
-#lotctwoujv .gt_center {
+#lxthpunmuh .gt_center {
   text-align: center;
 }
 
-#lotctwoujv .gt_right {
+#lxthpunmuh .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#lotctwoujv .gt_font_normal {
+#lxthpunmuh .gt_font_normal {
   font-weight: normal;
 }
 
-#lotctwoujv .gt_font_bold {
+#lxthpunmuh .gt_font_bold {
   font-weight: bold;
 }
 
-#lotctwoujv .gt_font_italic {
+#lxthpunmuh .gt_font_italic {
   font-style: italic;
 }
 
-#lotctwoujv .gt_super {
+#lxthpunmuh .gt_super {
   font-size: 65%;
 }
 
-#lotctwoujv .gt_footnote_marks {
+#lxthpunmuh .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#lotctwoujv .gt_asterisk {
+#lxthpunmuh .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#lotctwoujv .gt_indent_1 {
+#lxthpunmuh .gt_indent_1 {
   text-indent: 5px;
 }
 
-#lotctwoujv .gt_indent_2 {
+#lxthpunmuh .gt_indent_2 {
   text-indent: 10px;
 }
 
-#lotctwoujv .gt_indent_3 {
+#lxthpunmuh .gt_indent_3 {
   text-indent: 15px;
 }
 
-#lotctwoujv .gt_indent_4 {
+#lxthpunmuh .gt_indent_4 {
   text-indent: 20px;
 }
 
-#lotctwoujv .gt_indent_5 {
+#lxthpunmuh .gt_indent_5 {
   text-indent: 25px;
 }
 </style>
 <table class="gt_table" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
   <thead>
     <tr class="gt_heading">
-      <td colspan="3" class="gt_heading gt_title gt_font_normal gt_bottom_border" style="">e2 Nrevisits fruit means</td>
+      <td colspan="3" class="gt_heading gt_title gt_font_normal gt_bottom_border" style="">e2 Retrieval fruit means</td>
     </tr>
     
     <tr class="gt_col_headings">
@@ -1939,48 +1839,48 @@ well-considered value for the type argument to ezANOVA().</code></pre>
     </tr>
   </thead>
   <tbody class="gt_table_body">
-    <tr><td headers="fr" class="gt_row gt_center">0</td>
-<td headers="mean" class="gt_row gt_right">0.02</td>
-<td headers="sd" class="gt_row gt_right">0.03</td></tr>
     <tr><td headers="fr" class="gt_row gt_center">1</td>
-<td headers="mean" class="gt_row gt_right">0.03</td>
-<td headers="sd" class="gt_row gt_right">0.04</td></tr>
+<td headers="mean" class="gt_row gt_right">2.36</td>
+<td headers="sd" class="gt_row gt_right">0.59</td></tr>
     <tr><td headers="fr" class="gt_row gt_center">2</td>
-<td headers="mean" class="gt_row gt_right">0.04</td>
-<td headers="sd" class="gt_row gt_right">0.05</td></tr>
+<td headers="mean" class="gt_row gt_right">1.83</td>
+<td headers="sd" class="gt_row gt_right">0.39</td></tr>
     <tr><td headers="fr" class="gt_row gt_center">3</td>
-<td headers="mean" class="gt_row gt_right">0.04</td>
-<td headers="sd" class="gt_row gt_right">0.05</td></tr>
-    <tr><td headers="fr" class="gt_row gt_center">4</td>
-<td headers="mean" class="gt_row gt_right">0.06</td>
-<td headers="sd" class="gt_row gt_right">0.05</td></tr>
-    <tr><td headers="fr" class="gt_row gt_center">5</td>
-<td headers="mean" class="gt_row gt_right">0.05</td>
-<td headers="sd" class="gt_row gt_right">0.05</td></tr>
-    <tr><td headers="fr" class="gt_row gt_center">6</td>
-<td headers="mean" class="gt_row gt_right">0.07</td>
-<td headers="sd" class="gt_row gt_right">0.07</td></tr>
-    <tr><td headers="fr" class="gt_row gt_center">7</td>
-<td headers="mean" class="gt_row gt_right">0.05</td>
-<td headers="sd" class="gt_row gt_right">0.04</td></tr>
-    <tr><td headers="fr" class="gt_row gt_center">8</td>
-<td headers="mean" class="gt_row gt_right">0.08</td>
-<td headers="sd" class="gt_row gt_right">0.07</td></tr>
-    <tr><td headers="fr" class="gt_row gt_center">9</td>
-<td headers="mean" class="gt_row gt_right">0.07</td>
-<td headers="sd" class="gt_row gt_right">0.06</td></tr>
-    <tr><td headers="fr" class="gt_row gt_center">10</td>
-<td headers="mean" class="gt_row gt_right">0.08</td>
-<td headers="sd" class="gt_row gt_right">0.09</td></tr>
-    <tr><td headers="fr" class="gt_row gt_center">11</td>
-<td headers="mean" class="gt_row gt_right">0.10</td>
-<td headers="sd" class="gt_row gt_right">0.10</td></tr>
-    <tr><td headers="fr" class="gt_row gt_center">12</td>
-<td headers="mean" class="gt_row gt_right">0.22</td>
+<td headers="mean" class="gt_row gt_right">1.78</td>
 <td headers="sd" class="gt_row gt_right">0.26</td></tr>
+    <tr><td headers="fr" class="gt_row gt_center">4</td>
+<td headers="mean" class="gt_row gt_right">1.72</td>
+<td headers="sd" class="gt_row gt_right">0.28</td></tr>
+    <tr><td headers="fr" class="gt_row gt_center">5</td>
+<td headers="mean" class="gt_row gt_right">1.77</td>
+<td headers="sd" class="gt_row gt_right">0.33</td></tr>
+    <tr><td headers="fr" class="gt_row gt_center">6</td>
+<td headers="mean" class="gt_row gt_right">1.75</td>
+<td headers="sd" class="gt_row gt_right">0.26</td></tr>
+    <tr><td headers="fr" class="gt_row gt_center">7</td>
+<td headers="mean" class="gt_row gt_right">1.72</td>
+<td headers="sd" class="gt_row gt_right">0.36</td></tr>
+    <tr><td headers="fr" class="gt_row gt_center">8</td>
+<td headers="mean" class="gt_row gt_right">1.69</td>
+<td headers="sd" class="gt_row gt_right">0.30</td></tr>
+    <tr><td headers="fr" class="gt_row gt_center">9</td>
+<td headers="mean" class="gt_row gt_right">1.77</td>
+<td headers="sd" class="gt_row gt_right">0.30</td></tr>
+    <tr><td headers="fr" class="gt_row gt_center">10</td>
+<td headers="mean" class="gt_row gt_right">1.67</td>
+<td headers="sd" class="gt_row gt_right">0.24</td></tr>
+    <tr><td headers="fr" class="gt_row gt_center">11</td>
+<td headers="mean" class="gt_row gt_right">1.75</td>
+<td headers="sd" class="gt_row gt_right">0.30</td></tr>
+    <tr><td headers="fr" class="gt_row gt_center">12</td>
+<td headers="mean" class="gt_row gt_right">1.76</td>
+<td headers="sd" class="gt_row gt_right">0.29</td></tr>
     <tr><td headers="fr" class="gt_row gt_center">13</td>
-<td headers="mean" class="gt_row gt_right">0.48</td>
-<td headers="sd" class="gt_row gt_right">0.67</td></tr>
+<td headers="mean" class="gt_row gt_right">1.95</td>
+<td headers="sd" class="gt_row gt_right">0.43</td></tr>
+    <tr><td headers="fr" class="gt_row gt_center">14</td>
+<td headers="mean" class="gt_row gt_right">2.36</td>
+<td headers="sd" class="gt_row gt_right">0.87</td></tr>
   </tbody>
   
   
@@ -2228,13 +2128,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./e2-ntrees.html" class="pagination-link">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Trees</span>
+      <a href="./e2-nrevisits.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Revisits</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./e2-retrieval.html" class="pagination-link">
-        <span class="nav-page-text">Retrieval</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./e2-master-plot.html" class="pagination-link">
+        <span class="nav-page-text">Patchwork</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
