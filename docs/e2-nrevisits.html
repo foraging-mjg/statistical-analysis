@@ -208,6 +208,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="./e2-distance.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Distance</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="./e2-master-plot.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Patchwork</span></a>
   </div>
@@ -273,7 +279,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">is.na</span>(tl <span class="sc">!=</span> <span class="fu">lag</span>(tl)) <span class="sc">|</span> tl <span class="sc">!=</span> <span class="fu">lag</span>(tl)) <span class="sc">%&gt;%</span> </span>
 <span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>()</span>
 <span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="co"># remove trials where they failed to get 10 fruit</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="co"># remove trials where they failed to get 14 fruit</span></span>
 <span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>e2 <span class="ot">&lt;-</span> e2 <span class="sc">%&gt;%</span></span>
 <span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(pp, rr, tb) <span class="sc">%&gt;%</span></span>
 <span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">max_fr =</span> <span class="fu">max</span>(fr)) <span class="sc">%&gt;%</span></span>
@@ -402,23 +408,23 @@ well-considered value for the type argument to ezANOVA().</code></pre>
 </details>
 <div class="cell-output-display">
 
-<div id="ygkgzilsok" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#ygkgzilsok table {
+<div id="viyeheznzc" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#viyeheznzc table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#ygkgzilsok thead, #ygkgzilsok tbody, #ygkgzilsok tfoot, #ygkgzilsok tr, #ygkgzilsok td, #ygkgzilsok th {
+#viyeheznzc thead, #viyeheznzc tbody, #viyeheznzc tfoot, #viyeheznzc tr, #viyeheznzc td, #viyeheznzc th {
   border-style: none;
 }
 
-#ygkgzilsok p {
+#viyeheznzc p {
   margin: 0;
   padding: 0;
 }
 
-#ygkgzilsok .gt_table {
+#viyeheznzc .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -444,12 +450,12 @@ well-considered value for the type argument to ezANOVA().</code></pre>
   border-left-color: #D3D3D3;
 }
 
-#ygkgzilsok .gt_caption {
+#viyeheznzc .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#ygkgzilsok .gt_title {
+#viyeheznzc .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -461,7 +467,7 @@ well-considered value for the type argument to ezANOVA().</code></pre>
   border-bottom-width: 0;
 }
 
-#ygkgzilsok .gt_subtitle {
+#viyeheznzc .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -473,7 +479,7 @@ well-considered value for the type argument to ezANOVA().</code></pre>
   border-top-width: 0;
 }
 
-#ygkgzilsok .gt_heading {
+#viyeheznzc .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -485,13 +491,13 @@ well-considered value for the type argument to ezANOVA().</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#ygkgzilsok .gt_bottom_border {
+#viyeheznzc .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#ygkgzilsok .gt_col_headings {
+#viyeheznzc .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -506,7 +512,7 @@ well-considered value for the type argument to ezANOVA().</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#ygkgzilsok .gt_col_heading {
+#viyeheznzc .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -526,7 +532,7 @@ well-considered value for the type argument to ezANOVA().</code></pre>
   overflow-x: hidden;
 }
 
-#ygkgzilsok .gt_column_spanner_outer {
+#viyeheznzc .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -538,15 +544,15 @@ well-considered value for the type argument to ezANOVA().</code></pre>
   padding-right: 4px;
 }
 
-#ygkgzilsok .gt_column_spanner_outer:first-child {
+#viyeheznzc .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#ygkgzilsok .gt_column_spanner_outer:last-child {
+#viyeheznzc .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#ygkgzilsok .gt_column_spanner {
+#viyeheznzc .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -558,11 +564,11 @@ well-considered value for the type argument to ezANOVA().</code></pre>
   width: 100%;
 }
 
-#ygkgzilsok .gt_spanner_row {
+#viyeheznzc .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#ygkgzilsok .gt_group_heading {
+#viyeheznzc .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -588,7 +594,7 @@ well-considered value for the type argument to ezANOVA().</code></pre>
   text-align: left;
 }
 
-#ygkgzilsok .gt_empty_group_heading {
+#viyeheznzc .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -603,15 +609,15 @@ well-considered value for the type argument to ezANOVA().</code></pre>
   vertical-align: middle;
 }
 
-#ygkgzilsok .gt_from_md > :first-child {
+#viyeheznzc .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#ygkgzilsok .gt_from_md > :last-child {
+#viyeheznzc .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#ygkgzilsok .gt_row {
+#viyeheznzc .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -630,7 +636,7 @@ well-considered value for the type argument to ezANOVA().</code></pre>
   overflow-x: hidden;
 }
 
-#ygkgzilsok .gt_stub {
+#viyeheznzc .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -643,7 +649,7 @@ well-considered value for the type argument to ezANOVA().</code></pre>
   padding-right: 5px;
 }
 
-#ygkgzilsok .gt_stub_row_group {
+#viyeheznzc .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -657,15 +663,15 @@ well-considered value for the type argument to ezANOVA().</code></pre>
   vertical-align: top;
 }
 
-#ygkgzilsok .gt_row_group_first td {
+#viyeheznzc .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#ygkgzilsok .gt_row_group_first th {
+#viyeheznzc .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#ygkgzilsok .gt_summary_row {
+#viyeheznzc .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -675,16 +681,16 @@ well-considered value for the type argument to ezANOVA().</code></pre>
   padding-right: 5px;
 }
 
-#ygkgzilsok .gt_first_summary_row {
+#viyeheznzc .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#ygkgzilsok .gt_first_summary_row.thick {
+#viyeheznzc .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#ygkgzilsok .gt_last_summary_row {
+#viyeheznzc .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -694,7 +700,7 @@ well-considered value for the type argument to ezANOVA().</code></pre>
   border-bottom-color: #D3D3D3;
 }
 
-#ygkgzilsok .gt_grand_summary_row {
+#viyeheznzc .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -704,7 +710,7 @@ well-considered value for the type argument to ezANOVA().</code></pre>
   padding-right: 5px;
 }
 
-#ygkgzilsok .gt_first_grand_summary_row {
+#viyeheznzc .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -714,7 +720,7 @@ well-considered value for the type argument to ezANOVA().</code></pre>
   border-top-color: #D3D3D3;
 }
 
-#ygkgzilsok .gt_last_grand_summary_row_top {
+#viyeheznzc .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -724,11 +730,11 @@ well-considered value for the type argument to ezANOVA().</code></pre>
   border-bottom-color: #D3D3D3;
 }
 
-#ygkgzilsok .gt_striped {
+#viyeheznzc .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#ygkgzilsok .gt_table_body {
+#viyeheznzc .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -737,7 +743,7 @@ well-considered value for the type argument to ezANOVA().</code></pre>
   border-bottom-color: #D3D3D3;
 }
 
-#ygkgzilsok .gt_footnotes {
+#viyeheznzc .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -751,7 +757,7 @@ well-considered value for the type argument to ezANOVA().</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#ygkgzilsok .gt_footnote {
+#viyeheznzc .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -760,7 +766,7 @@ well-considered value for the type argument to ezANOVA().</code></pre>
   padding-right: 5px;
 }
 
-#ygkgzilsok .gt_sourcenotes {
+#viyeheznzc .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -774,7 +780,7 @@ well-considered value for the type argument to ezANOVA().</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#ygkgzilsok .gt_sourcenote {
+#viyeheznzc .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -782,63 +788,63 @@ well-considered value for the type argument to ezANOVA().</code></pre>
   padding-right: 5px;
 }
 
-#ygkgzilsok .gt_left {
+#viyeheznzc .gt_left {
   text-align: left;
 }
 
-#ygkgzilsok .gt_center {
+#viyeheznzc .gt_center {
   text-align: center;
 }
 
-#ygkgzilsok .gt_right {
+#viyeheznzc .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#ygkgzilsok .gt_font_normal {
+#viyeheznzc .gt_font_normal {
   font-weight: normal;
 }
 
-#ygkgzilsok .gt_font_bold {
+#viyeheznzc .gt_font_bold {
   font-weight: bold;
 }
 
-#ygkgzilsok .gt_font_italic {
+#viyeheznzc .gt_font_italic {
   font-style: italic;
 }
 
-#ygkgzilsok .gt_super {
+#viyeheznzc .gt_super {
   font-size: 65%;
 }
 
-#ygkgzilsok .gt_footnote_marks {
+#viyeheznzc .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#ygkgzilsok .gt_asterisk {
+#viyeheznzc .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#ygkgzilsok .gt_indent_1 {
+#viyeheznzc .gt_indent_1 {
   text-indent: 5px;
 }
 
-#ygkgzilsok .gt_indent_2 {
+#viyeheznzc .gt_indent_2 {
   text-indent: 10px;
 }
 
-#ygkgzilsok .gt_indent_3 {
+#viyeheznzc .gt_indent_3 {
   text-indent: 15px;
 }
 
-#ygkgzilsok .gt_indent_4 {
+#viyeheznzc .gt_indent_4 {
   text-indent: 20px;
 }
 
-#ygkgzilsok .gt_indent_5 {
+#viyeheznzc .gt_indent_5 {
   text-indent: 25px;
 }
 </style>
@@ -1000,23 +1006,23 @@ well-considered value for the type argument to ezANOVA().</code></pre>
 </details>
 <div class="cell-output-display">
 
-<div id="sfqtihufts" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#sfqtihufts table {
+<div id="bsszxnyeae" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#bsszxnyeae table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#sfqtihufts thead, #sfqtihufts tbody, #sfqtihufts tfoot, #sfqtihufts tr, #sfqtihufts td, #sfqtihufts th {
+#bsszxnyeae thead, #bsszxnyeae tbody, #bsszxnyeae tfoot, #bsszxnyeae tr, #bsszxnyeae td, #bsszxnyeae th {
   border-style: none;
 }
 
-#sfqtihufts p {
+#bsszxnyeae p {
   margin: 0;
   padding: 0;
 }
 
-#sfqtihufts .gt_table {
+#bsszxnyeae .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -1042,12 +1048,12 @@ well-considered value for the type argument to ezANOVA().</code></pre>
   border-left-color: #D3D3D3;
 }
 
-#sfqtihufts .gt_caption {
+#bsszxnyeae .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#sfqtihufts .gt_title {
+#bsszxnyeae .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -1059,7 +1065,7 @@ well-considered value for the type argument to ezANOVA().</code></pre>
   border-bottom-width: 0;
 }
 
-#sfqtihufts .gt_subtitle {
+#bsszxnyeae .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -1071,7 +1077,7 @@ well-considered value for the type argument to ezANOVA().</code></pre>
   border-top-width: 0;
 }
 
-#sfqtihufts .gt_heading {
+#bsszxnyeae .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -1083,13 +1089,13 @@ well-considered value for the type argument to ezANOVA().</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#sfqtihufts .gt_bottom_border {
+#bsszxnyeae .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#sfqtihufts .gt_col_headings {
+#bsszxnyeae .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1104,7 +1110,7 @@ well-considered value for the type argument to ezANOVA().</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#sfqtihufts .gt_col_heading {
+#bsszxnyeae .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1124,7 +1130,7 @@ well-considered value for the type argument to ezANOVA().</code></pre>
   overflow-x: hidden;
 }
 
-#sfqtihufts .gt_column_spanner_outer {
+#bsszxnyeae .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1136,15 +1142,15 @@ well-considered value for the type argument to ezANOVA().</code></pre>
   padding-right: 4px;
 }
 
-#sfqtihufts .gt_column_spanner_outer:first-child {
+#bsszxnyeae .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#sfqtihufts .gt_column_spanner_outer:last-child {
+#bsszxnyeae .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#sfqtihufts .gt_column_spanner {
+#bsszxnyeae .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -1156,11 +1162,11 @@ well-considered value for the type argument to ezANOVA().</code></pre>
   width: 100%;
 }
 
-#sfqtihufts .gt_spanner_row {
+#bsszxnyeae .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#sfqtihufts .gt_group_heading {
+#bsszxnyeae .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1186,7 +1192,7 @@ well-considered value for the type argument to ezANOVA().</code></pre>
   text-align: left;
 }
 
-#sfqtihufts .gt_empty_group_heading {
+#bsszxnyeae .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -1201,15 +1207,15 @@ well-considered value for the type argument to ezANOVA().</code></pre>
   vertical-align: middle;
 }
 
-#sfqtihufts .gt_from_md > :first-child {
+#bsszxnyeae .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#sfqtihufts .gt_from_md > :last-child {
+#bsszxnyeae .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#sfqtihufts .gt_row {
+#bsszxnyeae .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1228,7 +1234,7 @@ well-considered value for the type argument to ezANOVA().</code></pre>
   overflow-x: hidden;
 }
 
-#sfqtihufts .gt_stub {
+#bsszxnyeae .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1241,7 +1247,7 @@ well-considered value for the type argument to ezANOVA().</code></pre>
   padding-right: 5px;
 }
 
-#sfqtihufts .gt_stub_row_group {
+#bsszxnyeae .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1255,15 +1261,15 @@ well-considered value for the type argument to ezANOVA().</code></pre>
   vertical-align: top;
 }
 
-#sfqtihufts .gt_row_group_first td {
+#bsszxnyeae .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#sfqtihufts .gt_row_group_first th {
+#bsszxnyeae .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#sfqtihufts .gt_summary_row {
+#bsszxnyeae .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1273,16 +1279,16 @@ well-considered value for the type argument to ezANOVA().</code></pre>
   padding-right: 5px;
 }
 
-#sfqtihufts .gt_first_summary_row {
+#bsszxnyeae .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#sfqtihufts .gt_first_summary_row.thick {
+#bsszxnyeae .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#sfqtihufts .gt_last_summary_row {
+#bsszxnyeae .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1292,7 +1298,7 @@ well-considered value for the type argument to ezANOVA().</code></pre>
   border-bottom-color: #D3D3D3;
 }
 
-#sfqtihufts .gt_grand_summary_row {
+#bsszxnyeae .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1302,7 +1308,7 @@ well-considered value for the type argument to ezANOVA().</code></pre>
   padding-right: 5px;
 }
 
-#sfqtihufts .gt_first_grand_summary_row {
+#bsszxnyeae .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1312,7 +1318,7 @@ well-considered value for the type argument to ezANOVA().</code></pre>
   border-top-color: #D3D3D3;
 }
 
-#sfqtihufts .gt_last_grand_summary_row_top {
+#bsszxnyeae .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1322,11 +1328,11 @@ well-considered value for the type argument to ezANOVA().</code></pre>
   border-bottom-color: #D3D3D3;
 }
 
-#sfqtihufts .gt_striped {
+#bsszxnyeae .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#sfqtihufts .gt_table_body {
+#bsszxnyeae .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1335,7 +1341,7 @@ well-considered value for the type argument to ezANOVA().</code></pre>
   border-bottom-color: #D3D3D3;
 }
 
-#sfqtihufts .gt_footnotes {
+#bsszxnyeae .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1349,7 +1355,7 @@ well-considered value for the type argument to ezANOVA().</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#sfqtihufts .gt_footnote {
+#bsszxnyeae .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -1358,7 +1364,7 @@ well-considered value for the type argument to ezANOVA().</code></pre>
   padding-right: 5px;
 }
 
-#sfqtihufts .gt_sourcenotes {
+#bsszxnyeae .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1372,7 +1378,7 @@ well-considered value for the type argument to ezANOVA().</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#sfqtihufts .gt_sourcenote {
+#bsszxnyeae .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -1380,63 +1386,63 @@ well-considered value for the type argument to ezANOVA().</code></pre>
   padding-right: 5px;
 }
 
-#sfqtihufts .gt_left {
+#bsszxnyeae .gt_left {
   text-align: left;
 }
 
-#sfqtihufts .gt_center {
+#bsszxnyeae .gt_center {
   text-align: center;
 }
 
-#sfqtihufts .gt_right {
+#bsszxnyeae .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#sfqtihufts .gt_font_normal {
+#bsszxnyeae .gt_font_normal {
   font-weight: normal;
 }
 
-#sfqtihufts .gt_font_bold {
+#bsszxnyeae .gt_font_bold {
   font-weight: bold;
 }
 
-#sfqtihufts .gt_font_italic {
+#bsszxnyeae .gt_font_italic {
   font-style: italic;
 }
 
-#sfqtihufts .gt_super {
+#bsszxnyeae .gt_super {
   font-size: 65%;
 }
 
-#sfqtihufts .gt_footnote_marks {
+#bsszxnyeae .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#sfqtihufts .gt_asterisk {
+#bsszxnyeae .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#sfqtihufts .gt_indent_1 {
+#bsszxnyeae .gt_indent_1 {
   text-indent: 5px;
 }
 
-#sfqtihufts .gt_indent_2 {
+#bsszxnyeae .gt_indent_2 {
   text-indent: 10px;
 }
 
-#sfqtihufts .gt_indent_3 {
+#bsszxnyeae .gt_indent_3 {
   text-indent: 15px;
 }
 
-#sfqtihufts .gt_indent_4 {
+#bsszxnyeae .gt_indent_4 {
   text-indent: 20px;
 }
 
-#sfqtihufts .gt_indent_5 {
+#bsszxnyeae .gt_indent_5 {
   text-indent: 25px;
 }
 </style>
@@ -1486,23 +1492,23 @@ well-considered value for the type argument to ezANOVA().</code></pre>
 </details>
 <div class="cell-output-display">
 
-<div id="lotctwoujv" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#lotctwoujv table {
+<div id="ixpcduozbb" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#ixpcduozbb table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#lotctwoujv thead, #lotctwoujv tbody, #lotctwoujv tfoot, #lotctwoujv tr, #lotctwoujv td, #lotctwoujv th {
+#ixpcduozbb thead, #ixpcduozbb tbody, #ixpcduozbb tfoot, #ixpcduozbb tr, #ixpcduozbb td, #ixpcduozbb th {
   border-style: none;
 }
 
-#lotctwoujv p {
+#ixpcduozbb p {
   margin: 0;
   padding: 0;
 }
 
-#lotctwoujv .gt_table {
+#ixpcduozbb .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -1528,12 +1534,12 @@ well-considered value for the type argument to ezANOVA().</code></pre>
   border-left-color: #D3D3D3;
 }
 
-#lotctwoujv .gt_caption {
+#ixpcduozbb .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#lotctwoujv .gt_title {
+#ixpcduozbb .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -1545,7 +1551,7 @@ well-considered value for the type argument to ezANOVA().</code></pre>
   border-bottom-width: 0;
 }
 
-#lotctwoujv .gt_subtitle {
+#ixpcduozbb .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -1557,7 +1563,7 @@ well-considered value for the type argument to ezANOVA().</code></pre>
   border-top-width: 0;
 }
 
-#lotctwoujv .gt_heading {
+#ixpcduozbb .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -1569,13 +1575,13 @@ well-considered value for the type argument to ezANOVA().</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#lotctwoujv .gt_bottom_border {
+#ixpcduozbb .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#lotctwoujv .gt_col_headings {
+#ixpcduozbb .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1590,7 +1596,7 @@ well-considered value for the type argument to ezANOVA().</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#lotctwoujv .gt_col_heading {
+#ixpcduozbb .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1610,7 +1616,7 @@ well-considered value for the type argument to ezANOVA().</code></pre>
   overflow-x: hidden;
 }
 
-#lotctwoujv .gt_column_spanner_outer {
+#ixpcduozbb .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1622,15 +1628,15 @@ well-considered value for the type argument to ezANOVA().</code></pre>
   padding-right: 4px;
 }
 
-#lotctwoujv .gt_column_spanner_outer:first-child {
+#ixpcduozbb .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#lotctwoujv .gt_column_spanner_outer:last-child {
+#ixpcduozbb .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#lotctwoujv .gt_column_spanner {
+#ixpcduozbb .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -1642,11 +1648,11 @@ well-considered value for the type argument to ezANOVA().</code></pre>
   width: 100%;
 }
 
-#lotctwoujv .gt_spanner_row {
+#ixpcduozbb .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#lotctwoujv .gt_group_heading {
+#ixpcduozbb .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1672,7 +1678,7 @@ well-considered value for the type argument to ezANOVA().</code></pre>
   text-align: left;
 }
 
-#lotctwoujv .gt_empty_group_heading {
+#ixpcduozbb .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -1687,15 +1693,15 @@ well-considered value for the type argument to ezANOVA().</code></pre>
   vertical-align: middle;
 }
 
-#lotctwoujv .gt_from_md > :first-child {
+#ixpcduozbb .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#lotctwoujv .gt_from_md > :last-child {
+#ixpcduozbb .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#lotctwoujv .gt_row {
+#ixpcduozbb .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1714,7 +1720,7 @@ well-considered value for the type argument to ezANOVA().</code></pre>
   overflow-x: hidden;
 }
 
-#lotctwoujv .gt_stub {
+#ixpcduozbb .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1727,7 +1733,7 @@ well-considered value for the type argument to ezANOVA().</code></pre>
   padding-right: 5px;
 }
 
-#lotctwoujv .gt_stub_row_group {
+#ixpcduozbb .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1741,15 +1747,15 @@ well-considered value for the type argument to ezANOVA().</code></pre>
   vertical-align: top;
 }
 
-#lotctwoujv .gt_row_group_first td {
+#ixpcduozbb .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#lotctwoujv .gt_row_group_first th {
+#ixpcduozbb .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#lotctwoujv .gt_summary_row {
+#ixpcduozbb .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1759,16 +1765,16 @@ well-considered value for the type argument to ezANOVA().</code></pre>
   padding-right: 5px;
 }
 
-#lotctwoujv .gt_first_summary_row {
+#ixpcduozbb .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#lotctwoujv .gt_first_summary_row.thick {
+#ixpcduozbb .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#lotctwoujv .gt_last_summary_row {
+#ixpcduozbb .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1778,7 +1784,7 @@ well-considered value for the type argument to ezANOVA().</code></pre>
   border-bottom-color: #D3D3D3;
 }
 
-#lotctwoujv .gt_grand_summary_row {
+#ixpcduozbb .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1788,7 +1794,7 @@ well-considered value for the type argument to ezANOVA().</code></pre>
   padding-right: 5px;
 }
 
-#lotctwoujv .gt_first_grand_summary_row {
+#ixpcduozbb .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1798,7 +1804,7 @@ well-considered value for the type argument to ezANOVA().</code></pre>
   border-top-color: #D3D3D3;
 }
 
-#lotctwoujv .gt_last_grand_summary_row_top {
+#ixpcduozbb .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1808,11 +1814,11 @@ well-considered value for the type argument to ezANOVA().</code></pre>
   border-bottom-color: #D3D3D3;
 }
 
-#lotctwoujv .gt_striped {
+#ixpcduozbb .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#lotctwoujv .gt_table_body {
+#ixpcduozbb .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1821,7 +1827,7 @@ well-considered value for the type argument to ezANOVA().</code></pre>
   border-bottom-color: #D3D3D3;
 }
 
-#lotctwoujv .gt_footnotes {
+#ixpcduozbb .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1835,7 +1841,7 @@ well-considered value for the type argument to ezANOVA().</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#lotctwoujv .gt_footnote {
+#ixpcduozbb .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -1844,7 +1850,7 @@ well-considered value for the type argument to ezANOVA().</code></pre>
   padding-right: 5px;
 }
 
-#lotctwoujv .gt_sourcenotes {
+#ixpcduozbb .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1858,7 +1864,7 @@ well-considered value for the type argument to ezANOVA().</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#lotctwoujv .gt_sourcenote {
+#ixpcduozbb .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -1866,63 +1872,63 @@ well-considered value for the type argument to ezANOVA().</code></pre>
   padding-right: 5px;
 }
 
-#lotctwoujv .gt_left {
+#ixpcduozbb .gt_left {
   text-align: left;
 }
 
-#lotctwoujv .gt_center {
+#ixpcduozbb .gt_center {
   text-align: center;
 }
 
-#lotctwoujv .gt_right {
+#ixpcduozbb .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#lotctwoujv .gt_font_normal {
+#ixpcduozbb .gt_font_normal {
   font-weight: normal;
 }
 
-#lotctwoujv .gt_font_bold {
+#ixpcduozbb .gt_font_bold {
   font-weight: bold;
 }
 
-#lotctwoujv .gt_font_italic {
+#ixpcduozbb .gt_font_italic {
   font-style: italic;
 }
 
-#lotctwoujv .gt_super {
+#ixpcduozbb .gt_super {
   font-size: 65%;
 }
 
-#lotctwoujv .gt_footnote_marks {
+#ixpcduozbb .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#lotctwoujv .gt_asterisk {
+#ixpcduozbb .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#lotctwoujv .gt_indent_1 {
+#ixpcduozbb .gt_indent_1 {
   text-indent: 5px;
 }
 
-#lotctwoujv .gt_indent_2 {
+#ixpcduozbb .gt_indent_2 {
   text-indent: 10px;
 }
 
-#lotctwoujv .gt_indent_3 {
+#ixpcduozbb .gt_indent_3 {
   text-indent: 15px;
 }
 
-#lotctwoujv .gt_indent_4 {
+#ixpcduozbb .gt_indent_4 {
   text-indent: 20px;
 }
 
-#lotctwoujv .gt_indent_5 {
+#ixpcduozbb .gt_indent_5 {
   text-indent: 25px;
 }
 </style>

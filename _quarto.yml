@@ -20,6 +20,7 @@ book:
         - e2-ntrees.qmd
         - e2-nrevisits.qmd
         - e2-retrieval.qmd
+        - e2-distance.qmd
         - e2-master-plot.qmd
 
 format:
