@@ -98,7 +98,7 @@ Report the ANOVA
 
 The effect of resources was 
 F(`r round(corr[corr$Effect=="rr","DFn"],1)`, 
-  `r round(corr[corr$Effect=="rr","DFd"],1)`) = 
+  `r round(corr[corr$Effect=="rr","DFd"],2)`) = 
   `r round(corr[corr$Effect=="rr", "F"],2)`, 
   `r case_when(
     corr[corr$Effect=="rr","p"] <.001 ~ "p<.001",

@@ -36,7 +36,7 @@ prettify_sphericity = function(raw, cap="title"){
       )
     )
   gt(init) %>% 
-    fmt_number(rows=c(2,3),columns=c(2,3),decimals=c(1)) %>% 
+    fmt_number(rows=c(2,3),columns=c(2,3),decimals=c(2)) %>% 
     fmt_number(columns=c(4),decimals=2) %>% 
     tab_header(cap) %>% 
     tab_options(table.align = "left")
