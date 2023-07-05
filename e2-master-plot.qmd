@@ -50,7 +50,7 @@ p2=ggplot(data=d2, aes(y=nrv, x=fr, group=rr, fill=rr, shape=rr)) +
 d3=readRDS("e2_retrieval_plot_data.rds")
 p3=ggplot(data=d3, aes(x=fr, y=mu, group=rr, fill=rr, shape=rr)) +
   facet_wrap(~ff, nrow=2)+
-  labs(title="(c): Retrieval rate", subtitle="People benefit from being in a patch once they realise they are in one")+
+  labs(title="(c): Retrieval rate")+#, subtitle="People benefit from being in a patch once they realise they are in one")+
   ylab("Number\nof\ntrees\nvisited\nto get\neach fruit")+
   xlab("Number of fruit collected so far during trial")+
   my_fgms_theme+
@@ -64,7 +64,7 @@ p3=ggplot(data=d3, aes(x=fr, y=mu, group=rr, fill=rr, shape=rr)) +
 d4=readRDS("e2_distance_data.rds")
 p4=ggplot(data=d4, aes(y=mu.dist, x=st, group=rr, fill=rr, shape=rr)) +
   facet_wrap(~ll) +
-  labs(title="(d): Distance moved between trees", subtitle = "The eyes move further to the next tree if the current tree has no fruit")+
+  labs(title="(d): Distance moved between trees")+#, subtitle = "The eyes move further to the next tree if the current tree has no fruit")+
   ylab("Pixels")+
   xlab("Trials")+
   my_fgms_theme+
